@@ -30,3 +30,12 @@ As root@localhost:
 - GRANT ALL PRIVILEGES ON elitetraderoutes.* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
 
 Then run 'python3 manage.py migrate' and make sure there are no errors.
+
+## User settings
+
+### Required users
+
+Keep these users' passwords a secret.
+
+- admin
+- guest
