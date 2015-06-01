@@ -8,7 +8,9 @@ class SystemSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class StationSerializer(serializers.HyperlinkedModelSerializer):
-    system = serializers.HyperlinkedIdentityField(view_name='system-detail')
+
+    # Painful debugging note: HyperlinkedIdentityField forcefully sets its queryset to the model
+    system = serializers.HyperlinkedRelatedField(view_name='system-detail', read_only=True)
 
     class Meta:
         model = Station

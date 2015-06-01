@@ -22,10 +22,10 @@ class Connection(models.Model):
     destination_system = models.ForeignKey("elitedata.System", related_name="connections_destination")
     destination_station = models.ForeignKey("elitedata.Station", related_name="connections_destination")
     commodity = models.ForeignKey("elitedata.Commodity", related_name='connections')
-    buy_price = models.IntegerField()
-    sell_price = models.IntegerField()
-    supply = models.IntegerField()
-    demand = models.IntegerField()
+    buy_price = models.IntegerField(default=0)
+    sell_price = models.IntegerField(default=0)
+    supply = models.IntegerField(default=0)
+    demand = models.IntegerField(default=0)
 
     def profit_per_ton(self):
         return self.sell_price - self.buy_price
