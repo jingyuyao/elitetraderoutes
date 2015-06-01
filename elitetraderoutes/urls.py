@@ -23,12 +23,13 @@ import elitedata.views
 router = DefaultRouter()
 router.register('routes', traderoutes.views.RouteViewSet)
 router.register('connections', traderoutes.views.ConnectionViewSet)
+router.register('users', common.views.UserViewSet)
 router.register('systems', elitedata.views.SystemViewSet)
 router.register('stations', elitedata.views.StationViewSet)
 router.register('commodities', elitedata.views.CommodityViewSet)
-router.register('users', common.views.UserViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    # url(r'^elitedata/', include('elitedata.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

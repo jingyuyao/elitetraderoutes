@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from rest_framework import viewsets
 
-from common.permissions import IsAdminOrReadOnly
 from .models import System, Station, Commodity
 from .serializers import StationSerializer, SystemSerializer, CommoditySerializer
 

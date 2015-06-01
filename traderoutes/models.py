@@ -14,6 +14,8 @@ class Route(models.Model):
 
 
 class Connection(models.Model):
+    owner = models.ForeignKey('auth.User', related_name="connections")
+    created = models.DateTimeField(default=timezone.now)
     route = models.ForeignKey(Route, related_name="connections")
     start_system = models.ForeignKey("elitedata.System", related_name="connections_start")
     start_station = models.ForeignKey("elitedata.Station", related_name="connections_start")

@@ -24,3 +24,6 @@ class ConnectionViewSet(viewsets.ModelViewSet):
     serializer_class = ConnectionSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

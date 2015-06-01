@@ -17,37 +17,38 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Connection',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('buy_price', models.IntegerField()),
                 ('sell_price', models.IntegerField()),
                 ('supply', models.IntegerField()),
                 ('demand', models.IntegerField()),
-                ('commodity', models.ForeignKey(to='elitedata.Commodity')),
-                ('destination_station', models.ForeignKey(to='elitedata.Station', related_name='connection_destination')),
-                ('destination_system', models.ForeignKey(to='elitedata.System', related_name='connection_destination')),
+                ('commodity', models.ForeignKey(related_name='connections', to='elitedata.Commodity')),
+                ('destination_station', models.ForeignKey(related_name='connections_destination', to='elitedata.Station')),
+                ('destination_system', models.ForeignKey(related_name='connections_destination', to='elitedata.System')),
+                ('owner', models.ForeignKey(related_name='connections', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Route',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('created', models.DateTimeField(default=django.utils.timezone.now)),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='route')),
+                ('owner', models.ForeignKey(related_name='routes', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='connection',
             name='route',
-            field=models.ForeignKey(to='traderoutes.Route'),
+            field=models.ForeignKey(related_name='connections', to='traderoutes.Route'),
         ),
         migrations.AddField(
             model_name='connection',
             name='start_station',
-            field=models.ForeignKey(to='elitedata.Station', related_name='connection_start'),
+            field=models.ForeignKey(related_name='connections_start', to='elitedata.Station'),
         ),
         migrations.AddField(
             model_name='connection',
             name='start_system',
-            field=models.ForeignKey(to='elitedata.System', related_name='connection_start'),
+            field=models.ForeignKey(related_name='connections_start', to='elitedata.System'),
         ),
     ]

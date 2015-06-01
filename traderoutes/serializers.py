@@ -8,8 +8,8 @@ from elitedata.models import Station, System, Commodity
 class RouteSerializer(serializers.HyperlinkedModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
     owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
-    connections = serializers.HyperlinkedRelatedField(view_name='connection-detail', many=True, read_only=True)
     created = serializers.DateTimeField(read_only=True)
+    connections = serializers.HyperlinkedIdentityField(view_name='connection-detail', many=True)
 
     class Meta:
         model = Route
@@ -17,6 +17,8 @@ class RouteSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    created = serializers.DateTimeField(read_only=True)
     route = serializers.HyperlinkedRelatedField(view_name='route-detail', queryset=Route.objects.all())
     start_system = serializers.HyperlinkedRelatedField(view_name='system-detail', queryset=System.objects.all())
     start_station = serializers.HyperlinkedRelatedField(view_name='station-detail', queryset=Station.objects.all())
@@ -26,7 +28,8 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Connection
-        fields = ('url', 'route',
+        fields = ('url',
+                  'owner', 'created', 'route',
                   'start_system', 'start_station',
                   'destination_system', 'destination_station',
                   'commodity', 'buy_price', 'sell_price', 'supply', 'demand')
