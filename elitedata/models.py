@@ -27,7 +27,7 @@ class System(models.Model):
 
 class Station(models.Model):
     name = models.CharField(max_length=100, null=True)
-    system = models.ForeignKey(System)
+    system = models.ForeignKey(System, related_name="stations")
     type = models.CharField(max_length=100, null=True)
     max_landing_pad_size = models.CharField(max_length=100, null=True)  # L or M
     distance_to_star = models.BigIntegerField(default=0, null=True)

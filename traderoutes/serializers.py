@@ -3,21 +3,6 @@ from rest_framework import serializers
 from .models import Route, Connection
 from elitedata.models import Station, System, Commodity
 
-class RouteSerializer(serializers.HyperlinkedModelSerializer):
-    """
-    Serializer for the Route class.
-
-    Includes a read only field of all the connections the route has.
-    """
-
-    owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
-    created = serializers.DateTimeField(read_only=True)
-    connections = serializers.HyperlinkedIdentityField(view_name='connection-detail', many=True)
-
-    class Meta:
-        model = Route
-        fields = ('url', 'owner', 'created', 'connections')
-
 
 class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
     """
@@ -81,6 +66,32 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
                   'destination_system', 'destination_station',
                   'distance',
                   'commodity', 'buy_price', 'sell_price', 'supply', 'demand')
+
+
+class RouteSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer for the Route class.
+
+    Includes a read only field of all the connections the route has.
+    """
+
+    owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    created = serializers.DateTimeField(read_only=True)
+
+    # Option 1: Only link to the connection
+    # connections = serializers.HyperlinkedRelatedField(view_name='connection-detail',
+    #                                                   many=True, read_only=True)
+
+    # Option 2: show the detail of each connection
+    connections = ConnectionSerializer(many=True, read_only=True)
+
+    # Decided to go with option 2 with read_only enable because the OPTIONS request for
+    # option 1 causes errors and this way saves the number of requests needed to get the complete
+    # description of a route.
+
+    class Meta:
+        model = Route
+        fields = ('url', 'owner', 'created', 'connections')
 
 
 # class ConnectionSerializer(serializers.ModelSerializer):
