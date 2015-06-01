@@ -17,6 +17,9 @@ class System(models.Model):
     y = models.FloatField()
     z = models.FloatField()
 
+    def __str__(self):
+        return self.name
+
 
 class Station(models.Model):
     has_repair = models.NullBooleanField(default=False)
@@ -37,9 +40,15 @@ class Station(models.Model):
     name = models.CharField(max_length=100, null=True)
     system = models.ForeignKey(System)
 
+    def __str__(self):
+        return self.name
+
 
 class Commodity(models.Model):
     name = models.CharField(max_length=100, null=True)
     category_id = models.IntegerField(default=0, null=True)
     category_name = models.CharField(max_length=100, null=True)
     average_price = models.IntegerField(default=0, null=True)
+
+    def __str__(self):
+        return self.name

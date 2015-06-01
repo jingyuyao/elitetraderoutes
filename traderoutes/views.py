@@ -24,5 +24,3 @@ class ConnectionViewSet(viewsets.ModelViewSet):
     serializer_class = ConnectionSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-
-

@@ -8,19 +8,16 @@ from .serializers import StationSerializer, SystemSerializer, CommoditySerialize
 
 # Create your views here.
 
-class SystemViewSet(viewsets.ModelViewSet):
+class SystemViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = System.objects.all()
     serializer_class = SystemSerializer
-    permission_classes = (IsAdminOrReadOnly,)
 
 
-class StationViewSet(viewsets.ModelViewSet):
+class StationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
-    permission_classes = (IsAdminOrReadOnly,)
 
 
-class CommodityViewSet(viewsets.ModelViewSet):
+class CommodityViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Commodity.objects.all()
     serializer_class = CommoditySerializer
-    permission_classes = (IsAdminOrReadOnly,)
