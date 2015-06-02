@@ -20,8 +20,8 @@ class RouteViewSet(viewsets.ModelViewSet):
     Decided to not wrap the response objects in a top level variable to preserve
     the consistency in the API.
 
-    I've tried to use the HTMLFormRenderer with little success. Maybe I will try
-    again later.
+    HTMLFormRenderer is ill documented. Spent half a night trying to use it.
+    Put it off and just build our own form for now
     """
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
@@ -35,6 +35,24 @@ class RouteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def retrieve(self, request, *args, **kwargs):
+        """
+        Wraps the get request for an item in a route field.
+
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        response = super(RouteViewSet, self).retrieve(request, *args, **kwargs)
+        response.data = {"route": response.data}
+        return response
+
+    def create(self, request, *args, **kwargs):
+        response = super(RouteViewSet, self).create(request, *args, **kwargs)
+        response.data = {"route": response.data}
+        return response
 
     @detail_route()
     def min(self, request, pk=None):

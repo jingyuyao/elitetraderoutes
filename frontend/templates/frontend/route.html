@@ -2,17 +2,31 @@
 
 {% block body %}
 
-{% if url and owner and created %}
+{% if route %}
     <a href="{% url 'route-list' %}">Back to list</a>
 
-    {% include "frontend/route_detail.html" with url=url owner=owner created=created only %}
+    {% include "frontend/route_detail.html" %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Update route">
+    </form>
 
 {% endif%}
 
+{% if fields %}
+    {{ fields }}
+{% endif %}
+
 {% if results %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="New route">
+    </form>
+
     <p>Route list:</p>
     {% for route in results %}
-        {% include "frontend/route_detail.html" with url=route.url owner=route.owner created=route.created only %}
+        {% include "frontend/route_detail.html" %}
     {% endfor %}
 
 {% endif %}

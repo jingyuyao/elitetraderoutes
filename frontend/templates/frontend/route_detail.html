@@ -1,5 +1,11 @@
-<ul>
-    <li>Url: <a href="{{url}}">{{url}}</a></li>
-    <li>Created: {{created}}</li>
-    <li>Owner: <a href="{{owner}}">{{owner}}</a></li>
-</ul>
+<div class="route">
+    Url: <a href="{{route.url}}">{{route.url}}</a>
+    <br>
+    Created: {{route.created}}
+    <br>
+    Owner: <a href="{{route.owner}}">{{route.owner}}</a>
+    <br>
+    {% for connection in route.connections %}
+        {% include "frontend/connection_detail.html" with connection=connection only %}
+    {% endfor %}
+</div>
