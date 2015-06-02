@@ -13,35 +13,28 @@ from .serializers import ConnectionSerializer, RouteSerializer, MinimizedRouteSe
 # Create your views here.
 
 class RouteViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for Route.
+
+    Notes:
+    Decided to not wrap the response objects in a top level variable to preserve
+    the consistency in the API.
+
+    I've tried to use the HTMLFormRenderer with little success. Maybe I will try
+    again later.
+    """
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-    renderer_classes = (renderers.JSONRenderer, renderers.TemplateHTMLRenderer,
-                        renderers.BrowsableAPIRenderer, renderers.HTMLFormRenderer)
+    renderer_classes = (renderers.JSONRenderer,
+                        renderers.TemplateHTMLRenderer,
+                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
+                        )
+    template_name = "frontend/route.html"  # The default template for all html actions
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-    def list(self, request, *args, **kwargs):
-        response = super(RouteViewSet, self).list(request, *args, **kwargs)
-        template_name = 'route_list'
-        return Response({template_name: response.data}, template_name='frontend/%s.html' % template_name)
-
-    def retrieve(self, request, *args, **kwargs):
-        response = super(RouteViewSet, self).retrieve(request, *args, **kwargs)
-        template_name = 'route'
-        return Response({template_name: response.data}, template_name='frontend/%s.html' % template_name)
-
-    @list_route()
-    def form(self, request, *args, **kwargs):
-        serializer = self.get_serializer()
-        renderer = renderers.HTMLFormRenderer()
-        form_html = renderer.render(serializer.data, renderer_context={
-            'request': request
-        })
-        print(form_html)
-        return HttpResponse(form_html)
 
     @detail_route()
     def min(self, request, pk=None):
