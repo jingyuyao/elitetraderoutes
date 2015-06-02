@@ -17,8 +17,6 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
     the possible choices for selection in the view. It does not affect normal json calls.
     """
 
-    owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
-    created = serializers.DateTimeField(read_only=True)
     route = serializers.HyperlinkedRelatedField(view_name='route-detail', queryset=Route.objects.all())
     start_system = serializers.HyperlinkedRelatedField(view_name='system-detail', queryset=System.objects.all())
     start_station = serializers.HyperlinkedRelatedField(view_name='station-detail',
@@ -60,32 +58,39 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Connection
-        fields = ('url',
-                  'owner', 'created', 'route',
-                  'start_system', 'start_station',
-                  'destination_system', 'destination_station',
-                  'distance',
-                  'commodity', 'buy_price', 'sell_price', 'supply', 'demand')
 
 
 class RouteSerializer(serializers.HyperlinkedModelSerializer):
     """
-    Serializer for the Route class.
+    Serializer for the Route.
 
-    Includes a read only field of all the connections the route has.
+    Includes detailed information on all the Connection the Route has.
     """
 
-    owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
-    created = serializers.DateTimeField(read_only=True)
     connections = ConnectionSerializer(many=True, read_only=True)
-
-    # Decided to go with nested relation with read_only enable because the OPTIONS request for
-    # relatedfield causes errors and this way saves the number of requests needed to get the complete
-    # description of a route.
 
     class Meta:
         model = Route
-        fields = ('url', 'owner', 'created', 'connections')
+
+
+class MinimizedRouteSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Minimized serializer for Route.
+
+    Only contains a link each Connection the Route has.
+    """
+
+    connections = serializers.HyperlinkedRelatedField(view_name="connection-detail", many=True, read_only=True)
+
+    class Meta:
+        model = Route
+
+
+"""
+Why not use primary key relationships?
+- Avoids building URL
+- No way to misrepresent information
+"""
 
 
 # class ConnectionSerializer(serializers.ModelSerializer):
