@@ -77,16 +77,10 @@ class RouteSerializer(serializers.HyperlinkedModelSerializer):
 
     owner = serializers.HyperlinkedIdentityField(view_name='user-detail')
     created = serializers.DateTimeField(read_only=True)
-
-    # Option 1: Only link to the connection
-    # connections = serializers.HyperlinkedRelatedField(view_name='connection-detail',
-    #                                                   many=True, read_only=True)
-
-    # Option 2: show the detail of each connection
     connections = ConnectionSerializer(many=True, read_only=True)
 
-    # Decided to go with option 2 with read_only enable because the OPTIONS request for
-    # option 1 causes errors and this way saves the number of requests needed to get the complete
+    # Decided to go with nested relation with read_only enable because the OPTIONS request for
+    # relatedfield causes errors and this way saves the number of requests needed to get the complete
     # description of a route.
 
     class Meta:

@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
 from .models import System, Station, Commodity
-from .serializers import StationSerializer, SystemSerializer, CommoditySerializer
+from .serializers import CommoditySerializer, StationSerializer, SystemSerializer, MinimizedSystemSerializer
 
 # Create your views here.
 
@@ -15,10 +13,30 @@ class SystemViewSet(viewsets.ReadOnlyModelViewSet):
 
     @detail_route()
     def stations(self, request, pk=None):
+        """
+        A route to display only the stations this System contains.
+
+        :param request:
+        :param pk:
+        :return:
+        """
         system = self.get_object()
         stations = Station.objects.filter(system=system)
 
         serializer = StationSerializer(stations, context={'request': request}, many=True)
+        return Response(serializer.data)
+
+    @detail_route()
+    def min(self, request, pk=None):
+        """
+        A route to display the minimized System view.
+
+        :param request:
+        :param pk:
+        :return:
+        """
+        serializer = MinimizedSystemSerializer(self.get_object(), context={'request': request})
+
         return Response(serializer.data)
 
 
