@@ -3,9 +3,10 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from common.permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 from .models import Route, Connection
 from .serializers import ConnectionSerializer, RouteSerializer, MinimizedRouteSerializer
+
 
 # Create your views here.
 
