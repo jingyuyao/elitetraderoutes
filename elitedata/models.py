@@ -26,24 +26,24 @@ class System(models.Model):
 
 
 class Station(models.Model):
-    name = models.CharField(max_length=100, null=True)
-    system = models.ForeignKey(System, related_name="stations")
-    type = models.CharField(max_length=100, null=True)
-    max_landing_pad_size = models.CharField(max_length=100, null=True)  # L or M
-    distance_to_star = models.BigIntegerField(default=0, null=True)
+    name = models.CharField(max_length=100)
+    system = models.ForeignKey(System, related_name="stations", editable=False)
+    type = models.CharField(max_length=100, null=True, blank=True)
+    max_landing_pad_size = models.CharField(max_length=100, null=True, blank=True)  # L or M
+    distance_to_star = models.BigIntegerField(default=0)  # Might change depending on orbit???
 
-    allegiance = models.CharField(max_length=100, null=True)
-    government = models.CharField(max_length=100, null=True)
-    state = models.CharField(max_length=100, null=True)
-    faction = models.CharField(max_length=100, null=True)
+    allegiance = models.CharField(max_length=100, null=True, blank=True)
+    government = models.CharField(max_length=100, null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    faction = models.CharField(max_length=100, null=True, blank=True)
 
-    has_repair = models.NullBooleanField(default=False)
-    has_blackmarket = models.NullBooleanField(default=False)
-    has_refuel = models.NullBooleanField(default=False)
-    has_rearm = models.NullBooleanField(default=False)
-    has_shipyard = models.NullBooleanField(default=False)
-    has_outfitting = models.NullBooleanField(default=False)
-    has_commodities = models.NullBooleanField(default=False)
+    has_repair = models.NullBooleanField(default=False, blank=True)
+    has_blackmarket = models.NullBooleanField(default=False, blank=True)
+    has_refuel = models.NullBooleanField(default=False, blank=True)
+    has_rearm = models.NullBooleanField(default=False, blank=True)
+    has_shipyard = models.NullBooleanField(default=False, blank=True)
+    has_outfitting = models.NullBooleanField(default=False, blank=True)
+    has_commodities = models.NullBooleanField(default=False, blank=True)
 
     updated_at = models.BigIntegerField()
 
@@ -52,10 +52,10 @@ class Station(models.Model):
 
 
 class Commodity(models.Model):
-    name = models.CharField(max_length=100, null=True)
-    average_price = models.IntegerField(default=0, null=True)
-    category_id = models.IntegerField(default=0, null=True)
-    category_name = models.CharField(max_length=100, null=True)
+    name = models.CharField(max_length=100)
+    average_price = models.IntegerField(default=0, null=True, blank=True)
+    category_id = models.IntegerField(default=0, editable=False)
+    category_name = models.CharField(max_length=100, editable=False)
 
     def __str__(self):
         return self.name
