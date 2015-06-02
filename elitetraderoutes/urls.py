@@ -20,15 +20,16 @@ import common.views
 import traderoutes.views
 import elitedata.views
 
-router = DefaultRouter()
-router.register('routes', traderoutes.views.RouteViewSet)
-router.register('connections', traderoutes.views.ConnectionViewSet)
-router.register('users', common.views.UserViewSet)
-router.register('systems', elitedata.views.SystemViewSet)
-router.register('stations', elitedata.views.StationViewSet)
-router.register('commodities', elitedata.views.CommodityViewSet)
+api_router = DefaultRouter()
+api_router.register('routes', traderoutes.views.RouteViewSet)
+api_router.register('connections', traderoutes.views.ConnectionViewSet)
+api_router.register('users', common.views.UserViewSet)
+api_router.register('systems', elitedata.views.SystemViewSet)
+api_router.register('stations', elitedata.views.StationViewSet)
+api_router.register('commodities', elitedata.views.CommodityViewSet)
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^index/', include('frontend.urls')),
+    url(r'^', include(api_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

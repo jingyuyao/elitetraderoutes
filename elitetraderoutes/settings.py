@@ -40,10 +40,11 @@ INSTALLED_APPS = (
     'rest_framework',
     'elitedata',
     'traderoutes',
+    'frontend',
 )
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
 }
 
 MIDDLEWARE_CLASSES = (
