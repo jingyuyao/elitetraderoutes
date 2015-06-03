@@ -17,16 +17,21 @@ def get_type(value):
     return type(value)
 
 @register.filter()
-def render_link(value, text=None):
+def render_link(url, text=None):
     """
     If value is a url, hyperlink it with text if exist.
 
-    :param value:
+    :param url:
     :param text:
     :return:
     """
     try:
-        url_validator(value)
-        return "<a href='%s'>%s</a>" % (value, text if text else value)
+        url_validator(url)
+        return "<a href='%s'>%s</a>" % (url, text if text else url)
     except ValidationError:
-        return value
+        return url
+
+@register.filter()
+def render_input(name, value=None, label=None):
+    return "<label for='%s'>%s: </label><input id='%s' type='text' name='%s' value='%s'>" % \
+           (name, label if label else name.capitalize(), name, name, value if value else '')

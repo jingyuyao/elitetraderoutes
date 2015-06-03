@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="{% static 'frontend/css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
         <script src="{% static 'frontend/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+        {% block head %} {% endblock %}
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -23,6 +24,8 @@
 
         <!-- Add your site or application content here -->
         {% block body %}
+            {% block instance %} {% endblock %}
+            {% block list %} {% endblock %}
         {% endblock %}
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

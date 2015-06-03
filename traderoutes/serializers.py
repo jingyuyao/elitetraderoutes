@@ -60,7 +60,24 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
         model = Connection
 
 
-class RouteSerializer(serializers.HyperlinkedModelSerializer):
+class BaseRouteSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Base serializer for Route. Sub-class need to provide value for connections
+    """
+
+    @property
+    def connections(self):
+        """
+        A serializer for Connection
+        """
+        raise NotImplementedError
+
+    class Meta:
+        model = Route
+        fields = ('url', 'owner', 'created', 'connections')
+
+
+class RouteSerializer(BaseRouteSerializer):
     """
     Serializer for the Route.
 
@@ -69,12 +86,8 @@ class RouteSerializer(serializers.HyperlinkedModelSerializer):
 
     connections = ConnectionSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = Route
-        fields = ('url', 'owner', 'created', 'connections')
 
-
-class MinimizedRouteSerializer(serializers.HyperlinkedModelSerializer):
+class MinimizedRouteSerializer(BaseRouteSerializer):
     """
     Minimized serializer for Route.
 
@@ -82,9 +95,6 @@ class MinimizedRouteSerializer(serializers.HyperlinkedModelSerializer):
     """
 
     connections = serializers.HyperlinkedRelatedField(view_name="connection-detail", many=True, read_only=True)
-
-    class Meta:
-        model = Route
 
 
 """

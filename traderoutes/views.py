@@ -69,7 +69,7 @@ class RouteViewSet(viewsets.ModelViewSet):
         """
         serializer = MinimizedRouteSerializer(self.get_object(), context={'request': request})
 
-        return Response(serializer.data)
+        return Response({'route': serializer.data})
 
 
 class ConnectionViewSet(viewsets.ModelViewSet):
@@ -80,6 +80,9 @@ class ConnectionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    renderer_classes = (renderers.JSONRenderer,
+                        )
 
 '''
     # Form renderer examples

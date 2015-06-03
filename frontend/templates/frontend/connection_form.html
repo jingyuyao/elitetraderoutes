@@ -1,0 +1,26 @@
+{% load my_tags %}
+<form method="post" action="{% url 'connection-list' %}">
+    {% csrf_token %}
+
+    {% if connection %}
+
+    {% else %}
+        {{"route"|render_input|safe}} <br>
+        {{"start_system"|render_input|safe}} <br>
+        {{"start_station"|render_input|safe}} <br>
+        {{"destination_system"|render_input|safe}} <br>
+        {{"destination_station"|render_input|safe}} <br>
+        {{"commodity"|render_input|safe}} <br>
+        {{"buy_price"|render_input|safe}} <br>
+        {{"sell_price"|render_input|safe}} <br>
+        {{"supply"|render_input|safe}} <br>
+        {{"demand"|render_input|safe}} <br>
+
+    {% endif %}
+
+    <input type="submit" value="Add connection">
+</form>
+
+<script>
+
+</script>

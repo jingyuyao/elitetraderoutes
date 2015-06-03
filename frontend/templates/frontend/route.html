@@ -1,38 +1,30 @@
 {% extends "frontend/base.html" %}
-{% load rest_framework %}
 
-{% comment %}
-    {% load rest_framework %} ALWAYS need to be in files where framework is used.
-{% endcomment %}
 
-{% block body %}
+{% block instance %}
+    {% if route %}
+        <a href="{% url 'route-list' %}">Back to list</a>
+        <br>
 
-{% if route %}
-    <a href="{% url 'route-list' %}">Back to list</a>
-    <br>
-
-    {% include "frontend/route_detail.html" %}
-
-    <form method="POST">
-        {% csrf_token %}
-        <input type="submit" value="Update route">
-    </form>
-
-{% endif%}
-
-{% if results %}
-    <form method="POST">
-        {% csrf_token %}
-        <input type="submit" value="New route">
-    </form>
-
-    <p>Route list:</p>
-    <br>
-    {% for route in results %}
         {% include "frontend/route_detail.html" %}
-    {% endfor %}
+        {% include "frontend/connection_form.html" %}
 
-{% endif %}
+    {% endif %}
+{% endblock instance %}
 
-{% endblock %}
 
+{% block list %}
+    {% if results %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="New route">
+        </form>
+
+        <p>Route list:</p>
+
+        {% for route in results %}
+            {% include "frontend/route_detail.html" %}
+        {% endfor %}
+
+    {% endif %}
+{% endblock list %}
