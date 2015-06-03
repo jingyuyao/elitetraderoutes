@@ -1,11 +1,16 @@
+{% load my_tags %}
 <div class="route">
-    Url: <a href="{{route.url}}">{{route.url}}</a>
-    <br>
-    Created: {{route.created}}
-    <br>
-    Owner: <a href="{{route.owner}}">{{route.owner}}</a>
-    <br>
-    {% for connection in route.connections %}
-        {% include "frontend/connection_detail.html" with connection=connection only %}
+    {% for key, value in route.items %}
+        {{key|capfirst}}:
+
+        {% if key = 'connections' %}
+            {% for connection in value.items %}
+                {% include "frontend/connection_detail.html" with connection=connection only %}
+            {% endfor %}
+        {% else %}
+             {{value|render_link|safe}}
+        {% endif %}
+        <br>
     {% endfor %}
+    <br>
 </div>

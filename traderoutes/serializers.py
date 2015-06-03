@@ -71,6 +71,7 @@ class RouteSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Route
+        fields = ('url', 'owner', 'created', 'connections')
 
 
 class MinimizedRouteSerializer(serializers.HyperlinkedModelSerializer):
