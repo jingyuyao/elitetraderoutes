@@ -30,7 +30,7 @@ class Station(models.Model):
     system = models.ForeignKey(System, related_name="stations", editable=False)
     type = models.CharField(max_length=100, null=True, blank=True)
     max_landing_pad_size = models.CharField(max_length=100, null=True, blank=True)  # L or M
-    distance_to_star = models.BigIntegerField(default=0)  # Might change depending on orbit???
+    distance_to_star = models.BigIntegerField(default=0, null=True, blank=True)  # Might change depending on orbit???
 
     allegiance = models.CharField(max_length=100, null=True, blank=True)
     government = models.CharField(max_length=100, null=True, blank=True)

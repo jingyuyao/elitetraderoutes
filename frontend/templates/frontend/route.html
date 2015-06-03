@@ -1,4 +1,9 @@
 {% extends "frontend/base.html" %}
+{% load rest_framework %}
+
+{% comment %}
+    {% load rest_framework %} ALWAYS need to be in files where framework is used.
+{% endcomment %}
 
 {% block body %}
 
@@ -14,8 +19,12 @@
 
 {% endif%}
 
-{% if fields %}
-    {{ fields }}
+{% if form %}
+    {% for field in form %}
+        {% if not field.read_only %}
+            {% render_field field style=style %}
+        {% endif %}
+    {% endfor %}
 {% endif %}
 
 {% if results %}

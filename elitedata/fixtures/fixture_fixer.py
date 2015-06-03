@@ -60,6 +60,11 @@ def fix_fixture(file, model_name):
         json.dump(objects, output, indent=2)
 
 def fix_all():
-    fix_fixture("commodities.json", 'commodity')
-    fix_fixture("stations_lite.json", 'station')
-    fix_fixture("systems.json", "system")
+    fix_fixture("unfixed/commodities.json", 'commodity')
+    fix_fixture("unfixed/stations_lite.json", 'station')
+    fix_fixture("unfixed/systems.json", "system")
+
+if __name__ == "__main__":
+    # fix_all()
+    # fix_fixture("unfixed/commodities.json", 'commodity')
+    fix_fixture("unfixed/stations_lite.json", 'station')
