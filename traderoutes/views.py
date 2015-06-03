@@ -30,7 +30,7 @@ class RouteViewSet(viewsets.ModelViewSet):
     renderer_classes = (renderers.JSONRenderer,
                         renderers.TemplateHTMLRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
-                        )
+                        renderers.HTMLFormRenderer)
     template_name = "frontend/route.html"  # The default template for all html actions
 
     def perform_create(self, serializer):
@@ -45,6 +45,10 @@ class RouteViewSet(viewsets.ModelViewSet):
         :param kwargs:
         :return:
         """
+        if request.accepted_renderer.format == 'form':
+            empty_serializer = self.get_serializer()
+            return Response(empty_serializer.data)
+
         response = super(RouteViewSet, self).retrieve(request, *args, **kwargs)
         response.data = {"route": response.data}
         return response
