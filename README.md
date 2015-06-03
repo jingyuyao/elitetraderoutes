@@ -1,16 +1,17 @@
 # Project setup
 
-The following setup is for Linux Ubuntu/Mint
+The following setup is Linux / Windows
 
 ## Required packages
 
 ### System packages
 
 - python3
-- python3-dev
-- mysql-server
-- mysql-client
-- libmysqlclient-dev
+- mysql 5.6+ (server only) (windows)
+- python3-dev (linux)
+- mysql-server (linux)
+- mysql-client (linux)
+- libmysqlclient-dev (linux)
 
 ### Python packages
 
@@ -19,6 +20,7 @@ The following setup is for Linux Ubuntu/Mint
 - Django
 - mysqlclient
 - rest_framework
+- requests
 
 ## Database settings
 
@@ -31,11 +33,7 @@ As root@localhost:
 
 Then run 'python3 manage.py migrate' and make sure there are no errors.
 
-## User settings
+## Additional setup
 
-### Required users
-
-Keep these users' passwords a secret.
-
-- admin
-- guest
+Run elitedata/fixtures/ingest_data.py
+Then run manage.py loaddata commodity system station
