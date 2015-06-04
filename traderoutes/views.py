@@ -73,6 +73,11 @@ class ConnectionViewSet(WrappedModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def list(self, request, *args, **kwargs):
+        response = super(ConnectionViewSet, self).list(request, *args, **kwargs)
+        response.template_name = "frontend/connection_list.html"
+        return response
+
 
 '''
     # Form renderer examples

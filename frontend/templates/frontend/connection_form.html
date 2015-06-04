@@ -4,6 +4,12 @@
     {% if data %}
         {{data|render_form|safe}}
     {% else %}
+        {% comment %}
+            Need to find some better way to render empty form.
+            The render_form can accept a list of field names.
+            But how do we pass one to it???
+        {% endcomment %}
+
         {{"route"|render_input|safe}} <br>
         {{"start_system"|render_input|safe}} <br>
         {{"start_station"|render_input|safe}} <br>

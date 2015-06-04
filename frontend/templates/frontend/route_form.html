@@ -1,0 +1,14 @@
+{% load my_tags %}
+<form method="post" action="{% url 'route-list' %}">
+    {% csrf_token %}
+    {% if data %}
+        {{data|render_form|safe}}
+    {% else %}
+        {% comment %}
+            Need to find some better way to render empty form.
+            The render_form can accept a list of field names.
+            But how do we pass one to it???
+        {% endcomment %}
+    {% endif %}
+    <input type="submit" value="Post to route">
+</form>

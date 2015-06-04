@@ -1,0 +1,14 @@
+{% extends "frontend/base.html" %}
+
+{% block list %}
+    {% if data %}
+        {% include "frontend/connection_form.html" with data=False only %}
+
+        <p>Connection list:</p>
+
+        {% for connection in data.results %}
+            {% include "frontend/connection_detail.html" with data=connection only %}
+        {% endfor %}
+
+    {% endif %}
+{% endblock list %}
