@@ -1,6 +1,6 @@
 {% load my_tags %}
 <div class="connection">
-    {% for key, value in connection.items %}
+    {% for key, value in data.items %}
         {{key|capfirst}}: {{value|render_link|safe}}
         <br>
     {% endfor %}

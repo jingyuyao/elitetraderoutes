@@ -1,13 +1,14 @@
-from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from .models import System, Station, Commodity
 from .serializers import CommoditySerializer, StationSerializer, SystemSerializer, MinimizedSystemSerializer
 
+from common.views import WrappedModelViewSet
+
 # Create your views here.
 
-class SystemViewSet(viewsets.ReadOnlyModelViewSet):
+class SystemViewSet(WrappedModelViewSet):
     queryset = System.objects.all()
     serializer_class = SystemSerializer
 
@@ -24,7 +25,7 @@ class SystemViewSet(viewsets.ReadOnlyModelViewSet):
         stations = Station.objects.filter(system=system)
 
         serializer = StationSerializer(stations, context={'request': request}, many=True)
-        return Response(serializer.data)
+        return self.wrap_response(Response(serializer.data))
 
     @detail_route()
     def min(self, request, pk=None):
@@ -37,14 +38,14 @@ class SystemViewSet(viewsets.ReadOnlyModelViewSet):
         """
         serializer = MinimizedSystemSerializer(self.get_object(), context={'request': request})
 
-        return Response(serializer.data)
+        return self.wrap_response(Response(serializer.data))
 
 
-class StationViewSet(viewsets.ReadOnlyModelViewSet):
+class StationViewSet(WrappedModelViewSet):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
 
 
-class CommodityViewSet(viewsets.ReadOnlyModelViewSet):
+class CommodityViewSet(WrappedModelViewSet):
     queryset = Commodity.objects.all()
     serializer_class = CommoditySerializer

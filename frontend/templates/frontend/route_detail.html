@@ -1,11 +1,11 @@
 {% load my_tags %}
 <div class="route">
-    {% for key, value in route.items %}
+    {% for key, value in data.items %}
         {{key|capfirst}}:
 
         {% if key = 'connections' %}
             {% for connection in value %}
-                {% include "frontend/connection_detail.html" with connection=connection only %}
+                {% include "frontend/connection_detail.html" with data=connection only %}
             {% endfor %}
         {% else %}
              {{value|render_link|safe}}

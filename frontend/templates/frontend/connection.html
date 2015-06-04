@@ -1,0 +1,11 @@
+{% extends "frontend/base.html" %}
+
+{% block instance %}
+    {% if data %}
+        <a href="{% url 'connection-list' %}">Back to list</a>
+        <br>
+
+        {% include "frontend/connection_form.html" %}
+
+    {% endif %}
+{% endblock instance %}

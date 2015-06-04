@@ -1,0 +1,17 @@
+{% extends "frontend/base.html" %}
+
+{% block list %}
+    {% if data %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="New route">
+        </form>
+
+        <p>Route list:</p>
+
+        {% for route in data.results %}
+            {% include "frontend/route_detail.html" with data=route only %}
+        {% endfor %}
+
+    {% endif %}
+{% endblock list %}

@@ -1,9 +1,8 @@
 {% load my_tags %}
 <form method="post" action="{% url 'connection-list' %}">
     {% csrf_token %}
-
-    {% if connection %}
-
+    {% if data %}
+        {{data|render_form|safe}}
     {% else %}
         {{"route"|render_input|safe}} <br>
         {{"start_system"|render_input|safe}} <br>
@@ -15,12 +14,6 @@
         {{"sell_price"|render_input|safe}} <br>
         {{"supply"|render_input|safe}} <br>
         {{"demand"|render_input|safe}} <br>
-
     {% endif %}
-
     <input type="submit" value="Add connection">
 </form>
-
-<script>
-
-</script>

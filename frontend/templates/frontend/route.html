@@ -1,30 +1,12 @@
 {% extends "frontend/base.html" %}
 
-
 {% block instance %}
-    {% if route %}
+    {% if data %}
         <a href="{% url 'route-list' %}">Back to list</a>
         <br>
 
         {% include "frontend/route_detail.html" %}
-        {% include "frontend/connection_form.html" %}
+        {% include "frontend/connection_form.html" with data=False %}
 
     {% endif %}
 {% endblock instance %}
-
-
-{% block list %}
-    {% if results %}
-        <form method="POST">
-            {% csrf_token %}
-            <input type="submit" value="New route">
-        </form>
-
-        <p>Route list:</p>
-
-        {% for route in results %}
-            {% include "frontend/route_detail.html" %}
-        {% endfor %}
-
-    {% endif %}
-{% endblock list %}

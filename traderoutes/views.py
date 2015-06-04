@@ -1,8 +1,5 @@
-from django.http.response import HttpResponse
-
-from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework import renderers
 
@@ -10,9 +7,11 @@ from .permissions import IsOwnerOrReadOnly
 from .models import Route, Connection
 from .serializers import ConnectionSerializer, RouteSerializer, MinimizedRouteSerializer
 
+from common.views import WrappedModelViewSet
+
 # Create your views here.
 
-class RouteViewSet(viewsets.ModelViewSet):
+class RouteViewSet(WrappedModelViewSet):
     """
     ViewSet for Route.
 
@@ -32,33 +31,19 @@ class RouteViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
 
-    # Reverte back to using views solely for model information
-    # renderer_classes = (renderers.JSONRenderer,
-    #                     renderers.TemplateHTMLRenderer,
-    #                     renderers.BrowsableAPIRenderer,  # Enables .api suffix
-    #                     )
-    # template_name = "frontend/route.html"  # The default template for all html actions
+    renderer_classes = (renderers.JSONRenderer,
+                        renderers.TemplateHTMLRenderer,
+                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
+                        )
+    template_name = "frontend/route.html"  # The default template for all html actions
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    # def retrieve(self, request, *args, **kwargs):
-    #     """
-    #     Wraps the get request for an item in a route field.
-    #
-    #     :param request:
-    #     :param args:
-    #     :param kwargs:
-    #     :return:
-    #     """
-    #     response = super(RouteViewSet, self).retrieve(request, *args, **kwargs)
-    #     response.data = {"route": response.data}
-    #     return response
-    #
-    # def create(self, request, *args, **kwargs):
-    #     response = super(RouteViewSet, self).create(request, *args, **kwargs)
-    #     response.data = {"route": response.data}
-    #     return response
+    def list(self, request, *args, **kwargs):
+        response = super(RouteViewSet, self).list(request, *args, **kwargs)
+        response.template_name = "frontend/route_list.html"
+        return response
 
     @detail_route()
     def min(self, request, pk=None):
@@ -70,19 +55,24 @@ class RouteViewSet(viewsets.ModelViewSet):
         :return:
         """
         serializer = MinimizedRouteSerializer(self.get_object(), context={'request': request})
-
-        # return Response({'route': serializer.data})
-        return Response(serializer.data)
+        return self.wrap_response(Response(serializer.data))
 
 
-class ConnectionViewSet(viewsets.ModelViewSet):
+class ConnectionViewSet(WrappedModelViewSet):
     queryset = Connection.objects.all()
     serializer_class = ConnectionSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
 
+    renderer_classes = (renderers.JSONRenderer,
+                        renderers.TemplateHTMLRenderer,
+                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
+                        )
+    template_name = "frontend/connection.html"
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 '''
     # Form renderer examples

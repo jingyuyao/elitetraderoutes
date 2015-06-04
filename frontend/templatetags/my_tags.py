@@ -35,3 +35,27 @@ def render_link(url, text=None):
 def render_input(name, value=None, label=None):
     return "<label for='%s'>%s: </label><input id='%s' type='text' name='%s' value='%s'>" % \
            (name, label if label else name.capitalize(), name, name, value if value else '')
+
+@register.filter()
+def render_form(obj):
+    """
+    Renders a basic form with a text input for each element in the object.
+
+    If the object is a dict, then the input will be prepopulated.
+    If it is a list, every item in the list will be treated as a field name
+    and rendered with an empty input.
+    :param obj:
+    :return:
+    """
+    if obj:
+        try:
+            return '<br>'.join([render_input(name, value) for name, value in obj.items()])
+        except:
+            pass
+        try:
+            return '<br>'.join([render_input(name) for name in obj])
+        except:
+            pass
+        return "INVALID DATA FOR render_form: " + str(type(obj)) + str(obj)
+
+    return ''
