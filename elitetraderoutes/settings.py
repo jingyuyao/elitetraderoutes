@@ -45,6 +45,7 @@ INSTALLED_APPS = (
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
+    # 'EXCEPTION_HANDLER': 'common.views.wrapped_exception_handler',
 }
 
 MIDDLEWARE_CLASSES = (

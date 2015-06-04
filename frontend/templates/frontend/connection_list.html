@@ -1,8 +1,12 @@
 {% extends "frontend/base.html" %}
 
 {% block list %}
+    {% if error %}
+        Error: {{error}}
+    {% endif %}
+
     {% if data %}
-        {% include "frontend/connection_form.html" with data=False only %}
+        {% include "frontend/connection_form.html" with data=False %}
 
         <p>Connection list:</p>
 

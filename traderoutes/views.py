@@ -31,8 +31,8 @@ class RouteViewSet(WrappedModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
 
-    renderer_classes = (renderers.JSONRenderer,
-                        renderers.TemplateHTMLRenderer,
+    renderer_classes = (renderers.TemplateHTMLRenderer,
+                        renderers.JSONRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
                         )
     template_name = "frontend/route.html"  # The default template for all html actions
@@ -64,8 +64,8 @@ class ConnectionViewSet(WrappedModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
 
-    renderer_classes = (renderers.JSONRenderer,
-                        renderers.TemplateHTMLRenderer,
+    renderer_classes = (renderers.TemplateHTMLRenderer,
+                        renderers.JSONRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
                         )
     template_name = "frontend/connection.html"
