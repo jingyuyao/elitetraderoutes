@@ -2,7 +2,7 @@
 
 {% block instance %}
     {% if data %}
-        <a href="{% url 'connection-list' %}">Back to list</a>
+        <a href="{{data.route}}">Back to route.</a>
         <br>
 
         {% include "frontend/connection_detail.html" %}
