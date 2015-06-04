@@ -31,32 +31,34 @@ class RouteViewSet(viewsets.ModelViewSet):
     serializer_class = RouteSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-    renderer_classes = (renderers.JSONRenderer,
-                        renderers.TemplateHTMLRenderer,
-                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
-                        )
-    template_name = "frontend/route.html"  # The default template for all html actions
+
+    # Reverte back to using views solely for model information
+    # renderer_classes = (renderers.JSONRenderer,
+    #                     renderers.TemplateHTMLRenderer,
+    #                     renderers.BrowsableAPIRenderer,  # Enables .api suffix
+    #                     )
+    # template_name = "frontend/route.html"  # The default template for all html actions
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    def retrieve(self, request, *args, **kwargs):
-        """
-        Wraps the get request for an item in a route field.
-
-        :param request:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        response = super(RouteViewSet, self).retrieve(request, *args, **kwargs)
-        response.data = {"route": response.data}
-        return response
-
-    def create(self, request, *args, **kwargs):
-        response = super(RouteViewSet, self).create(request, *args, **kwargs)
-        response.data = {"route": response.data}
-        return response
+    # def retrieve(self, request, *args, **kwargs):
+    #     """
+    #     Wraps the get request for an item in a route field.
+    #
+    #     :param request:
+    #     :param args:
+    #     :param kwargs:
+    #     :return:
+    #     """
+    #     response = super(RouteViewSet, self).retrieve(request, *args, **kwargs)
+    #     response.data = {"route": response.data}
+    #     return response
+    #
+    # def create(self, request, *args, **kwargs):
+    #     response = super(RouteViewSet, self).create(request, *args, **kwargs)
+    #     response.data = {"route": response.data}
+    #     return response
 
     @detail_route()
     def min(self, request, pk=None):
@@ -69,7 +71,8 @@ class RouteViewSet(viewsets.ModelViewSet):
         """
         serializer = MinimizedRouteSerializer(self.get_object(), context={'request': request})
 
-        return Response({'route': serializer.data})
+        # return Response({'route': serializer.data})
+        return Response(serializer.data)
 
 
 class ConnectionViewSet(viewsets.ModelViewSet):
@@ -80,9 +83,6 @@ class ConnectionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-    renderer_classes = (renderers.JSONRenderer,
-                        )
 
 '''
     # Form renderer examples
