@@ -8,9 +8,9 @@ $(document).ready(function(){
         });
     }
 
-    $("#route_input").keyup(function(){
-        get_json("/routes/", function(data, status){
-           alert(JSON.stringify(data));
+    $("#start_system_input").keyup(function(){
+        get_json("/systems/?search=" + $(this).val(), function(data, status){
+           $('#start_system_span').html(JSON.stringify(data));
         });
     });
 });

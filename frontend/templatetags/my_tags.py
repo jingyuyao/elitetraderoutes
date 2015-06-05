@@ -33,8 +33,11 @@ def render_link(url, text=None):
 
 @register.filter()
 def render_input(name, value=None, label=None):
-    return "<label for='%s'>%s: </label><input id='%s_input' type='text' name='%s' value='%s'>" % \
-           (name, label if label else name.capitalize(), name, name, value if value else '')
+    return "<label for='{name}'>{label}: </label>" \
+           "<input id='{name}_input' type='text' name='{name}' value='{value}'>" \
+           "<p id='{name}_span'></p>".format(name=name,
+                                                   label=label if label else name.capitalize(),
+                                                   value=value if value else '')
 
 @register.filter()
 def render_form(obj):
