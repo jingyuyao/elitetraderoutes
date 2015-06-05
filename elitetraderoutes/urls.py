@@ -21,12 +21,12 @@ import traderoutes.views
 import elitedata.views
 
 api_router = DefaultRouter()
-api_router.register('routes', traderoutes.views.RouteViewSet)
-api_router.register('connections', traderoutes.views.ConnectionViewSet)
-api_router.register('users', common.views.UserViewSet)
-api_router.register('systems', elitedata.views.SystemViewSet)
-api_router.register('stations', elitedata.views.StationViewSet)
-api_router.register('commodities', elitedata.views.CommodityViewSet)
+api_router.register('route', traderoutes.views.RouteViewSet)
+api_router.register('connection', traderoutes.views.ConnectionViewSet)
+api_router.register('user', common.views.UserViewSet)
+api_router.register('system', elitedata.views.SystemViewSet)
+api_router.register('station', elitedata.views.StationViewSet)
+api_router.register('commodity', elitedata.views.CommodityViewSet)
 
 urlpatterns = [
     url(r'^index/', include('frontend.urls')),
