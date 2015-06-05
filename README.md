@@ -17,7 +17,8 @@ The following setup is Linux / Windows
 
 - pip
 - setuptools
-- Django
+- django
+- django-filter
 - mysqlclient
 - rest_framework
 - requests

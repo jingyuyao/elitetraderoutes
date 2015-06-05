@@ -33,7 +33,7 @@ def render_link(url, text=None):
 
 @register.filter()
 def render_input(name, value=None, label=None):
-    return "<label for='%s'>%s: </label><input id='%s' type='text' name='%s' value='%s'>" % \
+    return "<label for='%s'>%s: </label><input id='%s_input' type='text' name='%s' value='%s'>" % \
            (name, label if label else name.capitalize(), name, name, value if value else '')
 
 @register.filter()

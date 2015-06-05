@@ -1,5 +1,5 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework import renderers
 
@@ -7,7 +7,7 @@ from .permissions import IsOwnerOrReadOnly
 from .models import Route, Connection
 from .serializers import ConnectionSerializer, RouteSerializer, MinimizedRouteSerializer
 
-from common.views import WrappedModelViewSet
+from common.views import WrappedModelViewSet, wrap_response
 
 # Create your views here.
 
@@ -31,8 +31,8 @@ class RouteViewSet(WrappedModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
 
-    renderer_classes = (renderers.TemplateHTMLRenderer,
-                        renderers.JSONRenderer,
+    renderer_classes = (renderers.JSONRenderer,
+                        renderers.TemplateHTMLRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
                         )
     template_name = "frontend/route.html"  # The default template for all html actions
@@ -48,14 +48,14 @@ class RouteViewSet(WrappedModelViewSet):
     @detail_route()
     def min(self, request, pk=None):
         """
-        Displays a minimized route inforamtion without the details of each connection.
+        Displays a minimized route information without the details of each connection.
 
         :param request:
         :param pk:
         :return:
         """
         serializer = MinimizedRouteSerializer(self.get_object(), context={'request': request})
-        return self.wrap_response(Response(serializer.data))
+        return wrap_response(Response(serializer.data))
 
 
 class ConnectionViewSet(WrappedModelViewSet):
@@ -64,11 +64,12 @@ class ConnectionViewSet(WrappedModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
 
-    renderer_classes = (renderers.TemplateHTMLRenderer,
-                        renderers.JSONRenderer,
+    renderer_classes = (renderers.JSONRenderer,
+                        renderers.TemplateHTMLRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
                         )
     template_name = "frontend/connection.html"
+    search_fields = ("start_system", 'destination_system')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

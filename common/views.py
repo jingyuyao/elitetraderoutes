@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.views import exception_handler
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+from rest_framework import filters
 
 from common.serializers import UserSerializer
 
@@ -60,10 +61,14 @@ class ResponseWrapperMixin(object):
 
 class WrappedModelViewSet(ResponseWrapperMixin, viewsets.ModelViewSet):
     """
-    Convenience ModelViewSet class that implements the ResponseWrapperMixin
-    """
-    pass
+    The base for all the ModelViewSets used in the project.
 
+    All responses are wrapped in a data field and ValidationError data is passed to the
+    intended template. Also enables both DjangoFilterBackend and SearchFilter to do filter
+    duties.
+    """
+    filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter)
+    pass
 
 # def wrapped_exception_handler(exec, context):
 #     """
