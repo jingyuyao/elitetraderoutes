@@ -1,9 +1,9 @@
 // Global scope
 
 var modelToInputs = {
-    'system': ['start_system', 'destination_system'],
-    'station': ['start_station', 'destination_station'],
-    'commodity': ['commodity']
+    system: ['start_system', 'destination_system'],
+    station: ['start_station', 'destination_station'],
+    commodity: ['commodity']
 };
 
 var modelCache = {};
@@ -13,35 +13,33 @@ for (var key in modelToInputs){
     modelCache[key] = [];
 }
 
-console.log(modelCache);
-
 function addToCache(instance, model){
     var nameToUrlPairing = {
-        'name': instance.name,
-        'url': instance.url
+        name: instance.name,
+        url: instance.url
     };
 
     modelCache[model].push(nameToUrlPairing);
-
     return nameToUrlPairing;
 }
 
 function attachInputToModel(name, model){
     var input = '#' + name + '_input';
-    var span = '#' + name + '_span';
 
-    $(input).keyup(function(){
-        $.getJSON('/'+model+'/?search='+$(this).val(), function(data, status){
-            var results = data['data']['results'];
-            var names = [];
+    $(input).autocomplete({
+        minLength: 2,
+        source: function(req, add) {
+            $.getJSON('/'+model+'/?search='+$(input).val(), function(data){
+                var results = data.data.results;
+                var names = [];
 
-            for (var i = 0; i < results.length; i++){
-                var nameToUrl = addToCache(results[i], model);
-                names.push(nameToUrl['name']);
-            }
-
-            $(span).html(names.toString());
-        });
+                $.each(results, function(i, val){
+                    var nameToUrl = addToCache(val, model);
+                    names.push(nameToUrl.name);
+                });
+                add(names);
+            });
+        }
     });
 }
 
