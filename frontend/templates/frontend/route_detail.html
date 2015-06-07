@@ -1,13 +1,21 @@
 {% load my_tags %}
 {% if data %}
-    <div class="route">
-        Owner: {{data.owner}}
-        <br>
-        Created: {{data.created}}
-        <br>
-        Connections: <br>
-        {% for connection in data.connections %}
-            {% include "frontend/connection_detail.html" with data=connection only %}
-        {% endfor %}
+    <div class="route" id="route_{{data.id}}">
+        <dl>
+            <dt>Owner:</dt>
+            <dd>{{data.owner}}</dd>
+            <dt>Created:</dt>
+            <dd>{{data.created}}</dd>
+            <dt>Connections:</dt>
+            <dd>
+                <ul>
+                    {% for connection in data.connections %}
+                    <li>
+                        {% include "frontend/connection_detail.html" with data=connection only %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+        </dl>
     </div>
 {% endif %}
