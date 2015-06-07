@@ -19,12 +19,17 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
 
     route = serializers.HyperlinkedRelatedField(view_name='route-detail', queryset=Route.objects.all())
     start_system = serializers.HyperlinkedRelatedField(view_name='system-detail', queryset=System.objects.all())
+    start_system_name = serializers.ReadOnlyField(source="start_system.name")
     start_station = serializers.HyperlinkedRelatedField(view_name='station-detail',
                                                         queryset=Station.objects.all())
+    start_station_name = serializers.ReadOnlyField(source="start_station.name")
     destination_system = serializers.HyperlinkedRelatedField(view_name='system-detail', queryset=System.objects.all())
+    destination_system_name = serializers.ReadOnlyField(source="destination_system.name")
     destination_station = serializers.HyperlinkedRelatedField(view_name='station-detail',
                                                               queryset=Station.objects.all())
+    destination_station_name = serializers.ReadOnlyField(source='destination_station.name')
     commodity = serializers.HyperlinkedRelatedField(view_name='commodity-detail', queryset=Commodity.objects.all())
+    commodity_name = serializers.ReadOnlyField(source="commodity.name")
     distance = serializers.SerializerMethodField()  # Read only
 
     @staticmethod
