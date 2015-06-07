@@ -1,9 +1,10 @@
 from rest_framework import serializers
 
 from .models import System, Station, Commodity
+from common.serializers import IDHyperlinkedModelSerializer
 
 
-class CommoditySerializer(serializers.HyperlinkedModelSerializer):
+class CommoditySerializer(IDHyperlinkedModelSerializer):
     """Detailed serializer for Commodity.
     """
 
@@ -11,7 +12,7 @@ class CommoditySerializer(serializers.HyperlinkedModelSerializer):
         model = Commodity
 
 
-class StationSerializer(serializers.HyperlinkedModelSerializer):
+class StationSerializer(IDHyperlinkedModelSerializer):
     """
     Serializer for Station.
 
@@ -29,7 +30,7 @@ class StationSerializer(serializers.HyperlinkedModelSerializer):
         model = Station
 
 
-class SystemSerializer(serializers.HyperlinkedModelSerializer):
+class SystemSerializer(IDHyperlinkedModelSerializer):
     """
     Detailed serializer for System.
 
@@ -47,7 +48,7 @@ class SystemSerializer(serializers.HyperlinkedModelSerializer):
         model = System
 
 
-class MinimizedSystemSerializer(serializers.HyperlinkedModelSerializer):
+class MinimizedSystemSerializer(IDHyperlinkedModelSerializer):
     """
     Minimized serializer for System.
 

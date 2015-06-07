@@ -36,5 +36,6 @@ Then run 'python3 manage.py migrate' and make sure there are no errors.
 
 ## Additional setup
 
-Run elitedata/fixtures/ingest_data.py
-Then run manage.py loaddata commodity system station
+Run: elitedata/fixtures/ingest_data.py
+
+Then run: manage.py loaddata commodity system station

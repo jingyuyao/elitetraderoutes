@@ -3,9 +3,10 @@ from rest_framework import serializers
 from .models import Route, Connection
 from elitedata.models import Station, System, Commodity
 from elitedata.serializers import MinimizedSystemSerializer, StationSerializer, CommoditySerializer
+from common.serializers import IDHyperlinkedModelSerializer
 
 
-class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
+class ConnectionSerializer(IDHyperlinkedModelSerializer):
     """
     Serializer for the Connection class.
 
@@ -59,7 +60,7 @@ class ConnectionSerializer(serializers.HyperlinkedModelSerializer):
         model = Connection
 
 
-class BaseRouteSerializer(serializers.HyperlinkedModelSerializer):
+class BaseRouteSerializer(IDHyperlinkedModelSerializer):
     """
     Base serializer for Route. Sub-class need to provide value for connections
     """
@@ -73,7 +74,6 @@ class BaseRouteSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Route
-        fields = ('url', 'owner', 'created', 'connections')
 
 
 class RouteSerializer(BaseRouteSerializer):
