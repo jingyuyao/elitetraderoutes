@@ -1,9 +1,9 @@
 // Global scope
 
-var modelToInputs = {
-    system: ['start_system', 'destination_system'],
-    station: ['start_station', 'destination_station'],
-    commodity: ['commodity']
+var endpointToInputs = {
+    systems: ['start_system', 'destination_system'],
+    stations: ['start_station', 'destination_station'],
+    commodities: ['commodity']
 };
 
 var form = {};
@@ -37,6 +37,7 @@ function attachInputToModel(name, model){
     $(input).autocomplete({
         minLength: 2,
         source: function(req, add) {
+
             var requestUrl = '/'+model+'/?search='+req.term;
 
             // If the input is for a station, only supply data from the corresponding system.
@@ -77,7 +78,7 @@ function attachInputsToModels(dict){
 }
 
 $(function(){
-    attachInputsToModels(modelToInputs);
+    attachInputsToModels(endpointToInputs);
 
     // When submitting a form, replace inputs with the data in
     // the form variable if it exists.

@@ -8,10 +8,12 @@
         </form>
 
         <p>Route list:</p>
-
-        {% for route in data.results %}
-            {% include "frontend/route_detail.html" with data=route only %}
-        {% endfor %}
-
+        <ul>
+            {% for route in data.results %}
+            <li>
+                {% include "frontend/route_detail.html" with data=route only %}
+            </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 {% endblock list %}

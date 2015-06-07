@@ -5,26 +5,14 @@
         {% if data %}
             {{data|render_form|safe}}
         {% else %}
-            {% comment %}
-                Need to find some better way to render empty form.
-                The render_form can accept a list of field names.
-                But how do we pass one to it???
-            {% endcomment %}
-
             {% if route %}
                 {{"route"|render_hidden:route.url|safe}}
             {% else %}
                 {{"route"|render_input|safe}}
             {% endif %}
-            {{"start_system"|render_input|safe}}
-            {{"start_station"|render_input|safe}}
-            {{"destination_system"|render_input|safe}}
-            {{"destination_station"|render_input|safe}}
-            {{"commodity"|render_input|safe}}
-            {{"buy_price"|render_input|safe}}
-            {{"sell_price"|render_input|safe}}
-            {{"supply"|render_input|safe}}
-            {{"demand"|render_input|safe}}
+            {{'start_system,start_station,destination_system,destination_station'|render_form|safe}}
+            <br>
+            {{'commodity,buy_price,sell_price,supply,demand'|render_form|safe}}
         {% endif %}
         <input type="submit" value="Add connection">
     </form>

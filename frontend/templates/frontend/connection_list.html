@@ -8,9 +8,12 @@
     {% if data %}
         <p>Connection list:</p>
 
-        {% for connection in data.results %}
-            {% include "frontend/connection_detail.html" with data=connection only %}
-        {% endfor %}
-
+        <ul>
+            {% for connection in data.results %}
+            <li>
+                {% include "frontend/connection_detail.html" with data=connection only %}
+            </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 {% endblock list %}

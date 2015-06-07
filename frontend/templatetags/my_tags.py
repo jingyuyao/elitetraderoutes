@@ -49,7 +49,7 @@ def render_form(obj):
     Renders a basic form with a text input for each element in the object.
 
     If the object is a dict, then the input will be prepopulated.
-    If it is a list, every item in the list will be treated as a field name
+    If it is a csv, every item in the list will be treated as a field name
     and rendered with an empty input.
     :param obj:
     :return:
@@ -60,7 +60,8 @@ def render_form(obj):
         except:
             pass
         try:
-            return '<br>'.join([render_input(name) for name in obj])
+            fields = obj.split(',')
+            return '<br>'.join([render_input(name) for name in fields])
         except:
             pass
         return "INVALID DATA FOR render_form: " + str(type(obj)) + str(obj)
