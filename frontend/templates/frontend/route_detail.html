@@ -1,15 +1,13 @@
 {% load my_tags %}
-<div class="route">
-    {% for key, value in data.items %}
-        {% if key = 'connections' %}
-            {{key|capfirst}}:
-            {% for connection in value %}
-                {% include "frontend/connection_detail.html" with data=connection only %}
-            {% endfor %}
-        {% else %}
-             {{key|capfirst}}: {{value|render_link|safe}}
-        {% endif %}
+{% if data %}
+    <div class="route">
+        Owner: {{data.owner}}
         <br>
-    {% endfor %}
-    <br>
-</div>
+        Created: {{data.created}}
+        <br>
+        Connections: <br>
+        {% for connection in data.connections %}
+            {% include "frontend/connection_detail.html" with data=connection only %}
+        {% endfor %}
+    </div>
+{% endif %}

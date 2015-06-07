@@ -1,8 +1,21 @@
 {% load my_tags %}
-<div class="connection">
-    {% for key, value in data.items %}
-        {{key|capfirst}}: {{value|render_link|safe}}
+
+{% if data %}
+    <div class="connection">
+        Created: {{data.created}}
         <br>
-    {% endfor %}
-    <br>
-</div>
+        Start system / station: {{data.start_system.name}} / {{data.start_station.name}}
+        <br>
+        Destination system / station: {{data.destination_system.name}} / {{data.destination_station.name}}
+        <br>
+        Commodity (average): {{data.commodity.name}}({{data.commodity.average_price}}
+        <br>
+        Distance (ly): {{data.distance}}
+        <br>
+        Buy / sell: {{data.buy_price}} / {{data.sell_price}}
+        <br>
+        Supply / demand: {{data.supply}} / {{data.demand}}
+        <br>
+        <br>
+    </div>
+{% endif %}
