@@ -17,7 +17,7 @@ class SystemViewSet(WrappedModelViewSet):
     search_fields = ('name',)
 
     @detail_route()
-    def stations(self, request, pk=None):
+    def stations(self, request, *args, **kwargs):
         """
         A route to display only the stations this System contains.
 
@@ -29,10 +29,10 @@ class SystemViewSet(WrappedModelViewSet):
         stations = Station.objects.filter(system=system)
 
         serializer = StationSerializer(stations, context={'request': request}, many=True)
-        return wrap_response(Response(serializer.data))
+        return wrap_response(Response({'results': serializer.data}))
 
     @detail_route()
-    def min(self, request, pk=None):
+    def min(self, request, *args, **kwargs):
         """
         A route to display the minimized System view.
 

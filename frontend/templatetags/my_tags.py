@@ -31,11 +31,17 @@ def render_link(url, text=None):
     except ValidationError:
         return url
 
+label_base = "<label for='{name}'>{label}: </label>"
+input_base = "<input id='{name}_input' type='{type}' name='{name}' value='{value}' required><br>"
+
 @register.filter()
-def render_input(name, value=None, label=None):
-    return "<label for='{name}'>{label}: </label>" \
-           "<input id='{name}_input' type='text' name='{name}' value='{value}'><br>"\
-        .format(name=name, label=label if label else name.capitalize(), value=value if value else '')
+def render_input(name, value=None):
+    return label_base.format(name=name, label=name.capitalize()) + \
+        input_base.format(name=name, value=value if value else '', type='text')
+
+@register.filter()
+def render_hidden(name, value=None):
+    return input_base.format(name=name, label=name.capitalize(), value=value if value else '', type='hidden')
 
 @register.filter()
 def render_form(obj):

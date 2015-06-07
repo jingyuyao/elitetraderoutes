@@ -6,21 +6,29 @@ var modelToInputs = {
     commodity: ['commodity']
 };
 
-var modelCache = {};
+var form = {};
 
-// Sync model info from modelToInputs to nameToUrlCache
-for (var key in modelToInputs){
-    modelCache[key] = [];
+function addToForm(item){
+    if (item.hasOwnProperty('name')){
+        form[item.name] = item;
+    }
 }
 
-function addToCache(instance, model){
-    var nameToUrlPairing = {
-        name: instance.name,
-        url: instance.url
-    };
+function createAutocompleteList(results, name, model){
+    var list = [];
 
-    modelCache[model].push(nameToUrlPairing);
-    return nameToUrlPairing;
+    $.each(results, function(i, val){
+        var data = {
+            value: val.name,
+            label: val.name,
+            url: val.url,
+            name: name,
+            model: model
+        };
+        list.push(data);
+    });
+
+    return list;
 }
 
 function attachInputToModel(name, model){
@@ -29,16 +37,28 @@ function attachInputToModel(name, model){
     $(input).autocomplete({
         minLength: 2,
         source: function(req, add) {
-            $.getJSON('/'+model+'/?search='+$(input).val(), function(data){
-                var results = data.data.results;
-                var names = [];
+            var requestUrl = '/'+model+'/?search='+req.term;
 
-                $.each(results, function(i, val){
-                    var nameToUrl = addToCache(val, model);
-                    names.push(nameToUrl.name);
-                });
-                add(names);
+            // If the input is for a station, only supply data from the corresponding system.
+            // If no system is selected, return a helper message first.
+            if (name.search('station') != -1){
+                var correspondingSystemInput = name.replace('station', 'system');
+                if (form.hasOwnProperty(correspondingSystemInput)){
+                    requestUrl = form[correspondingSystemInput].url + 'stations/';
+                }
+                else{
+                    add(['Please select a system first.']);
+                    return;
+                }
+            }
+
+            $.getJSON(requestUrl, function(data){
+                var autocompleteList = createAutocompleteList(data.data.results, name, model);
+                add(autocompleteList);
             });
+        },
+        select: function(event, ui){
+            addToForm(ui.item);
         }
     });
 }
@@ -56,6 +76,16 @@ function attachInputsToModels(dict){
     }
 }
 
-$(document).ready(function(){
-    attachInputsToModels(modelToInputs)
+$(function(){
+    attachInputsToModels(modelToInputs);
+
+    // When submitting a form, replace inputs with the data in
+    // the form variable if it exists.
+    $('form').each(function(){
+        $(this).submit(function(){
+            for (var key in form){
+                $('input[name=' + key + ']').val(form[key].url);
+            }
+        });
+    });
 });

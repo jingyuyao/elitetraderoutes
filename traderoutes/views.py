@@ -46,7 +46,7 @@ class RouteViewSet(WrappedModelViewSet):
         return response
 
     @detail_route()
-    def min(self, request, pk=None):
+    def min(self, request, *args, **kwargs):
         """
         Displays a minimized route information without the details of each connection.
 

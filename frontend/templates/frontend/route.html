@@ -6,7 +6,7 @@
         <br>
 
         {% include "frontend/route_detail.html" %}
-        {% include "frontend/connection_form.html" with data=False %}
+        {% include "frontend/connection_form.html" with data=False route=data %}
 
     {% endif %}
 {% endblock instance %}

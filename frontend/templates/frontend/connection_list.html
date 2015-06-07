@@ -6,8 +6,6 @@
     {% endif %}
 
     {% if data %}
-        {% include "frontend/connection_form.html" with data=False %}
-
         <p>Connection list:</p>
 
         {% for connection in data.results %}

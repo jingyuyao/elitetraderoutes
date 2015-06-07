@@ -1,6 +1,6 @@
 {% load my_tags %}
 <div class="ui-widget">
-    <form method="post" action="{% url 'route-list' %}">
+    <form id="route_form" method="post" action="{% url 'route-list' %}">
         {% csrf_token %}
         {% if data %}
             {{data|render_form|safe}}
