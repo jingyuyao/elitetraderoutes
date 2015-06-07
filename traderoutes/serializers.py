@@ -5,10 +5,19 @@ from elitedata.models import Station, System, Commodity
 from elitedata.serializers import MinimizedSystemSerializer, StationSerializer, CommoditySerializer
 from common.serializers import IDHyperlinkedModelSerializer
 
-
-class ConnectionSerializer(IDHyperlinkedModelSerializer):
+class BaseConnectionSerializer(IDHyperlinkedModelSerializer):
     """
-    Serializer for the Connection class.
+    Base serializer for Connection model.
+    """
+    route = serializers.HyperlinkedRelatedField(view_name='route-detail', queryset=Route.objects.all())
+
+    class Meta:
+        model = Connection
+
+
+class WriteConnectionSerializer(BaseConnectionSerializer):
+    """
+    The write serializer for the Connection class.
 
     This serializer will validate start and destination stations belong in the specified
     start and destination system.
@@ -19,17 +28,11 @@ class ConnectionSerializer(IDHyperlinkedModelSerializer):
     the possible choices for selection in the view. It does not affect normal json calls.
     """
 
-    route = serializers.HyperlinkedRelatedField(view_name='route-detail', queryset=Route.objects.all())
-    start_system = MinimizedSystemSerializer()
-    start_station = StationSerializer()
-    destination_system = MinimizedSystemSerializer()
-    destination_station = StationSerializer()
-    commodity = CommoditySerializer()
-    distance = serializers.SerializerMethodField()  # Read only
-
-    @staticmethod
-    def get_distance(obj):
-        return obj.distance()
+    start_system = serializers.HyperlinkedRelatedField(view_name='system-detail', queryset=System.objects.all())
+    start_station = serializers.HyperlinkedRelatedField(view_name='station-detail', queryset=Station.objects.all())
+    destination_system = serializers.HyperlinkedRelatedField(view_name='system-detail', queryset=System.objects.all())
+    destination_station = serializers.HyperlinkedRelatedField(view_name='station-detail', queryset=Station.objects.all())
+    commodity = serializers.HyperlinkedRelatedField(view_name='commodity-detail', queryset=Commodity.objects.all())
 
     def validate(self, data):
         """
@@ -56,9 +59,23 @@ class ConnectionSerializer(IDHyperlinkedModelSerializer):
         if station not in Station.objects.filter(system=system):
             raise serializers.ValidationError("Station(%s) not in system(%s)." % (str(station), str(system)))
 
-    class Meta:
-        model = Connection
+class ReadConnectionSerializer(BaseConnectionSerializer):
+    """
+    The read serializer for the Connection model.
 
+    This serializer shows the referenced models as nested objects.
+    """
+    start_system = MinimizedSystemSerializer()
+    start_station = StationSerializer()
+    destination_system = MinimizedSystemSerializer()
+    destination_station = StationSerializer()
+    commodity = CommoditySerializer()
+
+    distance = serializers.SerializerMethodField()  # Read only
+
+    @staticmethod
+    def get_distance(obj):
+        return obj.distance()
 
 class BaseRouteSerializer(IDHyperlinkedModelSerializer):
     """
@@ -83,7 +100,7 @@ class RouteSerializer(BaseRouteSerializer):
     Includes detailed information on all the Connection the Route has.
     """
 
-    connections = ConnectionSerializer(many=True, read_only=True)
+    connections = ReadConnectionSerializer(many=True, read_only=True)
 
 
 class MinimizedRouteSerializer(BaseRouteSerializer):

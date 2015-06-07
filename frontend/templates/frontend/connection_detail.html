@@ -1,6 +1,22 @@
 {% load my_tags %}
 
 {% if data %}
+{% comment %}
+data.distance is used to figure out whether this template is included when displaying or
+creating a connection. When creating a connection, the data passed in is serialized using
+WriteConnection serializer so it does not contain the actual system object in its fields.
+Instead they only contain a link to the various model reference. The separation between
+reading and writing serialization is necessary because system and stations are not created
+when a connection is created. They are referenced only. So our serializer should only need
+a reference to a instance of the model. If a nested representation is used, the serializer
+will attemp to create the model along with the connection thus it will require information
+to create a new instance of the various models references included in a connection.
+
+The stuff I wrote above could totally be bs but this is the cleanest solution I can come up
+with for now. I tried to hack viewset.create() so it will use the write serialization but
+return the read serialization but doing so involved too much underlying rest framework.
+{% endcomment %}
+    {% if data.distance %}
     <div class="connection" id="connection_{{data.id}}">
         <dl>
             <dt>From System--Station to System--Station:</dt>
@@ -16,4 +32,7 @@
             <dd>{{data.supply}} / {{data.demand}}</dd>
         </dl>
     </div>
+    {% else %}
+        Connection created successfully.
+    {% endif %}
 {% endif %}

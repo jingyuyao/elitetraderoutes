@@ -1,3 +1,5 @@
+from django.shortcuts import redirect
+
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
@@ -5,7 +7,8 @@ from rest_framework import renderers
 
 from .permissions import IsOwnerOrReadOnly
 from .models import Route, Connection
-from .serializers import ConnectionSerializer, RouteSerializer, MinimizedRouteSerializer
+from .serializers import ReadConnectionSerializer, WriteConnectionSerializer,\
+    RouteSerializer, MinimizedRouteSerializer
 
 from common.views import WrappedModelViewSet, wrap_response
 
@@ -54,16 +57,14 @@ class RouteViewSet(WrappedModelViewSet):
         :param pk:
         :return:
         """
-        serializer = MinimizedRouteSerializer(self.get_object(), context={'request': request})
+        serializer = MinimizedRouteSerializer(instance=self.get_object(), context={'request': request})
         return wrap_response(Response(serializer.data))
 
 
 class ConnectionViewSet(WrappedModelViewSet):
     queryset = Connection.objects.all()
-    serializer_class = ConnectionSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-
     renderer_classes = (renderers.JSONRenderer,
                         renderers.TemplateHTMLRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
@@ -71,8 +72,14 @@ class ConnectionViewSet(WrappedModelViewSet):
     template_name = "frontend/connection.html"
     search_fields = ("start_system", 'destination_system')
 
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ReadConnectionSerializer
+        else:
+            return WriteConnectionSerializer
+
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        return serializer.save(owner=self.request.user)
 
     def list(self, request, *args, **kwargs):
         response = super(ConnectionViewSet, self).list(request, *args, **kwargs)
