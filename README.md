@@ -30,7 +30,7 @@ Create an user and a database for the user using the settings found in my.cnf fi
 As root@localhost:
 
 - CREATE DATABASE elitetraderoutes CHARACTER SET utf8;
-- GRANT ALL PRIVILEGES ON elitetraderoutes.* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
+- GRANT ALL PRIVILEGES ON *.* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
 
 Then run 'python3 manage.py migrate' and make sure there are no errors.
 
