@@ -3,9 +3,10 @@ python:
   - "3.4"
 # command to install dependencies
 install: "pip install -r requirements.txt"
+
 before_script:
   - mysql -e "CREATE DATABASE elitetraderoutes CHARACTER SET utf8;" -uroot
   - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';" -uroot
 
 # command to run tests
-script: manage.py test
+script: python manage.py test
