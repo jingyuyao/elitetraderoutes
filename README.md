@@ -31,12 +31,11 @@ Create an user and a database for the user using the settings found in my.cnf fi
 As root@localhost:
 
 - CREATE DATABASE elitetraderoutes CHARACTER SET utf8;
-- GRANT ALL PRIVILEGES ON *.* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
-
-Then run 'python3 manage.py migrate' and make sure there are no errors.
+- GRANT ALL PRIVILEGES ON \*.\* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
 
 ## Additional setup
 
-Run: elitedata/fixtures/ingest_data.py
-
-Then run: manage.py loaddata commodity system station
+- python ./elitedata/fixtures/ingest_data.py
+- python manage.py loaddata commodity system station
+- python manage.py migrate
+- python manage.py test
