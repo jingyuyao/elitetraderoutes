@@ -70,6 +70,7 @@ function attachInputToModel(name, model){
             addToForm(ui.item);
         }
     });
+
 }
 
 function attachInputsToModels(dict){
