@@ -1,5 +1,5 @@
 django
 django-filter
 mysqlclient
-rest_framework
+djangorestframework
 requests

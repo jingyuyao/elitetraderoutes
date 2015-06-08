@@ -20,7 +20,7 @@ The following setup is Linux / Windows
 - django
 - django-filter
 - mysqlclient
-- rest_framework
+- djangorestframework
 - requests
 
 ## Database settings
