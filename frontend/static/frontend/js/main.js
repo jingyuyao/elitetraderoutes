@@ -55,6 +55,14 @@ function attachInputToModel(name, model){
 
             $.getJSON(requestUrl, function(data){
                 var autocompleteList = createAutocompleteList(data.data.results, name, model);
+                if (requestUrl.search('station') != -1){
+                    var reqLower = req.term.toLowerCase();
+
+                    autocompleteList = autocompleteList.filter(function(element){
+                        var eleLower = element.value.toLowerCase();
+                        return eleLower.search(reqLower) != -1;
+                    });
+                }
                 add(autocompleteList);
             });
         },
