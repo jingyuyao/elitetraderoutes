@@ -3,3 +3,4 @@ django-filter
 mysqlclient
 djangorestframework
 requests
+nose
