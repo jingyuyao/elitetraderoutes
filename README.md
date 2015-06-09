@@ -16,13 +16,7 @@ The following setup is Linux / Windows
 
 ### Python packages
 
-- pip
-- setuptools
-- django
-- django-filter
-- mysqlclient
-- djangorestframework
-- requests
+pip install -r requirements.txt
 
 ## Database settings
 
