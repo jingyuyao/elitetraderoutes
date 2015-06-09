@@ -5,7 +5,7 @@ __author__ = 'jingyu'
 
 APP_NAME = 'elitedata'
 
-def fix_fixture(file, model_name):
+def fix_fixture(directory, file, model_name):
     """
     Changes the data downloaded from eddb.io into django fixture format.
 
@@ -17,7 +17,7 @@ def fix_fixture(file, model_name):
     :return:
     """
 
-    with open(file) as input, open(model_name+".json", mode="wt") as output:
+    with open(directory + file) as input, open(directory + model_name+".json", mode="wt") as output:
         objects = json.load(input)
 
         for obj in objects:
@@ -59,10 +59,7 @@ def fix_fixture(file, model_name):
 
         json.dump(objects, output, indent=2)
 
-def fix_all():
-    fix_fixture("commodities.json", 'commodity')
-    fix_fixture("stations_lite.json", 'station')
-    fix_fixture("systems.json", "system")
-
-if __name__ == "__main__":
-    fix_all()
+def fix_all(fixture_directory):
+    fix_fixture(fixture_directory, "commodities.json", 'commodity')
+    fix_fixture(fixture_directory, "stations_lite.json", 'station')
+    fix_fixture(fixture_directory, "systems.json", "system")

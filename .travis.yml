@@ -9,4 +9,7 @@ before_script:
   - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';" -uroot
 
 # command to run tests
+script: python manage.py migrate
 script: python manage.py test
+script: python ingest_data.py
+script: python loaddata commodity system station

@@ -35,7 +35,12 @@ As root@localhost:
 
 ## Additional setup
 
-- python ./elitedata/fixtures/ingest_data.py
-- python manage.py loaddata commodity system station
+### Populate the database with models and run tests
+
 - python manage.py migrate
 - python manage.py test
+
+### Download data from eddb.io and load into database
+
+- python ingest_data.py
+- python manage.py loaddata commodity system station
