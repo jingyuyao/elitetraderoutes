@@ -13,6 +13,7 @@ fixture_directory = "elitedata/fixtures/"
 
 def get_and_save(url):
     file_name = url.split('/')[-1]
+    print("Downloading", url, "...")
     r = requests.get(url)
     with open(fixture_directory + file_name, 'wt') as f:
         f.write(r.text)

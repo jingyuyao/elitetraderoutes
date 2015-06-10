@@ -7,12 +7,14 @@ The following setup is Linux / Windows
 
 ### System packages
 
+Linux:
+
+sudo bash linux_setup.sh
+
+Windows:
+
 - python3
-- mysql 5.6+ (server only) (windows)
-- python3-dev (linux)
-- mysql-server (linux)
-- mysql-client (linux)
-- libmysqlclient-dev (linux)
+- mysql 5.6+ (server only)
 
 ### Python packages
 
@@ -22,12 +24,24 @@ pip install -r requirements.txt
 
 Create an user and a database for the user using the settings found in my.cnf file using the following command:
 
-As root@localhost:
+Linux:
+
+bash database_setup.sh
+
+Windows:
+
+Open mysql terminal as root@localhost:
 
 - CREATE DATABASE elitetraderoutes CHARACTER SET utf8;
 - GRANT ALL PRIVILEGES ON \*.\* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
 
 ## Additional setup
+
+Linux:
+
+bash project_setup.sh
+
+Windows:
 
 ### Populate the database with models and run tests
 

@@ -1,6 +1,10 @@
 language: python
 python:
   - "3.4"
+
+before_install:
+  - sudo bash linux_setup.sh
+
 # command to install dependencies
 install: "pip install -r requirements.txt"
 
@@ -10,7 +14,4 @@ before_script:
 
 # command to run tests
 script:
-  - python manage.py migrate
-  - python manage.py test
-  - python ingest_data.py
-  - python manage.py loaddata commodity system station
+  - bash project_setup.sh

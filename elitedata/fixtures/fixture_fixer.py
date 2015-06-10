@@ -17,8 +17,13 @@ def fix_fixture(directory, file, model_name):
     :return:
     """
 
-    with open(directory + file) as input, open(directory + model_name+".json", mode="wt") as output:
-        objects = json.load(input)
+    input_file = directory + file
+    output_file = directory + model_name+".json"
+
+    print("Fixing", input_file, "...")
+
+    with open(input_file) as input_, open(output_file, mode="wt") as output:
+        objects = json.load(input_)
 
         for obj in objects:
             # Each object in the django fixture need a model name and pk
@@ -58,6 +63,8 @@ def fix_fixture(directory, file, model_name):
             obj['fields'] = fields
 
         json.dump(objects, output, indent=2)
+
+    print("Fixed", output_file)
 
 def fix_all(fixture_directory):
     fix_fixture(fixture_directory, "commodities.json", 'commodity')
