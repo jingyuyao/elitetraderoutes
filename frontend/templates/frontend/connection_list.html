@@ -1,19 +1,14 @@
 {% extends "frontend/base.html" %}
 
 {% block list %}
-    {% if error %}
-        Error: {{error}}
-    {% endif %}
-
+    <div class="page-header">
+        <h1>
+            Connection list
+        </h1>
+    </div>
     {% if data %}
-        <p>Connection list:</p>
-
-        <ul>
-            {% for connection in data.results %}
-            <li>
-                {% include "frontend/connection_detail.html" with data=connection only %}
-            </li>
-            {% endfor %}
-        </ul>
+        {% for connection in data.results %}
+            {% include "frontend/connection_detail.html" with data=connection only %}
+        {% endfor %}
     {% endif %}
 {% endblock list %}

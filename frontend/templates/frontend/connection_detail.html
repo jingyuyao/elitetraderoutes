@@ -1,6 +1,4 @@
 {% load my_tags %}
-
-{% if data %}
 {% comment %}
 data.start_system.name is used to figure out whether this template is included when displaying or
 creating a connection. When creating a connection, the data passed in is serialized using
@@ -19,23 +17,34 @@ return the read serialization but doing so involved too much underlying rest fra
 Note: data.distance cannot be used as the conditional because if distance is 0 (which can
 happen) the if statement will evaluate to false (which is dumb).
 {% endcomment %}
-    {% if data.start_system.name %}
-    <div class="connection" id="connection_{{data.id}}">
-        <dl>
-            <dt>From System--Station to System--Station:</dt>
-            <dd>{{data.start_system.name}}--{{data.start_station.name}} -->
-                {{data.destination_system.name}}--{{data.destination_station.name}} </dd>
-            <dt>Commodity (average):</dt>
-            <dd>{{data.commodity.name}}({{data.commodity.average_price}}</dd>
-            <dt>Distance (ly):</dt>
-            <dd>{{data.distance}}</dd>
-            <dt>Buy price / Sell price:</dt>
-            <dd>{{data.buy_price}} / {{data.sell_price}}</dd>
-            <dt>Supply / Demand:</dt>
-            <dd>{{data.supply}} / {{data.demand}}</dd>
-        </dl>
-    </div>
-    {% else %}
-        Connection created successfully.
-    {% endif %}
+
+{% if data %}
+    <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Connection {{data.id}}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% if data.start_system.name %}
+                <div class="connection" id="connection_{{data.id}}">
+                    <dl>
+                        <dt>From System--Station to System--Station:</dt>
+                        <dd>{{data.start_system.name}}--{{data.start_station.name}} -->
+                            {{data.destination_system.name}}--{{data.destination_station.name}} </dd>
+                        <dt>Commodity (average):</dt>
+                        <dd>{{data.commodity.name}}({{data.commodity.average_price}}</dd>
+                        <dt>Distance (ly):</dt>
+                        <dd>{{data.distance}}</dd>
+                        <dt>Buy price / Sell price:</dt>
+                        <dd>{{data.buy_price}} / {{data.sell_price}}</dd>
+                        <dt>Supply / Demand:</dt>
+                        <dd>{{data.supply}} / {{data.demand}}</dd>
+                    </dl>
+                </div>
+                {% else %}
+                    Connection created successfully.
+                {% endif %}
+            </div>
+        </div>
 {% endif %}

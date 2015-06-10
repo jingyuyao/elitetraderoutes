@@ -1,12 +1,14 @@
 {% extends "frontend/base.html" %}
 
 {% block instance %}
+    <div class="page-header">
+        <h1>Route</h1>
+    </div>
+    <p>
+        <a class="btn btn-lg btn-default" href="{% url 'route-list' %}">Back to list</a>
+    </p>
     {% if data %}
-        <a href="{% url 'route-list' %}">Back to list</a>
-        <br>
-
         {% include "frontend/route_detail.html" %}
         {% include "frontend/connection_form.html" with data=False route=data %}
-
     {% endif %}
 {% endblock instance %}

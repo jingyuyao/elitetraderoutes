@@ -1,20 +1,28 @@
 {% load my_tags %}
-<div class="ui-widget">
-    <form id="connection_form" method="post" action="{% url 'connection-list' %}">
-        {% csrf_token %}
-        {% if data %}
-            {{data|render_form|safe}}
-        {% else %}
-            {% if route %}
-                {{"route"|render_hidden:route.url|safe}}
-            {% else %}
-                {{"route"|render_input|safe}}
-            {% endif %}
-            {{'start_system,start_station,destination_system,destination_station'|render_form|safe}}
-            <br>
-            {{'commodity,buy_price,sell_price,supply,demand'|render_form|safe}}
-        {% endif %}
-        <input type="submit" value="Add connection">
-    </form>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Create connection
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="ui-widget">
+            <form id="connection_form" method="post" action="{% url 'connection-list' %}">
+                {% csrf_token %}
+                {% if data %}
+                    {{data|render_form|safe}}
+                {% else %}
+                    {% if route %}
+                        {{"route"|render_hidden:route.url|safe}}
+                    {% else %}
+                        {{"route"|render_input|safe}}
+                    {% endif %}
+                    {{'start_system,start_station,destination_system,destination_station'|render_form|safe}}
+                    <br>
+                    {{'commodity,buy_price,sell_price,supply,demand'|render_form|safe}}
+                {% endif %}
+                <input type="submit" value="Add connection">
+            </form>
+        </div>
+    </div>
 </div>
-

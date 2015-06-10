@@ -1,14 +1,23 @@
 {% load my_tags %}
-<div class="ui-widget">
-    <form id="route_form" method="post" action="{% url 'route-list' %}">
-        {% csrf_token %}
-        {% if data %}
-            {{data|render_form|safe}}
-        {% else %}
-            {% comment %}
-                Route doesn't need anything to be created atm.
-            {% endcomment %}
-        {% endif %}
-        <input type="submit" value="Post to route">
-    </form>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Create route
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="ui-widget">
+            <form id="route_form" method="post" action="{% url 'route-list' %}">
+                {% csrf_token %}
+                {% if data %}
+                    {{data|render_form|safe}}
+                {% else %}
+                    <p>
+                        Route doesn't need anything to be created atm.
+                    </p>
+                {% endif %}
+                <input type="submit" value="Create">
+            </form>
+        </div>
+    </div>
 </div>

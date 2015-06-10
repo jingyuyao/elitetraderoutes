@@ -1,19 +1,15 @@
 {% extends "frontend/base.html" %}
 
 {% block list %}
+    <div class="page-header">
+        <h1>
+            Route list
+        </h1>
+    </div>
+    {% include "frontend/route_form.html" with data=False %}
     {% if data %}
-        <form method="POST">
-            {% csrf_token %}
-            <input type="submit" value="New route">
-        </form>
-
-        <p>Route list:</p>
-        <ul>
-            {% for route in data.results %}
-            <li>
-                {% include "frontend/route_detail.html" with data=route only %}
-            </li>
-            {% endfor %}
-        </ul>
+        {% for route in data.results %}
+            {% include "frontend/route_detail.html" with data=route only %}
+        {% endfor %}
     {% endif %}
 {% endblock list %}

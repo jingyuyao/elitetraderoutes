@@ -1,11 +1,22 @@
 {% extends "frontend/base.html" %}
 
 {% block instance %}
+    <div class="page-header">
+        <h1>Connection</h1>
+    </div>
     {% if data %}
-        <a href="{{data.route}}">Back to route.</a>
-        <br>
-
-        {% include "frontend/connection_detail.html" %}
-
+        <p>
+            <a class="btn btn-lg btn-default" href="{{data.route}}">Back to route.</a>
+        </p>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Details
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% include "frontend/connection_detail.html" %}
+            </div>
+        </div>
     {% endif %}
 {% endblock instance %}
