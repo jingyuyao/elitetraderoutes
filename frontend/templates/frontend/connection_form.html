@@ -6,8 +6,8 @@
         </h3>
     </div>
     <div class="panel-body">
-        <div class="ui-widget">
-            <form id="connection_form" method="post" action="{% url 'connection-list' %}">
+        <form id="connection_form" method="post" action="{% url 'connection-list' %}">
+            <div class="form-group">
                 {% csrf_token %}
                 {% if data %}
                     {{data|render_form|safe}}
@@ -22,7 +22,7 @@
                     {{'commodity,buy_price,sell_price,supply,demand'|render_form|safe}}
                 {% endif %}
                 <input type="submit" value="Add connection">
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>

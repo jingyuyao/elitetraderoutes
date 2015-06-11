@@ -6,8 +6,8 @@
         </h3>
     </div>
     <div class="panel-body">
-        <div class="ui-widget">
-            <form id="route_form" method="post" action="{% url 'route-list' %}">
+        <form id="route_form" method="post" action="{% url 'route-list' %}">
+            <div class="form-group">
                 {% csrf_token %}
                 {% if data %}
                     {{data|render_form|safe}}
@@ -17,7 +17,7 @@
                     </p>
                 {% endif %}
                 <input type="submit" value="Create">
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
