@@ -1,71 +1,48 @@
 {% load my_tags %}
 {% if data %}
-    {% if data.distance or data.distance == 0 %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <a class="panel-title" href="{{data.url}}">
-                    Connection {{data.id}}
-                </a>
-            </div>
-            <div class="panel-body">
-                <div class="connection" id="connection_{{data.id}}">
-                    <dl>
-                        <dt><p>From:</p></dt>
-                        <dd>
-                        <p>
-                            <a class="btn btn-primary btn-sm" href="{{data.start_system.url}}">
-                                {{data.start_system.name}}
-                            </a>
-                            --
-                            <a class="btn btn-primary btn-sm" href="{{data.start_station.url}}">
-                                {{data.start_station.name}}
-                            </a>
-                        </p>
-                        </dd>
-                        <dt><p>To:</p></dt>
-                        <dd>
-                        <p>
-                            <a class="btn btn-primary btn-sm" href="{{data.destination_system.url}}">
-                                {{data.destination_system.name}}
-                            </a>
-                            --
-                            <a class="btn btn-primary btn-sm" href="{{data.destination_station.url}}">
-                                {{data.destination_station.name}}
-                            </a>
-                        </p>
-                        </dd>
-                        <dt><p>Commodity (average):</p></dt>
-                        <dd><p>{{data.commodity.name}}({{data.commodity.average_price}})</p></dd>
-                        <dt><p>Distance (ly):</p></dt>
-                        <dd><p>{{data.distance}}</p></dd>
-                        <dt><p>Buy price / Sell price:</p></dt>
-                        <dd><p>{{data.buy_price}} / {{data.sell_price}}</p></dd>
-                        <dt><p>Supply / Demand:</p></dt>
-                        <dd><p>{{data.supply}} / {{data.demand}}</p></dd>
-                    </dl>
-                </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a class="panel-title" href="{{data.url}}">
+                Connection {{data.id}}
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="connection" id="connection_{{data.id}}">
+                <dl>
+                    <dt><p>From:</p></dt>
+                    <dd>
+                    <p>
+                        <a class="btn btn-primary btn-sm" href="{{data.start_system.url}}">
+                            {{data.start_system.name}}
+                        </a>
+                        --
+                        <a class="btn btn-primary btn-sm" href="{{data.start_station.url}}">
+                            {{data.start_station.name}}
+                        </a>
+                    </p>
+                    </dd>
+                    <dt><p>To:</p></dt>
+                    <dd>
+                    <p>
+                        <a class="btn btn-primary btn-sm" href="{{data.destination_system.url}}">
+                            {{data.destination_system.name}}
+                        </a>
+                        --
+                        <a class="btn btn-primary btn-sm" href="{{data.destination_station.url}}">
+                            {{data.destination_station.name}}
+                        </a>
+                    </p>
+                    </dd>
+                    <dt><p>Commodity (average):</p></dt>
+                    <dd><p>{{data.commodity.name}}({{data.commodity.average_price}})</p></dd>
+                    <dt><p>Distance (ly):</p></dt>
+                    <dd><p>{{data.distance}}</p></dd>
+                    <dt><p>Buy price / Sell price:</p></dt>
+                    <dd><p>{{data.buy_price}} / {{data.sell_price}}</p></dd>
+                    <dt><p>Supply / Demand:</p></dt>
+                    <dd><p>{{data.supply}} / {{data.demand}}</p></dd>
+                </dl>
             </div>
         </div>
-    {% elif data.error %}
-        <div class="panel-danger">
-            <div class="panel-heading">
-                <p>Error</p>
-            </div>
-            <div class="panel-body">
-                <p>
-                    Please check your input. Make sure to select items from suggestions
-                    when it is available.
-                </p>
-            </div>
-        </div>
-    {% else %}
-        <div class="panel-success">
-            <div class="panel-heading">
-                <p>Success</p>
-            </div>
-            <div class="panel-body">
-                <p>Connection created successfully.</p>
-            </div>
-        </div>
-    {% endif %}
+    </div>
 {% endif %}

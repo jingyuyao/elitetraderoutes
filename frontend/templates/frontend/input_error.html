@@ -1,0 +1,21 @@
+{% extends "frontend/base.html" %}
+
+{% block instance %}
+    <div class="page-header">
+        <h1>Woops</h1>
+    </div>
+    <p>
+        <button class="btn btn-lg btn-default" onclick="window.history.back()">Back</button>
+    </p>
+    <div class="panel-danger">
+        <div class="panel-heading">
+            <p>Error</p>
+        </div>
+        <div class="panel-body">
+            <p>
+                Please check your input. Make sure to select items from suggestions
+                when it is available.
+            </p>
+        </div>
+    </div>
+{% endblock instance %}

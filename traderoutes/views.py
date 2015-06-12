@@ -1,9 +1,10 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework import renderers
+from rest_framework.exceptions import ValidationError
 
 from .permissions import IsOwnerOrReadOnly
 from .models import Route, Connection
@@ -85,6 +86,13 @@ class ConnectionViewSet(WrappedModelViewSet):
         response = super(ConnectionViewSet, self).list(request, *args, **kwargs)
         response.template_name = "frontend/connection/list.html"
         return response
+
+    def create(self, request, *args, **kwargs):
+        try:
+            response = super(ConnectionViewSet, self).create(request, *args, **kwargs)
+            return redirect(response.data['data']['url'])
+        except ValidationError:
+            return render(request, 'frontend/input_error.html')
 
 
 '''

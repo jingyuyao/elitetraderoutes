@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.views import exception_handler
 from rest_framework.exceptions import ValidationError
@@ -40,15 +41,7 @@ class ResponseWrapperMixin(object):
         return wrap_response(super(ResponseWrapperMixin, self).list(request, *args, **kwargs))
 
     def create(self, request, *args, **kwargs):
-        # So the problem is that when the error is raise out of this class, DRF no longer
-        # renders the response unto our template. Instead, it renders django's default 400 view
-        # which do not spit out any nice data. One way to fix it is to catch the validation
-        # error here and returns the wrapped response.
-        try:
-            return wrap_response(super(ResponseWrapperMixin, self).create(request, *args, **kwargs))
-        except ValidationError as e:
-            e.detail['error'] = True
-            return wrap_response(Response(e.detail, status=e.status_code))
+        return wrap_response(super(ResponseWrapperMixin, self).create(request, *args, **kwargs))
 
     def retrieve(self, request, *args, **kwargs):
         return wrap_response(super(ResponseWrapperMixin, self).retrieve(request, *args, **kwargs))
