@@ -32,7 +32,8 @@ def render_link(url, text=None):
         return url
 
 label_base = "<label for='{name}'>{label}: </label>"
-input_base = "<input class='typeahead form-control' id='{name}_input' type='{type}' name='{name}' value='{value}' required>"
+input_base = "<input class='typeahead form-control' autocomplete='off' " \
+             "id='{name}_input' type='{type}' name='{name}' value='{value}' required>"
 
 @register.filter()
 def render_input(name, value=None):

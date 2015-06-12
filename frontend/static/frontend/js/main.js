@@ -18,45 +18,47 @@ function addToForm(name, item){
     form[name] = item;
 }
 
+function matcher(item){
+    return this.query.toLowerCase().indexOf(item.name) != -1;
+}
+
 function attachInputToModel(name, model){
     var input = '#' + name + '_input';
 
-    $(input).typeahead(typeaheadSetting, {
-        name: name,
-        display: 'name',
-        source: function(query, sync, async) {
-            // Local data use sync callback and remote data use async callback
-
+    $(input).typeahead({
+        minLength: 2,
+        source: function(query, process) {
            var requestUrl = '/' + model + '/?search=' + query;
 
            // If the input is for a station, only supply data from the corresponding system.
            // If no system is selected, return a helper message first.
            if (name.search('station') != -1){
-               var correspondingSystemInput = name.replace('station', 'system');
-               if (form.hasOwnProperty(correspondingSystemInput)){
-                   requestUrl = form[correspondingSystemInput].url + 'stations/';
-               }
-               else{
-                   sync([{name:"Please select a system first."}]);
-                   return;
-               }
+                var correspondingSystemInput = name.replace('station', 'system');
+                if (form.hasOwnProperty(correspondingSystemInput)){
+                  requestUrl = form[correspondingSystemInput].url + 'stations/';
+                }
+                else{
+                  process([]);
+                  return;
+                }
            }
 
            $.getJSON(requestUrl, function(response){
                 var autocompleteList = response.data.results;
                 if (requestUrl.search('station') != -1){
-                   var reqLower = query.toLowerCase();
+                  var reqLower = query.toLowerCase();
 
-                   autocompleteList = autocompleteList.filter(function(element){
-                       var eleLower = element.name.toLowerCase();
-                       return eleLower.search(reqLower) != -1;
-                   });
+                  autocompleteList = autocompleteList.filter(function(element){
+                      var eleLower = element.name.toLowerCase();
+                      return eleLower.search(reqLower) != -1;
+                  });
                 }
-                async(autocompleteList);
-           });
-       }
-    }).on('typeahead:select typeahead:autocomplete', function(ev, suggestion){
-        addToForm(name, suggestion);
+                process(autocompleteList);
+            });
+        },
+        afterSelect: function(suggestion){
+            addToForm(name, suggestion);
+        }
     });
 }
 
