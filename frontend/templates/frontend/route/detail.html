@@ -2,20 +2,19 @@
 {% if data %}
     <div class="panel panel-info" id="route_{{data.id}}">
         <div class="panel-heading">
-            <h3 class="panel-title">
+            <a class="panel-title" href="{{data.url}}">
                 Route {{data.id}}
-            </h3>
+            </a>
         </div>
         <div class="panel-body">
             <dl>
-                <dt>Owner:</dt>
-                <dd>{{data.owner}}</dd>
-                <dt>Created:</dt>
-                <dd>{{data.created}}</dd>
-                <dt>Connections:</dt>
+                <dt><p><a class="btn btn-primary btn-sm" href="{{data.owner}}">Owner</a></p></dt>
+                <dt><p>Created:</p></dt>
+                <dd><p>{{data.created}}</p></dd>
+                <dt><p>Connections:</p></dt>
                 <dd>
                     {% for connection in data.connections %}
-                        {% include "frontend/connection_detail.html" with data=connection only %}
+                        {% include "frontend/connection/detail.html" with data=connection only %}
                     {% endfor %}
                 </dd>
             </dl>

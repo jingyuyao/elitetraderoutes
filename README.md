@@ -18,6 +18,8 @@ Windows:
 
 ### Python packages
 
+Linux / Windows:
+
 pip install -r requirements.txt
 
 ## Database settings

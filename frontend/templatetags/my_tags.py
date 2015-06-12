@@ -31,18 +31,24 @@ def render_link(url, text=None):
     except ValidationError:
         return url
 
+group_begin = "<div class='form-group'>"
 label_base = "<label for='{name}'>{label}: </label>"
 input_base = "<input class='typeahead form-control' autocomplete='off' " \
              "id='{name}_input' type='{type}' name='{name}' value='{value}' required>"
+group_end = "</div>"
 
 @register.filter()
 def render_input(name, value=None):
-    return label_base.format(name=name, label=name.capitalize()) + \
-        input_base.format(name=name, value=value if value else '', type='text')
+    return group_begin + \
+        label_base.format(name=name, label=name.capitalize()) + \
+        input_base.format(name=name, value=value if value else '', type='text') + \
+        group_end
 
 @register.filter()
 def render_hidden(name, value=None):
-    return input_base.format(name=name, label=name.capitalize(), value=value if value else '', type='hidden')
+    return group_begin + \
+        input_base.format(name=name, label=name.capitalize(), value=value if value else '', type='hidden') + \
+        group_end
 
 @register.filter()
 def render_form(obj):
@@ -57,12 +63,12 @@ def render_form(obj):
     """
     if obj:
         try:
-            return '<br>'.join([render_input(name, value) for name, value in obj.items()])
+            return ''.join([render_input(name, value) for name, value in obj.items()])
         except:
             pass
         try:
             fields = obj.split(',')
-            return '<br>'.join([render_input(name) for name in fields])
+            return ''.join([render_input(name) for name in fields])
         except:
             pass
         return "INVALID DATA FOR render_form: " + str(type(obj)) + str(obj)

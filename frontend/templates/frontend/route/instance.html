@@ -8,7 +8,7 @@
         <a class="btn btn-lg btn-default" href="{% url 'route-list' %}">Back to list</a>
     </p>
     {% if data %}
-        {% include "frontend/route_detail.html" %}
-        {% include "frontend/connection_form.html" with data=False route=data %}
+        {% include "frontend/route/detail.html" %}
+        {% include "frontend/connection/form.html" with data=False route=data %}
     {% endif %}
 {% endblock instance %}

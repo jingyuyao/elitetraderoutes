@@ -38,14 +38,14 @@ class RouteViewSet(WrappedModelViewSet):
                         renderers.TemplateHTMLRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
                         )
-    template_name = "frontend/route.html"  # The default template for all html actions
+    template_name = "frontend/route/instance.html"  # The default template for all html actions
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def list(self, request, *args, **kwargs):
         response = super(RouteViewSet, self).list(request, *args, **kwargs)
-        response.template_name = "frontend/route_list.html"
+        response.template_name = "frontend/route/list.html"
         return response
 
     @detail_route()
@@ -69,7 +69,7 @@ class ConnectionViewSet(WrappedModelViewSet):
                         renderers.TemplateHTMLRenderer,
                         renderers.BrowsableAPIRenderer,  # Enables .api suffix
                         )
-    template_name = "frontend/connection.html"
+    template_name = "frontend/connection/instance.html"
     search_fields = ("start_system", 'destination_system')
 
     def get_serializer_class(self):
@@ -83,7 +83,7 @@ class ConnectionViewSet(WrappedModelViewSet):
 
     def list(self, request, *args, **kwargs):
         response = super(ConnectionViewSet, self).list(request, *args, **kwargs)
-        response.template_name = "frontend/connection_list.html"
+        response.template_name = "frontend/connection/list.html"
         return response
 
 
@@ -116,7 +116,7 @@ class ConnectionViewSet(WrappedModelViewSet):
             # This will basically render the serialized data as a html form in a string
             # renderer = renderers.HTMLFormRenderer()
             # rendered_form = renderer.render(serializer.data,
-            #                                 renderer_context={'request': request, 'template': 'frontend/route.html'})
+            #                                 renderer_context={'request': request, 'template': 'frontend/instance.html'})
 
             # After the string representation of the form is rendered it can be inserted into
             # templates as a variable with autoescape off.

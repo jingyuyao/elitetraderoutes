@@ -8,7 +8,7 @@
     </div>
     {% if data %}
         {% for connection in data.results %}
-            {% include "frontend/connection_detail.html" with data=connection only %}
+            {% include "frontend/connection/detail.html" with data=connection only %}
         {% endfor %}
     {% endif %}
 {% endblock list %}

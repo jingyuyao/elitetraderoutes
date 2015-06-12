@@ -6,10 +6,10 @@
             Route list
         </h1>
     </div>
-    {% include "frontend/route_form.html" with data=False %}
+    {% include "frontend/route/form.html" with data=False %}
     {% if data %}
         {% for route in data.results %}
-            {% include "frontend/route_detail.html" with data=route only %}
+            {% include "frontend/route/detail.html" with data=route only %}
         {% endfor %}
     {% endif %}
 {% endblock list %}
