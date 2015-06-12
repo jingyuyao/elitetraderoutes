@@ -47,6 +47,7 @@ class ResponseWrapperMixin(object):
         try:
             return wrap_response(super(ResponseWrapperMixin, self).create(request, *args, **kwargs))
         except ValidationError as e:
+            e.detail['error'] = True
             return wrap_response(Response(e.detail, status=e.status_code))
 
     def retrieve(self, request, *args, **kwargs):

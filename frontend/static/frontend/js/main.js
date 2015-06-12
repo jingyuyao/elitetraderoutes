@@ -6,13 +6,8 @@ var endpointToInputs = {
     commodities: ['commodity']
 };
 
+var cache = {};
 var form = {};
-
-var typeaheadSetting = {
-    hint: true,
-    highlight: true,
-    minLength: 2
-}
 
 function addToForm(name, item){
     form[name] = item;
@@ -24,40 +19,53 @@ function matcher(item){
 
 function attachInputToModel(name, model){
     var input = '#' + name + '_input';
+    var isStation = name.search('station') != -1;
 
     $(input).typeahead({
-        minLength: 2,
+        minLength: isStation ? 0 : 2,
+        showHintOnFocus: isStation,
+        delay: 250, // Millisecond
         source: function(query, process) {
-           var requestUrl = '/' + model + '/?search=' + query;
+          var requestUrl = '/' + model + '/?search=' + query;
 
-           // If the input is for a station, only supply data from the corresponding system.
-           // If no system is selected, return a helper message first.
-           if (name.search('station') != -1){
-                var correspondingSystemInput = name.replace('station', 'system');
-                if (form.hasOwnProperty(correspondingSystemInput)){
-                  requestUrl = form[correspondingSystemInput].url + 'stations/';
-                }
-                else{
-                  process([]);
+          // If the input is for a station, only supply data from the corresponding system.
+          // If no system is selected, return a helper message first.
+          if (isStation){
+              // Return cached station data for this input if it exists
+              if (cache.hasOwnProperty(name)){
+                  process(cache[name]);
                   return;
-                }
-           }
+              }
 
-           $.getJSON(requestUrl, function(response){
-                var autocompleteList = response.data.results;
-                if (requestUrl.search('station') != -1){
-                  var reqLower = query.toLowerCase();
+              var correspondingSystemInput = name.replace('station', 'system');
+              if (form.hasOwnProperty(correspondingSystemInput)){
+                requestUrl = form[correspondingSystemInput].url + 'stations/';
+              }
+              else{
+                process([]);
+                return;
+              }
+            }
 
-                  autocompleteList = autocompleteList.filter(function(element){
-                      var eleLower = element.name.toLowerCase();
-                      return eleLower.search(reqLower) != -1;
-                  });
-                }
-                process(autocompleteList);
+            $.getJSON(requestUrl, function(response){
+              var autocompleteList = response.data.results;
+              if (isStation){
+                // Cache the list of station results for this input
+                cache[name] = autocompleteList;
+              }
+              process(autocompleteList);
             });
         },
         afterSelect: function(suggestion){
             addToForm(name, suggestion);
+            if (!isStation){
+                // Resets the associated station input data cache when a new
+                // system is selected.
+                var correspondingStationInput = name.replace('system', 'station');
+                if (cache.hasOwnProperty(correspondingStationInput)){
+                    delete cache[correspondingStationInput];
+                }
+            }
         }
     });
 }

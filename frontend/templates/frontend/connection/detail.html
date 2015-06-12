@@ -1,32 +1,13 @@
 {% load my_tags %}
-{% comment %}
-data.start_system.name is used to figure out whether this template is included when displaying or
-creating a connection. When creating a connection, the data passed in is serialized using
-WriteConnection serializer so it does not contain the actual system object in its fields.
-Instead they only contain a link to the various model reference. The separation between
-reading and writing serialization is necessary because system and stations are not created
-when a connection is created. They are referenced only. So our serializer should only need
-a reference to a instance of the model. If a nested representation is used, the serializer
-will attemp to create the model along with the connection thus it will require information
-to create a new instance of the various models references included in a connection.
-
-The stuff I wrote above could totally be bs but this is the cleanest solution I can come up
-with for now. I tried to hack viewset.create() so it will use the write serialization but
-return the read serialization but doing so involved too much underlying rest framework.
-
-Note: data.distance cannot be used as the conditional because if distance is 0 (which can
-happen) the if statement will evaluate to false (which is dumb).
-{% endcomment %}
-
 {% if data %}
-    <div class="panel panel-info">
+    {% if data.distance or data.distance == 0 %}
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <a class="panel-title" href="{{data.url}}">
                     Connection {{data.id}}
                 </a>
             </div>
             <div class="panel-body">
-                {% if data.start_system.name %}
                 <div class="connection" id="connection_{{data.id}}">
                     <dl>
                         <dt><p>From:</p></dt>
@@ -63,9 +44,28 @@ happen) the if statement will evaluate to false (which is dumb).
                         <dd><p>{{data.supply}} / {{data.demand}}</p></dd>
                     </dl>
                 </div>
-                {% else %}
-                    <p>Connection created successfully.</p>
-                {% endif %}
             </div>
         </div>
+    {% elif data.error %}
+        <div class="panel-danger">
+            <div class="panel-heading">
+                <p>Error</p>
+            </div>
+            <div class="panel-body">
+                <p>
+                    Please check your input. Make sure to select items from suggestions
+                    when it is available.
+                </p>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel-success">
+            <div class="panel-heading">
+                <p>Success</p>
+            </div>
+            <div class="panel-body">
+                <p>Connection created successfully.</p>
+            </div>
+        </div>
+    {% endif %}
 {% endif %}
