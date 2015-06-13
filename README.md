@@ -54,3 +54,9 @@ Windows:
 
 - python ingest_data.py
 - python manage.py loaddata commodity system station
+
+## Users
+
+You should also create a super user for testing purposes using manage.py
+
+- python manage.py createsuperuser
