@@ -15,6 +15,8 @@ class SystemViewSet(WrappedModelViewSet):
     queryset = System.objects.all()
     serializer_class = SystemSerializer
     search_fields = ('name',)
+    template_name = 'frontend/system/instance.html'
+    list_template_name = 'frontend/system/list.html'
 
     @detail_route()
     def stations(self, request, *args, **kwargs):
@@ -29,7 +31,7 @@ class SystemViewSet(WrappedModelViewSet):
         stations = Station.objects.filter(system=system)
 
         serializer = StationSerializer(stations, context={'request': request}, many=True)
-        return wrap_response(Response({'results': serializer.data}))
+        return wrap_response(Response({'results': serializer.data}, template_name='frontend/system/list_station.html'))
 
     @detail_route()
     def min(self, request, *args, **kwargs):
@@ -41,8 +43,10 @@ class SystemViewSet(WrappedModelViewSet):
         :return:
         """
         serializer = MinimizedSystemSerializer(self.get_object(), context={'request': request})
+        data = serializer.data
+        data['min'] = True
 
-        return wrap_response(Response(serializer.data))
+        return wrap_response(Response(data))
 
 
 class StationViewSet(WrappedModelViewSet):
@@ -57,6 +61,8 @@ class StationViewSet(WrappedModelViewSet):
     serializer_class = StationSerializer
     filter_class = StationFilter
     search_fields = ('name', )
+    template_name = 'frontend/station/instance.html'
+    list_template_name = 'frontend/station/list.html'
 
 
 class CommodityViewSet(WrappedModelViewSet):
@@ -72,3 +78,5 @@ class CommodityViewSet(WrappedModelViewSet):
     serializer_class = CommoditySerializer
     filter_class = CommodityFilter
     search_fields = ('name',)
+    template_name = 'frontend/commodity/instance.html'
+    list_template_name = 'frontend/commodity/list.html'

@@ -3,7 +3,6 @@ from django.shortcuts import redirect, render
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
-from rest_framework import renderers
 from rest_framework.exceptions import ValidationError
 
 from .permissions import IsOwnerOrReadOnly
@@ -34,20 +33,11 @@ class RouteViewSet(WrappedModelViewSet):
     serializer_class = RouteSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-
-    renderer_classes = (renderers.JSONRenderer,
-                        renderers.TemplateHTMLRenderer,
-                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
-                        )
     template_name = "frontend/route/instance.html"  # The default template for all html actions
+    list_template_name = "frontend/route/list.html"
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-    def list(self, request, *args, **kwargs):
-        response = super(RouteViewSet, self).list(request, *args, **kwargs)
-        response.template_name = "frontend/route/list.html"
-        return response
 
     @detail_route()
     def min(self, request, *args, **kwargs):
@@ -66,11 +56,8 @@ class ConnectionViewSet(WrappedModelViewSet):
     queryset = Connection.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly)
-    renderer_classes = (renderers.JSONRenderer,
-                        renderers.TemplateHTMLRenderer,
-                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
-                        )
     template_name = "frontend/connection/instance.html"
+    list_template_name = "frontend/connection/list.html"
     search_fields = ("start_system", 'destination_system')
 
     def get_serializer_class(self):
@@ -81,11 +68,6 @@ class ConnectionViewSet(WrappedModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(owner=self.request.user)
-
-    def list(self, request, *args, **kwargs):
-        response = super(ConnectionViewSet, self).list(request, *args, **kwargs)
-        response.template_name = "frontend/connection/list.html"
-        return response
 
     def create(self, request, *args, **kwargs):
         try:

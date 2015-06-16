@@ -1,0 +1,17 @@
+{% extends "frontend/base.html" %}
+
+{% block list %}
+    <div class="page-header">
+        <h1>
+            System stations list
+        </h1>
+    </div>
+    <p>
+        <button class="btn btn-lg btn-default" onclick="window.history.back()">Back to system</button>
+    </p>
+    {% if data %}
+        {% for station in data.results %}
+            {% include "frontend/station/detail.html" with data=station only %}
+        {% endfor %}
+    {% endif %}
+{% endblock list %}

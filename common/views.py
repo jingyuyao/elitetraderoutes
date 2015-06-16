@@ -5,6 +5,7 @@ from rest_framework.views import exception_handler
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework import filters
+from rest_framework import renderers
 
 from common.serializers import UserSerializer
 
@@ -62,7 +63,15 @@ class WrappedModelViewSet(ResponseWrapperMixin, viewsets.ModelViewSet):
     duties.
     """
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter)
-    pass
+    renderer_classes = (renderers.JSONRenderer,
+                        renderers.TemplateHTMLRenderer,
+                        renderers.BrowsableAPIRenderer,  # Enables .api suffix
+                        )
+
+    def list(self, request, *args, **kwargs):
+        response = super(WrappedModelViewSet, self).list(request, *args, **kwargs)
+        response.template_name = self.list_template_name
+        return response
 
 # def wrapped_exception_handler(exec, context):
 #     """

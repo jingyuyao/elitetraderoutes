@@ -34,7 +34,14 @@
                     </p>
                     </dd>
                     <dt><p>Commodity (average):</p></dt>
-                    <dd><p>{{data.commodity.name}}({{data.commodity.average_price}})</p></dd>
+                    <dd>
+                        <p>
+                            <a class="btn btn-primary btn-sm" href="{{data.commodity.url}}">
+                                {{data.commodity.name}}
+                            </a>
+                            ({{data.commodity.average_price}})
+                        </p>
+                    </dd>
                     <dt><p>Distance (ly):</p></dt>
                     <dd><p>{{data.distance}}</p></dd>
                     <dt><p>Buy price / Sell price:</p></dt>

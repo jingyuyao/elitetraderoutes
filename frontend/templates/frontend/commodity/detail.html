@@ -1,0 +1,18 @@
+{% load my_tags %}
+{% if data %}
+    <div class="panel panel-info" id="commodity_{{data.id}}">
+        <div class="panel-heading">
+            <a class="panel-title" href="{{data.url}}">
+                {{data.name}}
+            </a>
+        </div>
+        <div class="panel-body">
+            <dl>
+                <dt><p>Average price</p></dt>
+                <dd><p>{{data.average_price}}</p></dd>
+                <dt><p>Category name</p></dt>
+                <dd><p>{{data.category_name}}</p></dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

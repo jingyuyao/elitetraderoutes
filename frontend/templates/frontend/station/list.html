@@ -1,0 +1,14 @@
+{% extends "frontend/base.html" %}
+
+{% block list %}
+    <div class="page-header">
+        <h1>
+            Station list
+        </h1>
+    </div>
+    {% if data %}
+        {% for station in data.results %}
+            {% include "frontend/station/detail.html" with data=station only %}
+        {% endfor %}
+    {% endif %}
+{% endblock list %}

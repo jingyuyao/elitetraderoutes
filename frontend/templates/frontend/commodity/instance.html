@@ -1,0 +1,13 @@
+{% extends "frontend/base.html" %}
+
+{% block instance %}
+    <div class="page-header">
+        <h1>Commodity</h1>
+    </div>
+    <p>
+        <a class="btn btn-lg btn-default" href="{% url 'commodity-list' %}">Back to list</a>
+    </p>
+    {% if data %}
+        {% include "frontend/commodity/detail.html" %}
+    {% endif %}
+{% endblock instance %}

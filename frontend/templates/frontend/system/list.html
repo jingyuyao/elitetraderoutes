@@ -1,0 +1,14 @@
+{% extends "frontend/base.html" %}
+
+{% block list %}
+    <div class="page-header">
+        <h1>
+            System list
+        </h1>
+    </div>
+    {% if data %}
+        {% for system in data.results %}
+            {% include "frontend/system/detail.html" with data=system only %}
+        {% endfor %}
+    {% endif %}
+{% endblock list %}

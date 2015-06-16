@@ -7,9 +7,9 @@
     {% if data %}
         <p>
             {% if data.route %}
-            <a class="btn btn-lg btn-default" href="{{data.route}}">Back to route.</a>
+            <a class="btn btn-lg btn-default" href="{{data.route}}">Back to route</a>
             {% else %}
-            <button class="btn btn-lg btn-default" onclick="window.history.back()">Back to route.</button>
+            <button class="btn btn-lg btn-default" onclick="window.history.back()">Back to route</button>
             {% endif %}
         </p>
         {% include "frontend/connection/detail.html" %}
