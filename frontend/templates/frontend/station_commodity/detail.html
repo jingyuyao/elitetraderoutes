@@ -1,0 +1,28 @@
+{% load my_tags %}
+{% if data %}
+    <div class="panel panel-info" id="station_commodity_{{data.id}}">
+        <div class="panel-heading">
+            <a class="panel-title" href="{{data.url}}">
+                {{data.station_name}}/{{data.commodity_name}}
+            </a>
+        </div>
+        <div class="panel-body">
+            <dl>
+                <dt><p>Category</p></dt>
+                <dd><p>{{data.category_name}}</p></dd>
+                <dt><p>Average price</p></dt>
+                <dd><p>{{data.average_price}}</p></dd>
+                <dt><p>Buy price</p></dt>
+                <dd><p>{{data.buy_price}}</p></dd>
+                <dt><p>Buy price</p></dt>
+                <dd><p>{{data.buy_price}}</p></dd>
+                <dt><p>Stock</p></dt>
+                <dd><p>{{data.stock}}</p></dd>
+                <dt><p>Sell price</p></dt>
+                <dd><p>{{data.sell_price}}</p></dd>
+                <dt><p>Demand</p></dt>
+                <dd><p>{{data.demand}}</p></dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

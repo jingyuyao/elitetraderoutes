@@ -2,8 +2,9 @@ from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework import filters
 
-from .models import System, Station, Commodity
-from .serializers import CommoditySerializer, StationSerializer, SystemSerializer, MinimizedSystemSerializer
+from .models import System, Station, Commodity, StationCommodity
+from .serializers import CommoditySerializer, StationSerializer, \
+    SystemSerializer, MinimizedSystemSerializer, StationCommoditySerializer
 
 import django_filters
 
@@ -80,3 +81,10 @@ class CommodityViewSet(WrappedModelViewSet):
     search_fields = ('name',)
     template_name = 'frontend/commodity/instance.html'
     list_template_name = 'frontend/commodity/list.html'
+
+class StationCommodityViewSet(WrappedModelViewSet):
+    queryset = StationCommodity.objects.all()
+    serializer_class = StationCommoditySerializer
+    template_name = 'frontend/station_commodity/instance.html'
+    list_template_name = 'frontend/station_commodity/list.html'
+    search_fields = ('name',)

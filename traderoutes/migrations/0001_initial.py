@@ -8,15 +8,15 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('elitedata', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Connection',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('buy_price', models.IntegerField(default=0)),
                 ('sell_price', models.IntegerField(default=0)),
@@ -25,21 +25,21 @@ class Migration(migrations.Migration):
                 ('commodity', models.ForeignKey(related_name='connections', to='elitedata.Commodity')),
                 ('destination_station', models.ForeignKey(related_name='connections_destination', to='elitedata.Station')),
                 ('destination_system', models.ForeignKey(related_name='connections_destination', to='elitedata.System')),
-                ('owner', models.ForeignKey(related_name='connections', to=settings.AUTH_USER_MODEL, editable=False)),
+                ('owner', models.ForeignKey(editable=False, related_name='connections', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Route',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('owner', models.ForeignKey(related_name='routes', to=settings.AUTH_USER_MODEL, editable=False)),
+                ('owner', models.ForeignKey(editable=False, related_name='routes', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='connection',
             name='route',
-            field=models.ForeignKey(related_name='connections', to='traderoutes.Route', editable=False),
+            field=models.ForeignKey(editable=False, related_name='connections', to='traderoutes.Route'),
         ),
         migrations.AddField(
             model_name='connection',

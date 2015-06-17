@@ -1,12 +1,26 @@
 from rest_framework import serializers
 
-from .models import System, Station, Commodity
+from .models import System, Station, Commodity, StationCommodity
 from common.serializers import IDHyperlinkedModelSerializer
+
+
+class StationCommoditySerializer(IDHyperlinkedModelSerializer):
+    commodity = serializers.HyperlinkedRelatedField(view_name='commodity-detail', read_only=True)
+    commodity_name = serializers.ReadOnlyField(source='commodity.name')
+    average_price = serializers.ReadOnlyField(source='commodity.average_price')
+    category_name = serializers.ReadOnlyField(source='commodity.category_name')
+    station = serializers.HyperlinkedRelatedField(view_name='station-detail', read_only=True)
+    station_name = serializers.ReadOnlyField(source='station.name')
+
+    class Meta:
+        model = StationCommodity
 
 
 class CommoditySerializer(IDHyperlinkedModelSerializer):
     """Detailed serializer for Commodity.
     """
+
+    station_commodities = StationCommoditySerializer(many=True, read_only=True)
 
     class Meta:
         model = Commodity
@@ -25,6 +39,7 @@ class StationSerializer(IDHyperlinkedModelSerializer):
     # Painful debugging note: HyperlinkedIdentityField forcefully sets its queryset to the model
     system = serializers.HyperlinkedRelatedField(view_name='system-detail', read_only=True)
     system_name = serializers.ReadOnlyField(source="system.name")
+    station_commodities = StationCommoditySerializer(many=True, read_only=True)
 
     class Meta:
         model = Station

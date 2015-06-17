@@ -27,6 +27,7 @@ api_router.register('users', common.views.UserViewSet)
 api_router.register('systems', elitedata.views.SystemViewSet)
 api_router.register('stations', elitedata.views.StationViewSet)
 api_router.register('commodities', elitedata.views.CommodityViewSet)
+api_router.register('station_commodities', elitedata.views.StationCommodityViewSet)
 
 urlpatterns = [
     url(r'^index/', include('frontend.urls')),

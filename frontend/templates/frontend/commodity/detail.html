@@ -12,6 +12,12 @@
                 <dd><p>{{data.average_price}}</p></dd>
                 <dt><p>Category name</p></dt>
                 <dd><p>{{data.category_name}}</p></dd>
+                <dt><p>Stations</p></dt>
+                <dd>
+                    {% for s in data.station_commodities %}
+                        {% include 'frontend/station_commodity/detail.html' with data=s only %}
+                    {% endfor %}
+                </dd>
             </dl>
         </div>
     </div>
