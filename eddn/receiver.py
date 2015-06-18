@@ -30,6 +30,7 @@ def main():
 
     ingester = Ingester()
 
+    print('EDDN receiver started...')
     while True:
         try:
             subscriber.connect(__relayEDDN)

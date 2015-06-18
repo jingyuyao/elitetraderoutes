@@ -1,36 +1,37 @@
 [![Build Status](https://travis-ci.org/Jingyu-Yao/elitetraderoutes.svg?branch=master)](https://travis-ci.org/Jingyu-Yao/elitetraderoutes)
 # Project setup
 
-The following setup is Linux / Windows
+The following setup is for Linux / Windows. Installation scripts are available 
+for linux only. All commands should be run in the directory where manage.py is located.
 
 ## Required packages
 
 ### System packages
 
-Linux:
+#### Linux:
 
-sudo bash linux_setup.sh
+- sudo bash linux_setup.sh
 
-Windows:
+#### Windows:
 
 - python3
 - mysql 5.6+ (server only)
 
 ### Python packages
 
-Linux / Windows:
+#### Linux / Windows:
 
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 ## Database settings
 
 Create an user and a database for the user using the settings found in my.cnf file using the following command:
 
-Linux:
+#### Linux:
 
-bash database_setup.sh
+- bash database_setup.sh
 
-Windows:
+#### Windows:
 
 Open mysql terminal as root@localhost:
 
@@ -39,19 +40,14 @@ Open mysql terminal as root@localhost:
 
 ## Additional setup
 
-Linux:
+### Linux:
 
-bash project_setup.sh
+- bash project_setup.sh
 
-Windows:
-
-### Populate the database with models and run tests
+### Windows:
 
 - python manage.py migrate
 - python manage.py test
-
-### Download data from eddb.io and load into database
-
 - python ingest_data.py
 - python manage.py loaddata commodity system station
 
@@ -60,3 +56,9 @@ Windows:
 You should also create a super user for testing purposes using manage.py
 
 - python manage.py createsuperuser
+
+## EDDN
+
+Start the connection to EDDN:
+
+- python -m eddn.receiver
