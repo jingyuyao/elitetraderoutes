@@ -44,6 +44,12 @@
                 <dd><p>{{data.has_outfitting}}</p></dd>
                 <dt><p>Has commodities</p></dt>
                 <dd><p>{{data.has_commodities}}</p></dd>
+                <dt><p>Commodities</p></dt>
+                <dd>
+                    {% for s in data.station_commodities %}
+                        {% include 'frontend/station_commodity/detail.html' with data=s only %}
+                    {% endfor %}
+                </dd>
                 <dt><p>Updated at</p></dt>
                 <dd><p>{{data.updated_at}}</p></dd>
             </dl>
