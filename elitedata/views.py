@@ -1,6 +1,5 @@
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from rest_framework import filters
 
 from .models import System, Station, Commodity, StationCommodity
 from .serializers import CommoditySerializer, StationSerializer, \
@@ -87,4 +86,3 @@ class StationCommodityViewSet(WrappedModelViewSet):
     serializer_class = StationCommoditySerializer
     template_name = 'frontend/station_commodity/instance.html'
     list_template_name = 'frontend/station_commodity/list.html'
-    search_fields = ('name',)
