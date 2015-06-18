@@ -3,3 +3,6 @@ django-filter
 mysqlclient
 djangorestframework
 requests
+pyzmq
+jsonschema
+simplejson

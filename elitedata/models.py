@@ -70,10 +70,15 @@ class StationCommodity(models.Model):
     commodity = models.ForeignKey(Commodity, related_name='station_commodities', editable=False)
     station = models.ForeignKey(Station, related_name='station_commodities', editable=False)
     buy_price = models.IntegerField(default=0)
-    stock = models.IntegerField(default=0)
+    supply = models.IntegerField(default=0)
+    supply_level = models.CharField(max_length=100, null=True, blank=True)
     sell_price = models.IntegerField(default=0)
     demand = models.IntegerField(default=0)
+    demand_level = models.CharField(max_length=100, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created']
 
     def __str__(self):
         return '%s/%s(%i/%i)' % (str(self.station), str(self.commodity), int(self.buy_price), int(self.sell_price))
