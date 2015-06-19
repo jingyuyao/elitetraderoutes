@@ -1,24 +1,21 @@
-{% load my_tags %}
-{% if data %}
-    <div class="panel panel-info" id="commodity_{{data.id}}">
-        <div class="panel-heading">
-            <a class="panel-title" href="{{data.url}}">
-                {{data.name}}
-            </a>
-        </div>
-        <div class="panel-body">
-            <dl>
-                <dt><p>Average price</p></dt>
-                <dd><p>{{data.average_price}}</p></dd>
-                <dt><p>Category name</p></dt>
-                <dd><p>{{data.category_name}}</p></dd>
-                <dt><p>Stations</p></dt>
-                <dd>
-                    {% for s in data.station_commodities %}
-                        {% include 'frontend/station_commodity/detail.html' with data=s only %}
-                    {% endfor %}
-                </dd>
-            </dl>
-        </div>
+{% extends 'frontend/detail_base.html' %}
+{% block heading %}
+    {{data.name}}
+{% endblock heading %}
+
+{% block body %}
+<dl>
+    <dt><p>Average price</p></dt>
+    <dd><p>{{data.average_price}}</p></dd>
+    <dt><p>Category name</p></dt>
+    <dd><p>{{data.category_name}}</p></dd>
+    <dt><p>Stations</p></dt>
+    <dd>
+    <div class='panel-group' id='{{data.uuid}}_station_list}}'>
+        {% for s in data.station_commodities %}
+            {% include 'frontend/station_commodity/detail.html' with data=s group=data.uuid|add:'_station_list' only %}
+        {% endfor %}
     </div>
-{% endif %}
+    </dd>
+</dl>
+{% endblock body %}

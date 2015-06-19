@@ -1,44 +1,39 @@
-{% load my_tags %}
-{% if data %}
-    <div class="panel panel-info" id="station_commodity_{{data.id}}">
-        <div class="panel-heading">
-            <a class="panel-title" href="{{data.url}}">
-                {{data.station_name}}/{{data.commodity_name}}
+{% extends 'frontend/detail_base.html' %}
+{% block heading %}
+    {{data.station_name}} / {{data.commodity_name}}
+{% endblock heading %}
+
+{% block body %}
+<dl>
+    <dt><p>Commodity</p></dt>
+    <dd>
+        <p>
+            <a class="btn btn-primary btn-sm" href="{{data.commodity}}">
+                {{data.commodity_name}}
             </a>
-        </div>
-        <div class="panel-body">
-            <dl>
-                <dt><p>Commodity</p></dt>
-                <dd>
-                    <p>
-                        <a class="btn btn-primary btn-sm" href="{{data.commodity}}">
-                            {{data.commodity_name}}
-                        </a>
-                    </p>
-                </dd>
-                <dt><p>Station</p></dt>
-                <dd>
-                    <p>
-                        <a class="btn btn-primary btn-sm" href="{{data.station}}">
-                            {{data.station_name}}
-                        </a>
-                    </p>
-                </dd>
-                <dt><p>Category</p></dt>
-                <dd><p>{{data.category_name}}</p></dd>
-                <dt><p>Average price</p></dt>
-                <dd><p>{{data.average_price}}</p></dd>
-                <dt><p>Buy price</p></dt>
-                <dd><p>{{data.buy_price}}</p></dd>
-                <dt><p>Buy price</p></dt>
-                <dd><p>{{data.buy_price}}</p></dd>
-                <dt><p>Stock</p></dt>
-                <dd><p>{{data.stock}}</p></dd>
-                <dt><p>Sell price</p></dt>
-                <dd><p>{{data.sell_price}}</p></dd>
-                <dt><p>Demand</p></dt>
-                <dd><p>{{data.demand}}</p></dd>
-            </dl>
-        </div>
-    </div>
-{% endif %}
+        </p>
+    </dd>
+    <dt><p>Station</p></dt>
+    <dd>
+        <p>
+            <a class="btn btn-primary btn-sm" href="{{data.station}}">
+                {{data.station_name}}
+            </a>
+        </p>
+    </dd>
+    <dt><p>Category</p></dt>
+    <dd><p>{{data.category_name}}</p></dd>
+    <dt><p>Average price</p></dt>
+    <dd><p>{{data.average_price}}</p></dd>
+    <dt><p>Buy price</p></dt>
+    <dd><p>{{data.buy_price}}</p></dd>
+    <dt><p>Buy price</p></dt>
+    <dd><p>{{data.buy_price}}</p></dd>
+    <dt><p>Stock</p></dt>
+    <dd><p>{{data.stock}}</p></dd>
+    <dt><p>Sell price</p></dt>
+    <dd><p>{{data.sell_price}}</p></dd>
+    <dt><p>Demand</p></dt>
+    <dd><p>{{data.demand}}</p></dd>
+</dl>
+{% endblock body %}

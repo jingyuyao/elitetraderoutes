@@ -1,23 +1,20 @@
-{% load my_tags %}
-{% if data %}
-    <div class="panel panel-info" id="route_{{data.id}}">
-        <div class="panel-heading">
-            <a class="panel-title" href="{{data.url}}">
-                Route {{data.id}}
-            </a>
-        </div>
-        <div class="panel-body">
-            <dl>
-                <dt><p><a class="btn btn-primary btn-sm" href="{{data.owner}}">Owner</a></p></dt>
-                <dt><p>Created:</p></dt>
-                <dd><p>{{data.created}}</p></dd>
-                <dt><p>Connections:</p></dt>
-                <dd>
-                    {% for connection in data.connections %}
-                        {% include "frontend/connection/detail.html" with data=connection only %}
-                    {% endfor %}
-                </dd>
-            </dl>
-        </div>
+{% extends 'frontend/detail_base.html' %}
+{% block heading %}
+    Route {{data.id}}
+{% endblock heading %}
+
+{% block body %}
+<dl>
+    <dt><p><a class="btn btn-primary btn-sm" href="{{data.owner}}">Owner</a></p></dt>
+    <dt><p>Created:</p></dt>
+    <dd><p>{{data.created}}</p></dd>
+    <dt><p>Connections:</p></dt>
+    <dd>
+    <div class='panel-group' id='{{data.uuid}}_connection_list'>
+        {% for connection in data.connections %}
+            {% include "frontend/connection/detail.html" with data=connection group=data.uuid|add:'_connection_list' only %}
+        {% endfor %}
     </div>
-{% endif %}
+    </dd>
+</dl>
+{% endblock body %}

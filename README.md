@@ -40,11 +40,11 @@ Open mysql terminal as root@localhost:
 
 ## Additional setup
 
-### Linux:
+#### Linux:
 
 - bash project_setup.sh
 
-### Windows:
+#### Windows:
 
 - python manage.py migrate
 - python manage.py test

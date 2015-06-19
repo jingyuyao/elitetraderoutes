@@ -1,5 +1,9 @@
 {% extends "frontend/base.html" %}
 
+{% block title %}
+Station list
+{% endblock %}
+
 {% block list %}
     <div class="page-header">
         <h1>
@@ -7,8 +11,11 @@
         </h1>
     </div>
     {% if data %}
+    {% include 'frontend/list_nav.html' %}
+    <div class='panel-group' id='station_list'>
         {% for station in data.results %}
-            {% include "frontend/station/detail.html" with data=station only %}
+            {% include "frontend/station/detail.html" with data=station group='station_list' only %}
         {% endfor %}
+    </div>
     {% endif %}
 {% endblock list %}

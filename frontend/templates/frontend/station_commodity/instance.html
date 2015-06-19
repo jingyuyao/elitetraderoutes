@@ -1,12 +1,16 @@
 {% extends "frontend/base.html" %}
 
+{% block title %}
+{% if data %}
+{{data.station_name}} / {{data.commodity_name}}
+{% data %}
+{% endblock %}
+
 {% block instance %}
     <div class="page-header">
         <h1>Station Commodity</h1>
     </div>
-    <p>
-        <a class="btn btn-lg btn-default" href="{% url 'stationcommodity-list' %}">Back to list</a>
-    </p>
+    {% include 'frontend/back_button.html' %}
     {% if data %}
         {% include "frontend/station_commodity/detail.html" %}
     {% endif %}

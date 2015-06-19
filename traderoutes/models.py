@@ -1,10 +1,11 @@
 import math
 
 from django.db import models
+from common.models import UUIDModel
 
 # Create your models here.
 
-class Route(models.Model):
+class Route(UUIDModel):
     """
     Contains the metadata for a trade route.
 
@@ -18,7 +19,7 @@ class Route(models.Model):
         return "%s:%s" % (str(self.owner), str(self.pk))
 
 
-class Connection(models.Model):
+class Connection(UUIDModel):
     """
     Contains the core stop by stop data of trade routes.
     """

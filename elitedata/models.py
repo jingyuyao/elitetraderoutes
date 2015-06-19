@@ -4,10 +4,11 @@ created is the time when the data is added to database.
 """
 
 from django.db import models
+from common.models import UUIDModel
 
 # Create your models here.
 
-class System(models.Model):
+class System(UUIDModel):
     name = models.CharField(max_length=100)
     needs_permit = models.NullBooleanField(default=False)
 
@@ -30,7 +31,7 @@ class System(models.Model):
         return self.name
 
 
-class Station(models.Model):
+class Station(UUIDModel):
     name = models.CharField(max_length=100)
     system = models.ForeignKey(System, related_name="stations", editable=False)
     type = models.CharField(max_length=100, null=True, blank=True)
@@ -56,7 +57,7 @@ class Station(models.Model):
         return self.name
 
 
-class Commodity(models.Model):
+class Commodity(UUIDModel):
     name = models.CharField(max_length=100)
     average_price = models.IntegerField(default=0, null=True, blank=True)
     category_id = models.IntegerField(default=0, editable=False)
@@ -66,7 +67,7 @@ class Commodity(models.Model):
         return self.name
 
 
-class StationCommodity(models.Model):
+class StationCommodity(UUIDModel):
     commodity = models.ForeignKey(Commodity, related_name='station_commodities', editable=False)
     station = models.ForeignKey(Station, related_name='station_commodities', editable=False)
     buy_price = models.IntegerField(default=0)

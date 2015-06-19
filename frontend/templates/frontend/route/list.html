@@ -1,5 +1,9 @@
 {% extends "frontend/base.html" %}
 
+{% block title %}
+Route list
+{% endblock %}
+
 {% block list %}
     <div class="page-header">
         <h1>
@@ -8,8 +12,11 @@
     </div>
     {% include "frontend/route/form.html" with data=False %}
     {% if data %}
+    {% include 'frontend/list_nav.html' %}
+    <div class='panel-group' id='route_list'>
         {% for route in data.results %}
-            {% include "frontend/route/detail.html" with data=route only %}
+            {% include "frontend/route/detail.html" with data=route group='route_list' only %}
         {% endfor %}
+    </div>
     {% endif %}
 {% endblock list %}

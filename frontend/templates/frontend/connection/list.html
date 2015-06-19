@@ -1,5 +1,9 @@
 {% extends "frontend/base.html" %}
 
+{% block title %}
+Connection list
+{% endblock %}
+
 {% block list %}
     <div class="page-header">
         <h1>
@@ -7,8 +11,11 @@
         </h1>
     </div>
     {% if data %}
+    {% include 'frontend/list_nav.html' %}
+    <div class='panel-group' id='connection_list'>
         {% for connection in data.results %}
-            {% include "frontend/connection/detail.html" with data=connection only %}
+            {% include "frontend/connection/detail.html" with data=connection group='connection_list' only %}
         {% endfor %}
+    </div>
     {% endif %}
 {% endblock list %}

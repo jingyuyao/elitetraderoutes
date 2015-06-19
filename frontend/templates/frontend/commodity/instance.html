@@ -1,12 +1,16 @@
 {% extends "frontend/base.html" %}
 
+{% block title %}
+{% if data %}
+{{data.name}}
+{% data %}
+{% endblock %}
+
 {% block instance %}
     <div class="page-header">
         <h1>Commodity</h1>
     </div>
-    <p>
-        <a class="btn btn-lg btn-default" href="{% url 'commodity-list' %}">Back to list</a>
-    </p>
+    {% include 'frontend/back_button.html' %}
     {% if data %}
         {% include "frontend/commodity/detail.html" %}
     {% endif %}

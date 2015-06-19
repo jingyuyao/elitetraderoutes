@@ -1,56 +1,53 @@
-{% load my_tags %}
-{% if data %}
-    <div class="panel panel-info" id="system_{{data.id}}">
-        <div class="panel-heading">
-            <a class="panel-title" href="{{data.url}}">
-                {{data.name}}
-            </a>
+{% extends 'frontend/detail_base.html' %}
+{% block heading %}
+{{data.name}}
+{% endblock heading %}
+
+{% block body %}
+<dl>
+    <dt><p>Needs permit</p></dt>
+    <dd><p>{{data.needs_permit}}</p></dd>
+    <dt><p>Primary economy</p></dt>
+    <dd><p>{{data.primary_economy}}</p></dd>
+    <dt><p>Population</p></dt>
+    <dd><p>{{data.population}}</p></dd>
+    <dt><p>Security</p></dt>
+    <dd><p>{{data.security}}</p></dd>
+    <dt><p>Allegiance</p></dt>
+    <dd><p>{{data.allegiance}}</p></dd>
+    <dt><p>Government</p></dt>
+    <dd><p>{{data.government}}</p></dd>
+    <dt><p>State</p></dt>
+    <dd><p>{{data.state}}</p></dd>
+    <dt><p>Faction</p></dt>
+    <dd><p>{{data.faction}}</p></dd>
+    <dt><p>X</p></dt>
+    <dd><p>{{data.x}}</p></dd>
+    <dt><p>Y</p></dt>
+    <dd><p>{{data.y}}</p></dd>
+    <dt><p>Z</p></dt>
+    <dd><p>{{data.z}}</p></dd>
+    <dt><p>Stations</p></dt>
+    <dd>
+        {% if data.min %}
+        <ul>
+            {% for station in data.stations %}
+                <li>
+                    <a class="btn btn-primary btn-sm" href="{{station}}">
+                        {{station}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class='panel-group' id='{{data.uuid}}_station_list'>
+            {% for station in data.stations %}
+                {% include 'frontend/station/detail.html' with data=station group=data.uuid|add:'_station_list' only %}
+            {% endfor %}
         </div>
-        <div class="panel-body">
-            <dl>
-                <dt><p>Needs permit</p></dt>
-                <dd><p>{{data.needs_permit}}</p></dd>
-                <dt><p>Primary economy</p></dt>
-                <dd><p>{{data.primary_economy}}</p></dd>
-                <dt><p>Population</p></dt>
-                <dd><p>{{data.population}}</p></dd>
-                <dt><p>Security</p></dt>
-                <dd><p>{{data.security}}</p></dd>
-                <dt><p>Allegiance</p></dt>
-                <dd><p>{{data.allegiance}}</p></dd>
-                <dt><p>Government</p></dt>
-                <dd><p>{{data.government}}</p></dd>
-                <dt><p>State</p></dt>
-                <dd><p>{{data.state}}</p></dd>
-                <dt><p>Faction</p></dt>
-                <dd><p>{{data.faction}}</p></dd>
-                <dt><p>X</p></dt>
-                <dd><p>{{data.x}}</p></dd>
-                <dt><p>Y</p></dt>
-                <dd><p>{{data.y}}</p></dd>
-                <dt><p>Z</p></dt>
-                <dd><p>{{data.z}}</p></dd>
-                <dt><p>Stations</p></dt>
-                <dd>
-                    {% if data.min %}
-                    <ul>
-                        {% for station in data.stations %}
-                            <li>
-                                <a class="btn btn-primary btn-sm" href="{{station}}">
-                                    {{station}}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                        {% for station in data.stations %}
-                            {% include 'frontend/station/detail.html' with data=station only %}
-                        {% endfor %}
-                    {% endif %}
-                </dd>
-                <dt><p>Updated at</p></dt>
-                <dd><p>{{data.updated_at}}</p></dd>
-            </dl>
-        </div>
-    </div>
-{% endif %}
+        {% endif %}
+    </dd>
+    <dt><p>Updated at</p></dt>
+    <dd><p>{{data.updated_at}}</p></dd>
+</dl>
+{% endblock body %}

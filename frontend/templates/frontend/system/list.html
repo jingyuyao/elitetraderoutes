@@ -1,5 +1,9 @@
 {% extends "frontend/base.html" %}
 
+{% block title %}
+System list
+{% endblock %}
+
 {% block list %}
     <div class="page-header">
         <h1>
@@ -7,8 +11,11 @@
         </h1>
     </div>
     {% if data %}
+    {% include 'frontend/list_nav.html' %}
+    <div class='panel-group' id='system_list'>
         {% for system in data.results %}
-            {% include "frontend/system/detail.html" with data=system only %}
+            {% include "frontend/system/detail.html" with data=system group='system_list' only %}
         {% endfor %}
+    </div>
     {% endif %}
 {% endblock list %}

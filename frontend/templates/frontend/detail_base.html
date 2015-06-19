@@ -1,0 +1,23 @@
+{% load my_tags %}
+{% if data %}
+    <div class="panel panel-info" id="{{data.uuid}}">
+        <div id='{{data.uuid}}_heading' class="panel-heading" role='tab'>
+            {% if group %}
+            <a role='button' data-toggle='collapse' data-parent='#{{group}}' class="panel-title" href="#{{data.uuid}}_collapse">
+            {% else %}
+            <a class="panel-title" href="{{data.url}}">
+            {% endif %}
+                {% block heading %}{% endblock heading %}
+            </a>
+        </div>
+        {% if group %}
+        <div id='{{data.uuid}}_collapse' class='panel-collapse collapse' role='tabpanel'>
+        {% endif %}
+            <div id='{{data.uuid}}_body' class="panel-body">
+                {% block body %}{% endblock body %}
+            </div>
+        {% if group %}
+        </div>
+        {% endif %}
+    </div>
+{% endif %}
