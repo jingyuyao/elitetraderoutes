@@ -10,7 +10,9 @@ Route list
             Route list
         </h1>
     </div>
+    {% if user.is_authenticated %}
     {% include "frontend/route/form.html" with data=False %}
+    {% endif %}
     {% if data %}
     {% include 'frontend/list_nav.html' %}
     <div class='panel-group' id='route_list'>
