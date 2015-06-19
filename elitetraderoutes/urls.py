@@ -30,7 +30,7 @@ api_router.register('commodities', elitedata.views.CommodityViewSet)
 api_router.register('station_commodities', elitedata.views.StationCommodityViewSet)
 
 urlpatterns = [
-    url(r'^index/', include('frontend.urls')),
+    url(r'^', include('frontend.urls')),
     url(r'^', include(api_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

@@ -1,0 +1,40 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}
+Elite Trade Routes
+{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>
+        Under construction...
+    </h1>
+</div>
+
+<p>
+    The first version of this website will be focused on providing a restful
+    api. The api will have a matching html and api view in most cases.
+</p>
+
+<p>
+    To specify the return type of the content you can either use the appropriate
+    accept header (recommended) or append '.json', '.html' or '.api' to the end
+    of your calls. ex. <code>/systems/1/.json</code> will return the data for that
+    endpoint in json and <code>/systems/1/.api</code> will display api information
+    for that endpoint.
+</p>
+
+<p>
+    The use of accept header is recommended because if a suffix is used, all of the
+    hyperlinks returned on that page will also have the suffix. This can become
+    somewhat bothersome as it makes the return value not very consistent.
+</p>
+
+<p>
+    The backend used to build this api are Django and django-rest-framework.
+</p>
+
+<p>
+    The data used in this website is collected from eddb.io and EDDN.
+</p>
+{% endblock %}
