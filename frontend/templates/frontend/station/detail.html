@@ -4,52 +4,97 @@
 {% endblock heading %}
 
 {% block body %}
-<dl>
-    <dt><p>System</p></dt>
-    <dd>
-        <p>
-            <a class="btn btn-primary btn-sm" href="{{data.system}}">
-                {{data.system_name}}
-            </a>
-        </p>
-    </dd>
-    <dt><p>Type</p></dt>
-    <dd><p>{{data.type}}</p></dd>
-    <dt><p>Max landing pad size</p></dt>
-    <dd><p>{{data.max_landing_pad_size}}</p></dd>
-    <dt><p>Distance to star</p></dt>
-    <dd><p>{{data.distance_to_star}}</p></dd>
-    <dt><p>Allegiance</p></dt>
-    <dd><p>{{data.allegiance}}</p></dd>
-    <dt><p>Government</p></dt>
-    <dd><p>{{data.government}}</p></dd>
-    <dt><p>State</p></dt>
-    <dd><p>{{data.state}}</p></dd>
-    <dt><p>Faction</p></dt>
-    <dd><p>{{data.faction}}</p></dd>
-    <dt><p>Has repair</p></dt>
-    <dd><p>{{data.has_repair}}</p></dd>
-    <dt><p>Has blackmarket</p></dt>
-    <dd><p>{{data.has_blackmarket}}</p></dd>
-    <dt><p>Has refuel</p></dt>
-    <dd><p>{{data.has_refuel}}</p></dd>
-    <dt><p>Has rearm</p></dt>
-    <dd><p>{{data.has_rearm}}</p></dd>
-    <dt><p>Has shipyard</p></dt>
-    <dd><p>{{data.has_shipyard}}</p></dd>
-    <dt><p>Has outfitting</p></dt>
-    <dd><p>{{data.has_outfitting}}</p></dd>
-    <dt><p>Has commodities</p></dt>
-    <dd><p>{{data.has_commodities}}</p></dd>
-    <dt><p>Commodities</p></dt>
-    <dd>
-    <div class='panel-group' id='{{data.uuid}}_commodity_list'>
-        {% for s in data.station_commodities %}
-            {% include 'frontend/station_commodity/detail.html' with data=s group=data.uuid|add:'_commodity_list' only %}
-        {% endfor %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>System</th>
+            <th>Type</th>
+            <th>Max pad size</th>
+            <th>Distance to star</th>
+            <th>Allegiance</th>
+            <th>Government</th>
+            <th>State</th>
+            <th>Faction</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a class="btn btn-primary btn-sm" href="{{data.system}}">
+                    {{data.system_name}}
+                </a>
+            </td>
+            <td>{{data.type}}</td>
+            <td>{{data.max_landing_pad_size}}</td>
+            <td>{{data.distance_to_star}}</td>
+            <td>{{data.allegiance}}</td>
+            <td>{{data.government}}</td>
+            <td>{{data.state}}</td>
+            <td>{{data.faction}}</td>
+        </tr>
+        <tr>
+            <th>Repair</th>
+            <th>Black market</th>
+            <th>Refuel</th>
+            <th>Rearm</th>
+            <th>Shipyard</th>
+            <th>Outfitting</th>
+            <th>Commodities</th>
+            <th>Updated</th>
+        </tr>
+        <tr>
+            <td>{{data.has_repair}}</td>
+            <td>{{data.has_blackmarket}}</td>
+            <td>{{data.has_refuel}}</td>
+            <td>{{data.has_rearm}}</td>
+            <td>{{data.has_shipyard}}</td>
+            <td>{{data.has_outfitting}}</td>
+            <td>{{data.has_commodities}}</td>
+            <td>{{data.updated_at}}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if data.station_commodities|length == 0 %}
+    <h4>No commodities</h4>
+    {% else %}
+    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#{{data.uuid}}_commodities">
+        Commodities
+    </button>
+    <div class="collapse" id="{{data.uuid}}_commodities">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Commodity</th>
+                <th>Category</th>
+                <th>Average price</th>
+                <th>Buy</th>
+                <th>Supply (level)</th>
+                <th>Sell</th>
+                <th>Demand (level)</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for s in data.station_commodities %}
+                <tr>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="{{s.commodity}}">
+                            {{s.commodity_name}}
+                        </a>
+                    </td>
+                    <td>{{s.category_name}}</td>
+                    <td>{{s.average_price}}</td>
+                    <td>{{s.buy_price}}</td>
+                    <td>{{s.supply}} ({{data.supply_level}})</td>
+                    <td>{{s.sell_price}}</td>
+                    <td>{{s.demand}} ({{s.demand_level}})</td>
+                    <td>{{s.created}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-    </dd>
-    <dt><p>Updated at</p></dt>
-    <dd><p>{{data.updated_at}}</p></dd>
-</dl>
+    {% endif %}
+</div>
 {% endblock body %}

@@ -24,6 +24,14 @@ Ex: localhost/model/1/
 
 This is used to just render the content of a specific model instance. It is factored out of instance.html so it can be reused.
 
+##### thead.html
+
+Used to construct the thead row of the model in a table.
+
+##### row.html
+
+The model as a row in a table.
+
 #### list.html
 
 This is used for the list view for a specific model

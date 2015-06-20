@@ -4,50 +4,62 @@
 {% endblock heading %}
 
 {% block body %}
-<dl>
-    <dt><p>Needs permit</p></dt>
-    <dd><p>{{data.needs_permit}}</p></dd>
-    <dt><p>Primary economy</p></dt>
-    <dd><p>{{data.primary_economy}}</p></dd>
-    <dt><p>Population</p></dt>
-    <dd><p>{{data.population}}</p></dd>
-    <dt><p>Security</p></dt>
-    <dd><p>{{data.security}}</p></dd>
-    <dt><p>Allegiance</p></dt>
-    <dd><p>{{data.allegiance}}</p></dd>
-    <dt><p>Government</p></dt>
-    <dd><p>{{data.government}}</p></dd>
-    <dt><p>State</p></dt>
-    <dd><p>{{data.state}}</p></dd>
-    <dt><p>Faction</p></dt>
-    <dd><p>{{data.faction}}</p></dd>
-    <dt><p>X</p></dt>
-    <dd><p>{{data.x}}</p></dd>
-    <dt><p>Y</p></dt>
-    <dd><p>{{data.y}}</p></dd>
-    <dt><p>Z</p></dt>
-    <dd><p>{{data.z}}</p></dd>
-    <dt><p>Stations</p></dt>
-    <dd>
-        {% if data.min %}
-        <ul>
-            {% for station in data.stations %}
-                <li>
-                    <a class="btn btn-primary btn-sm" href="{{station}}">
-                        {{station}}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <div class='panel-group' id='{{data.uuid}}_station_list'>
-            {% for station in data.stations %}
-                {% include 'frontend/station/detail.html' with data=station group=data.uuid|add:'_station_list' only %}
-            {% endfor %}
-        </div>
-        {% endif %}
-    </dd>
-    <dt><p>Updated at</p></dt>
-    <dd><p>{{data.updated_at}}</p></dd>
-</dl>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Needs permit</th>
+                <th>Primary economy</th>
+                <th>Population</th>
+                <th>Security</th>
+                <th>Allegiance</th>
+                <th>Government</th>
+                <th>State</th>
+                <th>Faction</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>Z</th>
+                <th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{data.needs_permit}}</td>
+                <td>{{data.primary_economy}}</td>
+                <td>{{data.population}}</td>
+                <td>{{data.security}}</td>
+                <td>{{data.allegiance}}</td>
+                <td>{{data.government}}</td>
+                <td>{{data.state}}</td>
+                <td>{{data.faction}}</td>
+                <td>{{data.x}}</td>
+                <td>{{data.y}}</td>
+                <td>{{data.z}}</td>
+                <td>{{data.updated_at}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% if data.stations|length == 0 %}
+    <h4>No stations</h4>
+{% else %}
+    <h4>Stations</h4>
+    {% if data.min %}
+    <ul class="list-unstyled">
+        {% for station in data.stations %}
+        <li>
+            <a class="btn btn-primary btn-sm" href="{{station}}">
+                {{station}}
+            </a>
+        </li>
+    </ul>
+        {% endfor %}
+    {% else %}
+    <div class='panel-group' id='{{data.uuid}}_station_list' role="tablist">
+        {% for station in data.stations %}
+            {% include 'frontend/station/detail.html' with data=station group=data.uuid|add:'_station_list' only %}
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endif %}
 {% endblock body %}

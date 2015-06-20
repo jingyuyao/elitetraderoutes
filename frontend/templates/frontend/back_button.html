@@ -1,3 +1,9 @@
 <p>
-    <button class="btn btn-lg btn-default" onclick="window.history.back()">Back</button>
+    {% if url %}
+        <a class="btn btn-lg btn-default" href="{% url url %}">{{name|default:'Back'}}</a>
+    {% elif href %}
+        <a class="btn btn-lg btn-default" href="{{href}}">{{name|default:'Back'}}</a>
+    {% else %}
+        <button class="btn btn-lg btn-default" onclick="window.history.back()">{{name|default:'Back'}}</button>
+    {% endif %}
 </p>

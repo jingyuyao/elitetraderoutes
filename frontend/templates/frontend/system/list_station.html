@@ -15,7 +15,7 @@ System stations
     </p>
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='{{data.uuid}}_station_list'>
+    <div class='panel-group' id='{{data.uuid}}_station_list' role="tablist">
         {% for station in data.results %}
             {% include "frontend/station/detail.html" with data=station group=data.uuid|add:'_station_list' only %}
         {% endfor %}

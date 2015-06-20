@@ -4,17 +4,32 @@
 {% endblock heading %}
 
 {% block body %}
-<dl>
-    <dt><p><a class="btn btn-primary btn-sm" href="{{data.owner}}">Owner</a></p></dt>
-    <dt><p>Created:</p></dt>
-    <dd><p>{{data.created}}</p></dd>
-    <dt><p>Connections:</p></dt>
-    <dd>
-    <div class='panel-group' id='{{data.uuid}}_connection_list'>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Owner</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a class="btn btn-primary btn-sm" href="{{data.owner}}">Owner</a>
+            </td>
+            <td>{{data.created}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% if data.connections|length == 0 %}
+    <h4>No connections</h4>
+{% else %}
+    <h4>Connections</h4>
+    <div class='panel-group' id='{{data.uuid}}_connection_list' role="tablist">
         {% for connection in data.connections %}
             {% include "frontend/connection/detail.html" with data=connection group=data.uuid|add:'_connection_list' only %}
         {% endfor %}
     </div>
-    </dd>
-</dl>
+{% endif %}
 {% endblock body %}

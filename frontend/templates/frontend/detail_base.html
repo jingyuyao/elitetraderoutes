@@ -2,13 +2,22 @@
 {% if data %}
     <div class="panel panel-info" id="{{data.uuid}}">
         <div id='{{data.uuid}}_heading' class="panel-heading" role='tab'>
+            <h3 class="panel-title">
             {% if group %}
-            <a role='button' data-toggle='collapse' data-parent='#{{group}}' class="panel-title" href="#{{data.uuid}}_collapse">
-            {% else %}
-            <a class="panel-title" href="{{data.url}}">
+                <a role='button' data-toggle='collapse' data-parent='#{{group}}' class="panel-title" href="#{{data.uuid}}_collapse">
             {% endif %}
-                {% block heading %}{% endblock heading %}
-            </a>
+
+            {% block heading %}{% endblock heading %}
+
+            {% if group %}
+                </a>
+                <small>
+                    <a class="pull-right" href="{{data.url}}">
+                        goto
+                    </a>
+                </small>
+            {% endif %}
+            </h3>
         </div>
         {% if group %}
         <div id='{{data.uuid}}_collapse' class='panel-collapse collapse' role='tabpanel'>

@@ -4,36 +4,12 @@
 {% endblock heading %}
 
 {% block body %}
-<dl>
-    <dt><p>Commodity</p></dt>
-    <dd>
-        <p>
-            <a class="btn btn-primary btn-sm" href="{{data.commodity}}">
-                {{data.commodity_name}}
-            </a>
-        </p>
-    </dd>
-    <dt><p>Station</p></dt>
-    <dd>
-        <p>
-            <a class="btn btn-primary btn-sm" href="{{data.station}}">
-                {{data.station_name}}
-            </a>
-        </p>
-    </dd>
-    <dt><p>Category</p></dt>
-    <dd><p>{{data.category_name}}</p></dd>
-    <dt><p>Average price</p></dt>
-    <dd><p>{{data.average_price}}</p></dd>
-    <dt><p>Buy price</p></dt>
-    <dd><p>{{data.buy_price}}</p></dd>
-    <dt><p>Buy price</p></dt>
-    <dd><p>{{data.buy_price}}</p></dd>
-    <dt><p>Stock</p></dt>
-    <dd><p>{{data.stock}}</p></dd>
-    <dt><p>Sell price</p></dt>
-    <dd><p>{{data.sell_price}}</p></dd>
-    <dt><p>Demand</p></dt>
-    <dd><p>{{data.demand}}</p></dd>
-</dl>
+<div class="table-responsive">
+    <table class="table">
+        {% include 'frontend/station_commodity/thead.html' %}
+        <tbody>
+        {% include "frontend/station_commodity/row.html" %}
+        </tbody>
+    </table>
+</div>
 {% endblock body %}

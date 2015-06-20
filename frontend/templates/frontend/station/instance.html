@@ -10,7 +10,7 @@
     <div class="page-header">
         <h1>Station</h1>
     </div>
-    {% include 'frontend/back_button.html' %}
+    {% include 'frontend/back_button.html' with href=data.system name='Back to system' %}
     {% if data %}
         {% include "frontend/station/detail.html" %}
     {% endif %}

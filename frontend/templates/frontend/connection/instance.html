@@ -12,9 +12,7 @@ Connection {{data.name}}
     </div>
     {% if data %}
         {% if data.route %}
-            <p>
-                <a class="btn btn-lg btn-default" href="{{data.route}}">Back to route</a>
-            </p>
+            {% include 'frontend/back_button.html' with href=data.route name='Back to route' %}
         {% else %}
             {% include 'frontend/back_button.html' %}
         {% endif %}

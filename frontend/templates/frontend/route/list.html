@@ -15,7 +15,7 @@ Route list
     {% endif %}
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='route_list'>
+    <div class='panel-group' id='route_list' role="tablist">
         {% for route in data.results %}
             {% include "frontend/route/detail.html" with data=route group='route_list' only %}
         {% endfor %}

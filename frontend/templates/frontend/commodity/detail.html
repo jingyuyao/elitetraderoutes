@@ -4,18 +4,61 @@
 {% endblock heading %}
 
 {% block body %}
-<dl>
-    <dt><p>Average price</p></dt>
-    <dd><p>{{data.average_price}}</p></dd>
-    <dt><p>Category name</p></dt>
-    <dd><p>{{data.category_name}}</p></dd>
-    <dt><p>Stations</p></dt>
-    <dd>
-    <div class='panel-group' id='{{data.uuid}}_station_list}}'>
-        {% for s in data.station_commodities %}
-            {% include 'frontend/station_commodity/detail.html' with data=s group=data.uuid|add:'_station_list' only %}
-        {% endfor %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Average price</th>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{data.average_price}}</td>
+            <td>{{data.category_name}}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if data.station_commodities|length == 0 %}
+        <h4>No stations</h4>
+    {% else %}
+    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#{{data.uuid}}_stations">
+        Stations
+    </button>
+    <div class="collapse" id="{{data.uuid}}_stations">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Station</th>
+                <th>Category</th>
+                <th>Average price</th>
+                <th>Buy</th>
+                <th>Supply (level)</th>
+                <th>Sell</th>
+                <th>Demand (level)</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for s in data.station_commodities %}
+                <tr>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="{{s.station}}">
+                            {{s.station_name}}
+                        </a>
+                    </td>
+                    <td>{{s.category_name}}</td>
+                    <td>{{s.average_price}}</td>
+                    <td>{{s.buy_price}}</td>
+                    <td>{{s.supply}} ({{s.supply_level}})</td>
+                    <td>{{s.sell_price}}</td>
+                    <td>{{s.demand}} ({{s.demand_level}})</td>
+                    <td>{{s.created}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-    </dd>
-</dl>
+    {% endif %}
+</div>
 {% endblock body %}

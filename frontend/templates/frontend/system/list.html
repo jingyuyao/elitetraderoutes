@@ -12,7 +12,7 @@ System list
     </div>
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='system_list'>
+    <div class='panel-group' id='system_list' role="tablist">
         {% for system in data.results %}
             {% include "frontend/system/detail.html" with data=system group='system_list' only %}
         {% endfor %}

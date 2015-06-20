@@ -12,7 +12,7 @@ Station list
     </div>
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='station_list'>
+    <div class='panel-group' id='station_list' role="tablist">
         {% for station in data.results %}
             {% include "frontend/station/detail.html" with data=station group='station_list' only %}
         {% endfor %}

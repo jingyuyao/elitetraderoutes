@@ -12,7 +12,7 @@ Connection list
     </div>
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='connection_list'>
+    <div class='panel-group' id='connection_list' role="tablist">
         {% for connection in data.results %}
             {% include "frontend/connection/detail.html" with data=connection group='connection_list' only %}
         {% endfor %}

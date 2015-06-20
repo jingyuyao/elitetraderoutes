@@ -12,7 +12,7 @@ Commodity list
     </div>
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='commodity_list'>
+    <div class='panel-group' id='commodity_list' role="tablist">
         {% for commodity in data.results %}
             {% include "frontend/commodity/detail.html" with data=commodity group='commodity_list' only %}
         {% endfor %}
