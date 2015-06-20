@@ -62,3 +62,7 @@ You should also create a super user for testing purposes using manage.py
 Start the connection to EDDN:
 
 - python -m eddn.receiver
+
+
+Copyright © 2015, Jingyu Yao.
+All rights reserved.
