@@ -1,4 +1,4 @@
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
 from .models import System, Station, Commodity, StationCommodity
@@ -64,6 +64,15 @@ class StationViewSet(WrappedModelViewSet):
     template_name = 'frontend/station/instance.html'
     list_template_name = 'frontend/station/list.html'
 
+    @detail_route()
+    def commodities(self, request, *args, **kwargs):
+        station = self.get_object()
+        commodities = StationCommodity.objects.filter(station=station)
+
+        serializer = StationCommoditySerializer(commodities, context={'request': request}, many=True)
+        return wrap_response(Response({'results': serializer.data},
+                                      template_name='frontend/station/list_commodity.html'))
+
 
 class CommodityViewSet(WrappedModelViewSet):
     class CommodityFilter(django_filters.FilterSet):
@@ -80,6 +89,15 @@ class CommodityViewSet(WrappedModelViewSet):
     search_fields = ('name',)
     template_name = 'frontend/commodity/instance.html'
     list_template_name = 'frontend/commodity/list.html'
+
+    @detail_route()
+    def stations(self, request, *args, **kwargs):
+        commodity = self.get_object()
+        stations = StationCommodity.objects.filter(commodity=commodity)
+
+        serializer = StationCommoditySerializer(stations, context={'request': request}, many=True)
+        return wrap_response(Response({'results': serializer.data},
+                                      template_name='frontend/commodity/list_station.html'))
 
 class StationCommodityViewSet(WrappedModelViewSet):
     queryset = StationCommodity.objects.all()
