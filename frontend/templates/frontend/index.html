@@ -1,4 +1,5 @@
 {% extends 'frontend/base.html' %}
+{% load staticfiles %}
 
 {% block title %}
 Elite Trade Routes
@@ -53,4 +54,8 @@ Elite Trade Routes
 <p>
     The data used in this website is collected from eddb.io and EDDN.
 </p>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'frontend/js/index.js' %}"></script>
 {% endblock %}

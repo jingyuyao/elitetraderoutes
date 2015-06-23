@@ -1,3 +1,7 @@
+// This file is included on every page. Try not to bloat it.
+// Page specific js should be inserted using the script block tag
+// from the template.
+
 // Global scope
 
 var endpointToInputs = {
@@ -7,11 +11,6 @@ var endpointToInputs = {
 };
 
 var cache = {};
-var form = {};
-
-function addToForm(name, item){
-    form[name] = item;
-}
 
 function matcher(item){
     return this.query.toLowerCase().indexOf(item.name) != -1;
@@ -37,9 +36,10 @@ function attachInputToModel(name, model){
                   return;
               }
 
-              var correspondingSystemInput = name.replace('station', 'system');
-              if (form.hasOwnProperty(correspondingSystemInput)){
-                requestUrl = form[correspondingSystemInput].url + 'stations/';
+              var correspondingSystemInput = input.replace('station', 'system');
+              var selectedSystem = $(correspondingSystemInput).data('selected');
+              if (typeof selectedSystem !== 'undefined'){
+                requestUrl = selectedSystem.url + 'stations/';
               }
               else{
                 process([]);
@@ -57,7 +57,7 @@ function attachInputToModel(name, model){
             });
         },
         afterSelect: function(suggestion){
-            addToForm(name, suggestion);
+            $(input).data('selected', suggestion);
             if (!isStation){
                 // Resets the associated station input data cache when a new
                 // system is selected.
@@ -83,59 +83,20 @@ function attachInputsToModels(dict){
     }
 }
 
-function attachSearchToModel(id, model){
-    var $input = $(id);
-
-    // Clean previous typeahead
-    $input.typeahead('destroy');
-
-    $input.typeahead({
-        minLength: 2,
-        delay: 250, // Millisecond
-        source: function(query, process) {
-            var requestUrl = '/' + model + '/?search=' + query;
-
-            $.getJSON(requestUrl, function(response){
-                process(response.data.results);
-            });
-        },
-        afterSelect: function(suggestion){
-            $input.data('selected', suggestion);
-        }
-    });
-}
-
 $(function(){
     attachInputsToModels(endpointToInputs);
 
-    // When submitting a form, replace inputs with the data in
-    // the form variable if it exists.
+    // When submitting a form, replace inputs with input.data('selected').url
     $('form').each(function(){
-        $(this).submit(function(){
-            for (var key in form){
-                $('input[name=' + key + ']').val(form[key].url);
-            }
+        var $form = $(this);
+        $form.submit(function(){
+            $form.find(':input').each(function(){
+                var selected = $(this).data('selected');
+                if (typeof selected !== 'undefined'){
+                    $(this).val(selected.url);
+                    $(this).removeData();
+                }
+            });
         });
-    });
-
-    // Default option
-    attachSearchToModel('#search_input', 'commodities');
-
-    $(".dropdown-menu li a").click(function(){
-        var selText = $(this).text();
-        $(this).parents('.input-group').find('input[type=submit]').val(selText);
-        attachSearchToModel('#search_input', selText);
-    });
-
-    $('#search_form').submit(function(e){
-        e.preventDefault();
-        var $input = $('#search_input');
-        var selected = $input.data('selected');
-        if(typeof selected === 'undefined'){
-            $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
-        }
-        else{
-            window.location.href = selected.url;
-        }
     });
 });
