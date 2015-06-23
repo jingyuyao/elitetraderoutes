@@ -1,6 +1,4 @@
-function attachSearchToModel(id, model){
-    var $input = $(id);
-
+function attachSearchToModel($input, model){
     // Clean previous typeahead
     $input.typeahead('destroy');
 
@@ -15,35 +13,27 @@ function attachSearchToModel(id, model){
             });
         },
         afterSelect: function(suggestion){
-            $input.data('selected', suggestion);
+            window.location.href = suggestion.url;
         }
     });
 }
 
 $(function(){
     // Search box logic
+    var $input = $('#search_input'), $btn = $('#search_input_btn');
+
     // Default option
-    attachSearchToModel('#search_input', 'commodities');
+    attachSearchToModel($input, 'commodities');
 
     $(".dropdown-menu li a").click(function(){
         var selText = $(this).text();
-        $(this).parents('.input-group').find('input[type=submit]').val(selText);
-        attachSearchToModel('#search_input', selText);
+        $btn.html(selText+'<span class="caret"></span>');
+        attachSearchToModel($input, selText);
     });
 
-    var $search_form = $('#search_form');
-
-    $search_form.off('submit'); // Need to get rid of previously defined handler first
-    $search_form.submit(function(e){
-        e.preventDefault();
-        var $input = $('#search_input');
-        var selected = $input.data('selected');
-        if(typeof selected === 'undefined'){
+    $input.keypress(function(e){
+        if (e.which == 13){
             $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
-        }
-        else{
-            $input.removeData();
-            window.location.href = selected.url;
         }
     });
 });

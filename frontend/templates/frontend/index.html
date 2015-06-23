@@ -12,20 +12,19 @@ Elite Trade Routes
     </h1>
 </div>
 
-<form id="search_form">
-    <div class="input-group">
-        <input id="search_input" type="text" class="typeahead form-control" placeholder="Search..." autocomplete="off">
-        <div class="input-group-btn">
-            <input type="submit" class="btn btn-default" value="commodities">
-            <buttom type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></buttom>
-            <ul class="dropdown-menu dropdown-menu-right">
-                <li><a>commodities</a></li>
-                <li><a>systems</a></li>
-                <li><a>stations</a></li>
-            </ul>
-        </div>
+<div class="input-group">
+    <input id="search_input" type="text" class="typeahead form-control" placeholder="Search..." autocomplete="off">
+    <div class="input-group-btn">
+        <button id="search_input_btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            commodities<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li><a>commodities</a></li>
+            <li><a>systems</a></li>
+            <li><a>stations</a></li>
+        </ul>
     </div>
-</form>
+</div>
 <div id="search_error"></div>
 
 <p>
