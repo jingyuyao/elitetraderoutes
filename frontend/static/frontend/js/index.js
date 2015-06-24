@@ -14,6 +14,13 @@ function attachSearchToModel($input, model){
         },
         afterSelect: function(suggestion){
             window.location.href = suggestion.url;
+        },
+        displayText: function(item){
+            if (item.hasOwnProperty('system_name')){
+                return item.name + ' (' + item.system_name + ')';
+            }
+
+            return item.name;
         }
     });
 }
