@@ -41,7 +41,7 @@
             <th>Shipyard</th>
             <th>Outfitting</th>
             <th>Commodities</th>
-            <th>Updated</th>
+            <th>Number of commodities</th>
         </tr>
         <tr>
             <td>{{data.has_repair}}</td>
@@ -51,10 +51,11 @@
             <td>{{data.has_shipyard}}</td>
             <td>{{data.has_outfitting}}</td>
             <td>{{data.has_commodities}}</td>
-            <td>{{data.updated_at}}</td>
+            <td>{{data.number_of_commodities}}</td>
         </tr>
         </tbody>
     </table>
+    {% comment %}
     {% if data.station_commodities|length == 0 %}
     <h4>No commodities</h4>
     {% else %}
@@ -96,5 +97,6 @@
         </table>
     </div>
     {% endif %}
+    {% endcomment %}
 </div>
 {% endblock body %}

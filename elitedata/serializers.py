@@ -20,7 +20,11 @@ class CommoditySerializer(IDHyperlinkedModelSerializer):
     """Detailed serializer for Commodity.
     """
 
-    station_commodities = StationCommoditySerializer(many=True, read_only=True)
+    # station_commodities = StationCommoditySerializer(many=True, read_only=True)
+    number_of_stations = serializers.SerializerMethodField()
+
+    def get_number_of_stations(self, obj):
+        return StationCommodity.objects.filter(commodity=obj).count()
 
     class Meta:
         model = Commodity
@@ -39,7 +43,11 @@ class StationSerializer(IDHyperlinkedModelSerializer):
     # Painful debugging note: HyperlinkedIdentityField forcefully sets its queryset to the model
     system = serializers.HyperlinkedRelatedField(view_name='system-detail', read_only=True)
     system_name = serializers.ReadOnlyField(source="system.name")
-    station_commodities = StationCommoditySerializer(many=True, read_only=True)
+    # station_commodities = StationCommoditySerializer(many=True, read_only=True)
+    number_of_commodities = serializers.SerializerMethodField()
+
+    def get_number_of_commodities(self, obj):
+        return StationCommodity.objects.filter(station=obj).count()
 
     class Meta:
         model = Station

@@ -10,15 +10,18 @@
         <tr>
             <th>Average price</th>
             <th>Category</th>
+            <th>Number of stations</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>{{data.average_price}}</td>
             <td>{{data.category_name}}</td>
+            <td>{{data.number_of_stations}}</td>
         </tr>
         </tbody>
     </table>
+    {% comment %}
     {% if data.station_commodities|length == 0 %}
         <h4>No stations</h4>
     {% else %}
@@ -60,5 +63,6 @@
         </table>
     </div>
     {% endif %}
+    {% endcomment %}
 </div>
 {% endblock body %}
