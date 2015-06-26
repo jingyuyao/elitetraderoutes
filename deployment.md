@@ -30,17 +30,17 @@ The deployment process varies greatly depending on the system and a lot of unfor
 
 ### The apache conf file look something like this:
 
-WSGIScriptAlias / /home/jingyu/elitetraderoutes/elitetraderoutes/wsgi.py
-WSGIDaemonProcess elitetraderoutes python-path=/home/jingyu/elitetraderoutes:/home/jingyu/env/django/lib/python3.4/site-packages
-WSGIProcessGroup elitetraderoutes
-
-<Directory /home/jingyu/elitetraderoutes/elitetraderoutes>
-<Files wsgi.py>
-Require all granted
-</Files>
-</Directory>
-
-Alias /static/ /home/jingyu/elitetraderoutes/static/
-<Directory /home/jingyu/elitetraderoutes/static>
-Require all granted
-</Directory>
+    WSGIScriptAlias / /home/jingyu/elitetraderoutes/elitetraderoutes/wsgi.py
+    WSGIDaemonProcess elitetraderoutes python-path=/home/jingyu/elitetraderoutes:/home/jingyu/env/django/lib/python3.4/site-packages
+    WSGIProcessGroup elitetraderoutes
+    
+    <Directory /home/jingyu/elitetraderoutes/elitetraderoutes>
+    <Files wsgi.py>
+    Require all granted
+    </Files>
+    </Directory>
+    
+    Alias /static/ /home/jingyu/elitetraderoutes/static/
+    <Directory /home/jingyu/elitetraderoutes/static>
+    Require all granted
+    </Directory>
