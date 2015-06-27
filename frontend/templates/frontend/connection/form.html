@@ -1,27 +1,33 @@
+{% comment %}
+Params: id, route
+{% endcomment %}
+
 {% load my_tags %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
-            <a role="button" data-toggle="collapse" href="#{% firstof data.uuid id %}_connection_form_collapse">
+            <a role="button" data-toggle="collapse" href="#{{id}}_connection_form_collapse">
                 Create connection
             </a>
         </h3>
     </div>
-    <div class="collapse" id="{% firstof data.uuid id %}_connection_form_collapse">
+    <div class="collapse" id="{{id}}_connection_form_collapse">
         <div class="panel-body">
-            <form id="connection_form" method="post" action="{% url 'connection-list' %}">
+            <form id="{{id}}_connection_form" method="post" action="{% url 'connection-list' %}">
                 {% csrf_token %}
-                {% if data %}
-                    {{data|render_form|safe}}
-                {% else %}
-                    {% if route %}
-                        {{"route"|render_hidden:route.url|safe}}
-                    {% else %}
-                        {{"route"|render_input|safe}}
-                    {% endif %}
-                    {{'start_system,start_station,destination_system,destination_station'|render_form|safe}}
-                    {{'commodity,buy_price,sell_price,supply,demand'|render_form|safe}}
-                {% endif %}
+
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="route" value="{{data.url}}">
+                </div>
+
+                {% with 'start_system start_station destination_system destination_station commodity buy_price supply sell_price demand' as list %}
+                    {% for name in list.split %}
+                        <div class="form-group">
+                            <label for="{{id}}_{{name}}">{{name|capfirst}}</label>
+                            <input class="typeahead form-control" autocomplete="off" type="text" name="{{name}}" id="{{id}}_{{name}}" required>
+                        </div>
+                    {% endfor %}
+                {% endwith %}
                 <button class="btn btn-success" type="submit">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>

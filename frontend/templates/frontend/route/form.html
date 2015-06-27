@@ -2,14 +2,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
-            <a role="button" data-toggle="collapse" href="#{% firstof data.uuid id %}_route_form_collapse">
+            <a role="button" data-toggle="collapse" href="#{{id}}_route_form_collapse">
                 Create route
             </a>
         </h3>
     </div>
-    <div class="collapse" id="{% firstof data.uuid id %}_route_form_collapse">
+    <div class="collapse" id="{{id}}_route_form_collapse">
         <div class="panel-body">
-            <form id="route_form" method="post" action="{% url 'route-list' %}">
+            <form id="{{id}}_route_form" method="post" action="{% url 'route-list' %}">
                 {% csrf_token %}
                 {% if data %}
                     {{data|render_form|safe}}
