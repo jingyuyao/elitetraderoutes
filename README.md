@@ -13,7 +13,7 @@ for linux only. All commands should be run in the directory where manage.py is l
 
 #### Linux:
 
-- sudo bash linux_setup.sh
+    sudo bash linux_setup.sh
 
 #### Windows:
 
@@ -24,7 +24,7 @@ for linux only. All commands should be run in the directory where manage.py is l
 
 #### Linux / Windows:
 
-- pip install -r requirements.txt
+    pip install -r requirements.txt
 
 ## Database settings
 
@@ -32,40 +32,41 @@ Create an user and a database for the user using the settings found in my.cnf fi
 
 #### Linux:
 
-- bash database_setup.sh
+    bash database_setup.sh
 
 #### Windows:
 
 Open mysql terminal as root@localhost:
 
-- CREATE DATABASE elitetraderoutes CHARACTER SET utf8;
-- GRANT ALL PRIVILEGES ON \*.\* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
+    CREATE DATABASE elitetraderoutes CHARACTER SET utf8;
+    GRANT ALL PRIVILEGES ON \*.\* TO 'elitetraderoutes'@'localhost' IDENTIFIED BY 'elitetraderoutespassword';
 
 ## Additional setup
 
 #### Linux:
 
-- bash project_setup.sh
+    bash project_setup.sh
 
 #### Windows:
 
-- python manage.py migrate
-- python manage.py test
-- python ingest_data.py
-- python manage.py loaddata commodity system station
+    python manage.py migrate
+    python manage.py test
+    python ingest_data.py
+    python manage.py loaddata commodity system station
 
 ## Users
 
 You should also create a super user for testing purposes using manage.py
 
-- python manage.py createsuperuser
+    python manage.py createsuperuser
 
 ## EDDN
 
 Start the connection to EDDN:
 
-- python -m eddn.receiver
+    python -m eddn.receiver
 
+Licensed under the MIT license.
 
 Copyright © 2015, Jingyu Yao.
 All rights reserved.

@@ -25,22 +25,34 @@ The deployment process varies greatly depending on the system and a lot of unfor
 
 ### Some important thing to note (for ubuntu/debian):
 
-- Use libapache2-mod-wsgi-py3 for the mod_wsgi build to target python3
-- Need to set the SECRET_KEY environment variable (possibly in ~/.profile)
+- Use libapache2-mod-wsgi-py3 package for the mod_wsgi to build against python3
+- Set the **SECRET_KEY** environment variable (possibly in ~/.profile)
 
-### The apache conf file look something like this:
+### The apache configuration
 
-    WSGIScriptAlias / /home/jingyu/elitetraderoutes/elitetraderoutes/wsgi.py
-    WSGIDaemonProcess elitetraderoutes python-path=/home/jingyu/elitetraderoutes:/home/jingyu/env/django/lib/python3.4/site-packages
-    WSGIProcessGroup elitetraderoutes
+Make /etc/apache2/sites-available/elitetraderoutes.conf with the following:
+
+    <VirtualHost *:80>
+        ServerName www.elitetraderoutes.com
+        WSGIScriptAlias / /home/jingyu/elitetraderoutes/elitetraderoutes/wsgi.py
+        WSGIDaemonProcess elitetraderoutes python-path=/home/jingyu/elitetraderoutes:/home/jingyu/env/django/lib/python3.4/site-packages
+        WSGIProcessGroup elitetraderoutes
+        
+        <Directory /home/jingyu/elitetraderoutes/elitetraderoutes>
+        <Files wsgi.py>
+        Require all granted
+        </Files>
+        </Directory>
+        
+        Alias /static/ /home/jingyu/elitetraderoutes/static/
+        <Directory /home/jingyu/elitetraderoutes/static>
+        Require all granted
+        </Directory>
+    </VirtualHost>
     
-    <Directory /home/jingyu/elitetraderoutes/elitetraderoutes>
-    <Files wsgi.py>
-    Require all granted
-    </Files>
-    </Directory>
-    
-    Alias /static/ /home/jingyu/elitetraderoutes/static/
-    <Directory /home/jingyu/elitetraderoutes/static>
-    Require all granted
-    </Directory>
+Then enable this virtual host by making a link in the sites-enabled directory:
+
+    cd /etc/apache2/sites-enabled/
+    sudo ln -s ../sites-available/elitetraderoutes.conf elitetraderoutes.conf
+
+Of course, change the directories and server names to match your setting.
