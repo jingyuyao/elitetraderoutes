@@ -17,15 +17,16 @@ function iCompare(search, source){
 }
 
 function findModel(name){
-    if (iCompare('system', name)){
+    if (typeof name === 'undefined'){
+        return;
+    }
+    else if (iCompare('system', name)){
         return 'systems';
     }
-
-    if (iCompare('station', name)){
+    else if (iCompare('station', name)){
         return 'stations';
     }
-
-    if (iCompare('commodity', name)){
+    else if (iCompare('commodity', name)){
         return 'commodities';
     }
 }

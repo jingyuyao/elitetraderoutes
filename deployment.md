@@ -4,6 +4,10 @@ Read README.md first!
 
 The deployment process varies greatly depending on the system and a lot of unforeseen factors.
 
+### Before anything
+
+Define your own production.py and production.cnf in configs/. Use the develop versions as reference.
+
 ### General process:
 
 - Fresh ubuntu (update, upgrade)

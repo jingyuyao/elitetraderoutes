@@ -68,4 +68,5 @@ docs/_build/
 # PyBuilder
 target/
 
-
+configs/production.py
+configs/production.cnf

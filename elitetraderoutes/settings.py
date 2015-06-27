@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-PRODUCTION_MODE = True
+try:
+    import configs.production as configs
+except ImportError:
+    import configs.develop as configs
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -25,12 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', '=0!v#x0*wf9jmaewivwqe*qgdz-7y8)n$37^+5d*!r7%oj56-h')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not PRODUCTION_MODE
+DEBUG = configs.DEBUG
 
-if PRODUCTION_MODE:
-    ALLOWED_HOSTS = ['.elitetraderoutes.com']
-else:
-    ALLOWED_HOSTS = []
+ALLOWED_HOSTS = configs.ALLOWED_HOSTS
 
 
 # Application definition
@@ -97,7 +97,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR, 'my.cnf'),
+            'read_default_file': os.path.join(BASE_DIR, configs.DB_CNF),
         },
     }
 }
@@ -108,7 +108,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'US/Eastern'
+TIME_ZONE = configs.TIME_ZONE
 
 USE_I18N = True
 
@@ -121,5 +121,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-if PRODUCTION_MODE:
-    STATIC_ROOT = '/home/jingyu/elitetraderoutes/static/'
+STATIC_ROOT = configs.STATIC_ROOT
