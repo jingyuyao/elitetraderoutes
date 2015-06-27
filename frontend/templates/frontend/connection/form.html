@@ -2,12 +2,12 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
-            <a role="button" data-toggle="collapse" href="#{{data.uuid}}_collapse">
+            <a role="button" data-toggle="collapse" href="#{% firstof data.uuid id %}_connection_form_collapse">
                 Create connection
             </a>
         </h3>
     </div>
-    <div class="collapse" id="{{data.uuid}}_collapse">
+    <div class="collapse" id="{% firstof data.uuid id %}_connection_form_collapse">
         <div class="panel-body">
             <form id="connection_form" method="post" action="{% url 'connection-list' %}">
                 {% csrf_token %}

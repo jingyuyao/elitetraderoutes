@@ -32,4 +32,5 @@
         {% endfor %}
     </div>
 {% endif %}
+{% include 'frontend/connection/form.html' with data=False route=data id=data.uuid %}
 {% endblock body %}

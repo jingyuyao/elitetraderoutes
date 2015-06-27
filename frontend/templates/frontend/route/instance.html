@@ -13,6 +13,5 @@ Route {{data.id}}
     {% include 'frontend/back_button.html' with name='Back to list' %}
     {% if data %}
         {% include "frontend/route/detail.html" %}
-        {% include "frontend/connection/form.html" with data=False route=data %}
     {% endif %}
 {% endblock instance %}

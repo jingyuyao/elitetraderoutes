@@ -99,7 +99,12 @@ body {
     padding-top: 50px;
 }
 
-
+// Firefox table hack
+@-moz-document url-prefix() {
+    fieldset {
+        display: table-cell;
+    }
+}
 
 
 

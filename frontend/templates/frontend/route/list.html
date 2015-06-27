@@ -11,13 +11,13 @@ Route list
         </h1>
     </div>
     {% if user.is_authenticated %}
-    {% include "frontend/route/form.html" with data=False %}
+    {% include "frontend/route/form.html" with data=False id='route_list' %}
     {% endif %}
     {% if data %}
     {% include 'frontend/list_nav.html' %}
     <div class='panel-group' id='route_list' role="tablist">
         {% for route in data.results %}
-            {% include "frontend/route/detail.html" with data=route group='route_list' only %}
+            {% include "frontend/route/detail.html" with data=route group='route_list' %}
         {% endfor %}
     </div>
     {% endif %}
