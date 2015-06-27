@@ -42,13 +42,9 @@ class Ingester:
                 'demand_level': message.get('demandLevel', None)
             }
 
-            object, created = StationCommodity.objects.update_or_create(commodity=commodity, station=station,
+            StationCommodity.objects.update_or_create(commodity=commodity, station=station,
                                                                         defaults=defaults)
 
-            if created:
-                print('Created', object)
-            else:
-                print('Updated', object)
         except Commodity.DoesNotExist:
             pass
         except Station.DoesNotExist:
@@ -76,13 +72,9 @@ class Ingester:
                     'demand_level': item.get('demandLevel', None)
                 }
 
-                object, created = StationCommodity.objects.update_or_create(commodity=commodity, station=station,
+                StationCommodity.objects.update_or_create(commodity=commodity, station=station,
                                                                             defaults=defaults)
 
-                if created:
-                    print('Created', object)
-                else:
-                    print('Updated', object)
         except Commodity.DoesNotExist:
             pass
         except Station.DoesNotExist:
