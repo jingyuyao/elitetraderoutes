@@ -4,12 +4,6 @@
 
 // Global scope
 
-var endpointToInputs = {
-    systems: ['start_system', 'destination_system'],
-    stations: ['start_station', 'destination_station'],
-    commodities: ['commodity']
-};
-
 var cache = {};
 
 function iCompare(search, source){
@@ -31,7 +25,7 @@ function findModel(name){
     }
 }
 
-function attachInputToModel(){
+function attachInputsToModel(){
     $('input').each(function(){
         var $input = $(this);
         var name = $input.attr('name');
@@ -96,22 +90,8 @@ function attachInputToModel(){
     });
 }
 
-function attachInputsToModels(dict){
-    // Attaches the list of inputs from
-    for (var model in dict){
-        if (dict.hasOwnProperty(model)){
-            var input_list = dict[model];
-            for (var x = 0; x < input_list.length; x++){
-                var input = input_list[x];
-                attachInputToModel(input, model);
-            }
-        }
-    }
-}
-
 $(function(){
-//    attachInputsToModels(endpointToInputs);
-    attachInputToModel();
+    attachInputsToModel();
 
     // When submitting a form, replace inputs with input.data('selected').url
     $('form').each(function(){
