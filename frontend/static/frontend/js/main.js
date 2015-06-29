@@ -90,6 +90,52 @@ function attachInputsToModel(){
     });
 }
 
+function showStationCommodities(btn, uuid, station, commodity){
+    // Sets up the station commodities div and change button to show/hide the created div
+    var $button = $(btn);
+    var listId = uuid + '_station_commodities_list';
+    $button.after('<div id="' + listId + '" class="collapse"></div>');
+    var $listDiv = $('#' + listId);
+    $button.attr('onclick', null);
+    $button.attr('data-toggle', 'collapse');
+    $button.attr('data-target', '#' + listId);
+
+    populateStationCommoditiesList(listId, station, commodity);
+}
+
+function populateStationCommoditiesList(listId, station, commodity, url){
+    console.log(listId + station + commodity + url);
+    var $listDiv = $('#'+listId);
+    var hasUrl = typeof url !== 'undefined';
+
+    // Get the station commodities
+    $.getJSON(hasUrl ? url : '/station_commodities/',
+    hasUrl ? null : {
+        station: station,
+        commodity: commodity
+    }, function(data){
+        var html = buildStationCommoditiesListNav(listId, data);
+        // TODO: Actually make the table
+        html += JSON.stringify(data);
+        $listDiv.html(html);
+    });
+}
+
+function buildStationCommoditiesListNav(listId, data){
+    var previous = data['data']['previous'], next = data['data']['next'];
+    var onclick = 'populateStationCommoditiesList("' + listId + '",null,null,"';
+
+    previous = previous ?
+        "<li class='previous'><a onclick='" + onclick + previous + "\")'><span aria-hidden='true'>&larr;</span> Previous</a></li>"
+        : "";
+
+    next = next ?
+        "<li class='next'><a onclick='" + onclick + next + "\")'>Next <span aria-hidden='true'>&rarr;</span></a></li>"
+        : "";
+
+    return '<nav><ul class="pager">' + previous + next + "</ul></nav>";
+}
+
 $(function(){
     attachInputsToModel();
 

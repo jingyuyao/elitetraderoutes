@@ -100,7 +100,23 @@ class CommodityViewSet(WrappedModelViewSet):
                                       template_name='frontend/commodity/list_station.html'))
 
 class StationCommodityViewSet(WrappedModelViewSet):
+    class StationCommodityFilter(django_filters.FilterSet):
+        class Meta:
+            model = StationCommodity
+            fields = {
+                'station': ['exact'],
+                'commodity': ['exact'],
+                'supply_level': ['exact'],
+                'demand_level': ['exact'],
+                'buy_price': ['lt', 'gt'],
+                'sell_price': ['lt', 'gt'],
+                'supply': ['lt', 'gt'],
+                'demand': ['lt', 'gt'],
+            }
+
     queryset = StationCommodity.objects.all()
     serializer_class = StationCommoditySerializer
     template_name = 'frontend/station_commodity/instance.html'
     list_template_name = 'frontend/station_commodity/list.html'
+    filter_class = StationCommodityFilter
+    search_fields = ('commodity__name', 'station__name')

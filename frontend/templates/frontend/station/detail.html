@@ -55,48 +55,8 @@
         </tr>
         </tbody>
     </table>
-    {% comment %}
-    {% if data.station_commodities|length == 0 %}
-    <h4>No commodities</h4>
-    {% else %}
-    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#{{data.uuid}}_commodities">
-        Commodities
-    </button>
-    <div class="collapse" id="{{data.uuid}}_commodities">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Commodity</th>
-                <th>Category</th>
-                <th>Average price</th>
-                <th>Buy</th>
-                <th>Supply (level)</th>
-                <th>Sell</th>
-                <th>Demand (level)</th>
-                <th>Created</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for s in data.station_commodities %}
-                <tr>
-                    <td>
-                        <a class="btn btn-primary btn-sm" href="{{s.commodity}}">
-                            {{s.commodity_name}}
-                        </a>
-                    </td>
-                    <td>{{s.category_name}}</td>
-                    <td>{{s.average_price}}</td>
-                    <td>{{s.buy_price}}</td>
-                    <td>{{s.supply}} ({{data.supply_level}})</td>
-                    <td>{{s.sell_price}}</td>
-                    <td>{{s.demand}} ({{s.demand_level}})</td>
-                    <td>{{s.created}}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    {% if data.number_of_commodities != 0 %}
+    <button class="btn btn-primary btn-block" onclick="showStationCommodities(this, '{{data.uuid}}', null, {{data.id}});">Show commodities</button>
     {% endif %}
-    {% endcomment %}
 </div>
 {% endblock body %}
