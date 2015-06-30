@@ -11,20 +11,20 @@ Elite Trade Routes
         Under construction...
     </h1>
 </div>
-
-<div class="input-group">
+<p>
     <input id="search_input" type="text" class="typeahead form-control" placeholder="Search..." autocomplete="off">
-    <div class="input-group-btn">
-        <button id="search_input_btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            commodities<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right">
-            <li><a>commodities</a></li>
-            <li><a>systems</a></li>
-            <li><a>stations</a></li>
-        </ul>
-    </div>
-</div>
+</p>
+<p>
+    <label class="radio-inline">
+        <input type="radio" name="search_type" value="commodities" checked> Commodities
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="search_type" value="systems"> Systems
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="search_type" value="stations"> Stations
+    </label>
+</p>
 <div id="search_error"></div>
 
 <p>

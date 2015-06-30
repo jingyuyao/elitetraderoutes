@@ -95,7 +95,6 @@ function showStationCommodities(btn, uuid, station, commodity){
     var $button = $(btn);
     var listId = uuid + '_station_commodities_list';
     $button.after('<div id="' + listId + '" class="collapse"></div>');
-    var $listDiv = $('#' + listId);
     $button.attr('onclick', null);
     $button.attr('data-toggle', 'collapse');
     $button.attr('data-target', '#' + listId);
@@ -116,14 +115,14 @@ function populateStationCommoditiesList(listId, station, commodity, url){
         var html = buildStationCommoditiesListNav(data, function(url){
             return 'onclick=\'populateStationCommoditiesList("' + listId + '",null,null,"' + url + '")\'';
         });
-        html += buildStationCommoditiesTable(data, station != null);
+        html += buildStationCommoditiesTable(data, station !== null);
 
         $listDiv.html(html);
     });
 }
 
 function buildStationCommoditiesListNav(data, targeter){
-    var previous = data['data']['previous'], next = data['data']['next'];
+    var previous = data.data.previous, next = data.data.next;
 
     previous = previous ?
         "<li class='previous'><a class='btn' " + targeter(previous) + "><span aria-hidden='true'>&larr;</span> Previous</a></li>"
@@ -137,7 +136,7 @@ function buildStationCommoditiesListNav(data, targeter){
 }
 
 function buildStationCommoditiesTable(data, forStation){
-    var results = data['data']['results'];
+    var results = data.data.results;
     var header = '<table class="table">' + 
                     '<thead>' +
                     '<tr>' +
@@ -161,15 +160,15 @@ function buildStationCommoditiesTable(data, forStation){
         var thing = results[i];
 
         body += '<tr>';
-        body += forStation ? tdAnchorSm(thing['commodity'], thing['commodity_name'])
-                    : tdAnchorSm(thing['station'], thing['station_name']);
-        body += td(thing['category_name']);
-        body += td(thing['average_price']);
-        body += td(thing['buy_price']);
-        body += td(thing['supply'] + ' (' + thing['supply_level'] + ')');
-        body += td(thing['sell_price']);
-        body += td(thing['demand'] + ' (' + thing['demand_level'] + ')');
-        body += td(thing['created']);
+        body += forStation ? tdAnchorSm(thing.commodity, thing.commodity_name)
+                    : tdAnchorSm(thing.station, thing.station_name);
+        body += td(thing.category_name);
+        body += td(thing.average_price);
+        body += td(thing.buy_price);
+        body += td(thing.supply + ' (' + thing.supply_level + ')');
+        body += td(thing.sell_price);
+        body += td(thing.demand + ' (' + thing.demand_level + ')');
+        body += td(thing.created);
         body += '</tr>';
     }
 
@@ -213,14 +212,13 @@ function attachSearchToModel($input, model){
 
 function initSearchBox(){
     // Search box logic
-    var $input = $('#search_input'), $btn = $('#search_input_btn');
+    var $input = $('#search_input');
 
     // Default option
     attachSearchToModel($input, 'commodities');
 
-    $(".dropdown-menu li a").click(function(){
-        var selText = $(this).text();
-        $btn.html(selText+'<span class="caret"></span>');
+    $("input[type=radio]").click(function(){
+        var selText = $(this).val();
         attachSearchToModel($input, selText);
     });
 
