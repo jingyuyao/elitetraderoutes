@@ -208,6 +208,12 @@ function attachSearchToModel($input, model){
             return item.name;
         }
     });
+
+    $input.keypress(function(e){
+        if (e.which == 13){
+            $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
+        }
+    });
 }
 
 function initSearchBox(){
@@ -215,17 +221,11 @@ function initSearchBox(){
     var $input = $('#search_input');
 
     // Default option
-    attachSearchToModel($input, 'commodities');
+    var checkedRadio = $('input[name=search_type]:checked');
+    attachSearchToModel($input, checkedRadio.val());
 
-    $("input[type=radio]").click(function(){
-        var selText = $(this).val();
-        attachSearchToModel($input, selText);
-    });
-
-    $input.keypress(function(e){
-        if (e.which == 13){
-            $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
-        }
+    $("input[name=search_type]").click(function(){
+        attachSearchToModel($input, $(this).val());
     });
 }
 
