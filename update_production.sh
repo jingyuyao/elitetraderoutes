@@ -3,6 +3,8 @@
 # Requires nodejs, nodejs-legacy, npm, uglifyjs
 
 # It appears apache cache the python process so we need to restart
+source ../env/django/bin/activate
+
 git pull
 python manage.py collectstatic --noinput
 
