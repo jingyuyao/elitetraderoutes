@@ -6,6 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework import filters
 from rest_framework import renderers
+from rest_framework import permissions
 
 from common.serializers import UserSerializer
 
@@ -26,6 +27,8 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `detail` actions.
     """
+
+    permission_classes = (permissions.IsAdminUser,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

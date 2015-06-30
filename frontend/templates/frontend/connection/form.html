@@ -20,7 +20,7 @@ Params: id, route
                     <input type="hidden" class="form-control" name="route" value="{{data.url}}">
                 </div>
 
-                {% with 'start_system start_station destination_system destination_station commodity buy_price supply sell_price demand' as list %}
+                {% with 'start_system start_station destination_system destination_station commodity' as list %}
                     {% for name in list.split %}
                         <div class="form-group">
                             <label for="{{id}}_{{name}}">{{name|capfirst}}</label>
@@ -28,6 +28,16 @@ Params: id, route
                         </div>
                     {% endfor %}
                 {% endwith %}
+
+                {% with 'buy_price supply sell_price demand' as list %}
+                    {% for name in list.split %}
+                        <div class="form-group">
+                            <label for="{{id}}_{{name}}">{{name|capfirst}}</label>
+                            <input class="form-control" autocomplete="off" type="number" name="{{name}}" id="{{id}}_{{name}}" required>
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+
                 <button class="btn btn-success" type="submit">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>

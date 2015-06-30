@@ -14,9 +14,7 @@
         </thead>
         <tbody>
         <tr>
-            <td>
-                <a class="btn btn-primary btn-sm" href="{{data.owner}}">Owner</a>
-            </td>
+            <td>{{data.owner_name}}</td>
             <td>{{data.created}}</td>
         </tr>
         </tbody>
@@ -32,5 +30,7 @@
         {% endfor %}
     </div>
 {% endif %}
-{% include 'frontend/connection/form.html' with route=data id=data.uuid %}
+{% if user.username == data.owner_name %}
+    {% include 'frontend/connection/form.html' with route=data id=data.uuid %}
+{% endif %}
 {% endblock body %}

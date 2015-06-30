@@ -1,5 +1,6 @@
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route
 from rest_framework.response import Response
+from common import permissions
 
 from .models import System, Station, Commodity, StationCommodity
 from .serializers import CommoditySerializer, StationSerializer, \
@@ -12,6 +13,7 @@ from common.views import WrappedModelViewSet, wrap_response
 # Create your views here.
 
 class SystemViewSet(WrappedModelViewSet):
+    permission_classes = (permissions.IsAdminOrReadOnly,)
     queryset = System.objects.all()
     serializer_class = SystemSerializer
     search_fields = ('name',)
@@ -57,6 +59,7 @@ class StationViewSet(WrappedModelViewSet):
             model = Station
             fields = ('distance_to_star',)
 
+    permission_classes = (permissions.IsAdminOrReadOnly,)
     queryset = Station.objects.all()
     serializer_class = StationSerializer
     filter_class = StationFilter
@@ -83,6 +86,7 @@ class CommodityViewSet(WrappedModelViewSet):
             model = Commodity
             fields = ('average_price', 'name')
 
+    permission_classes = (permissions.IsAdminOrReadOnly,)
     queryset = Commodity.objects.all()
     serializer_class = CommoditySerializer
     filter_class = CommodityFilter
@@ -114,6 +118,7 @@ class StationCommodityViewSet(WrappedModelViewSet):
                 'demand': ['lt', 'gt'],
             }
 
+    permission_classes = (permissions.IsAdminOrReadOnly,)
     queryset = StationCommodity.objects.all()
     serializer_class = StationCommoditySerializer
     template_name = 'frontend/station_commodity/instance.html'

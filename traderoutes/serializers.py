@@ -59,6 +59,7 @@ class WriteConnectionSerializer(BaseConnectionSerializer):
         if station not in Station.objects.filter(system=system):
             raise serializers.ValidationError("Station(%s) not in system(%s)." % (str(station), str(system)))
 
+
 class ReadConnectionSerializer(BaseConnectionSerializer):
     """
     The read serializer for the Connection model.
@@ -77,10 +78,13 @@ class ReadConnectionSerializer(BaseConnectionSerializer):
     def get_distance(obj):
         return obj.distance()
 
+
 class BaseRouteSerializer(IDHyperlinkedModelSerializer):
     """
     Base serializer for Route. Sub-class need to provide value for connections
     """
+
+    owner_name = serializers.ReadOnlyField(source='owner.username')
 
     @property
     def connections(self):
