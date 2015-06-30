@@ -6,6 +6,6 @@
 git pull
 python manage.py collectstatic --noinput
 
-uglifyjs static/frontend/js/main.js -o static/frontend/js/main.js
+uglifyjs static/frontend/js/main.js --compress --mangle -o static/frontend/js/main.js
 
 sudo service apache2 restart
