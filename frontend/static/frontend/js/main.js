@@ -6,6 +6,175 @@
 
 var cache = {};
 
+function showStationCommodities(btn, uuid, station, commodity){
+    // Change button to show/hide the created div
+    var $button = $(btn);
+    var listId = uuid + '_station_commodity_list';
+    $button.closest('p').after('<div class="collapse" id="' + listId + '"></div>');
+    $button.attr('onclick', null);
+    $button.attr('data-toggle', 'collapse');
+    $button.attr('data-target', '#' + listId);
+
+    populateStationCommoditiesList(listId, station, commodity);
+}
+
+function populateStationCommoditiesList(listId, station, commodity, url){
+    var $listDiv = $('#'+listId);
+    var hasUrl = typeof url !== 'undefined';
+
+    // Get the station commodities
+    $.getJSON(hasUrl ? url : '/station_commodities/',
+    hasUrl ? null : {
+        station: station,
+        commodity: commodity
+    }, function(data){
+        var forStation = station !== null;
+        var html = buildListNav(data, function(url){
+            return 'onclick=\'populateStationCommoditiesList("' + listId + '",' + station + ',' + commodity + ',"' + url + '")\'';
+        });
+        html += buildStationCommoditiesTable(data, forStation);
+
+        $listDiv.html(html);
+    });
+}
+
+function buildListNav(data, targeter){
+    var previous = data.data.previous, next = data.data.next;
+
+    previous = previous ?
+        "<li class='previous'><a class='btn' " + targeter(previous) + "><span aria-hidden='true'>&larr;</span> Previous</a></li>"
+        : "";
+
+    next = next ?
+        "<li class='next'><a class='btn' " + targeter(next) + ">Next <span aria-hidden='true'>&rarr;</span></a></li>"
+        : "";
+
+    return '<nav><ul class="pager">' + previous + next + "</ul></nav>";
+}
+
+function buildStationCommoditiesTable(data, forStation){
+    var results = data.data.results;
+    var header = '<table class="table">' + 
+                    '<thead>' +
+                    '<tr>' +
+                        '<th>' + (forStation ? 'Commodity' : 'Station') + '</th>' +
+                        (forStation ? '<th>Category</th>' : "") +
+                        '<th>Average price</th>' +
+                        '<th>Buy</th>' +
+                        '<th>Supply (level)</th>' +
+                        '<th>Sell</th>' +
+                        '<th>Demand (level)</th>' +
+                        '<th>Created</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+    var ender =     '</tbody>' +
+                '</table>';
+
+    var body = '';
+
+    for (var i = 0; i < results.length; i++) {
+        var thing = results[i];
+
+        body += '<tr>';
+        body += forStation ? tdAnchorSm(thing.commodity, thing.commodity_name)
+                    : tdAnchorSm(thing.station, thing.station_name);
+        body += forStation ? td(thing.category_name) : "";
+        body += td(thing.average_price);
+        body += td(thing.buy_price);
+        body += td(thing.supply + ' (' + thing.supply_level + ')');
+        body += td(thing.sell_price);
+        body += td(thing.demand + ' (' + thing.demand_level + ')');
+        body += td(thing.created);
+        body += '</tr>';
+    }
+
+    return header + body + ender;
+}
+
+function td(thing){
+    return '<td>' + thing + '</td>';
+}
+
+function tdAnchorSm(url, name){
+    return '<td><a class="btn btn-primary btn-sm" href="' + url + '">' + name + '</a></td>';
+}
+
+function initSearchBox(){
+    // Search box logic
+    var $input = $('#search_input');
+
+    if (!$input.length) {
+        return;
+    }
+
+    // Default option
+    var checkedRadio = $('input[name=search_type]:checked');
+    attachSearchToModel($input, checkedRadio.val());
+
+    $("input[name=search_type]").click(function(){
+        attachSearchToModel($input, $(this).val());
+    });
+}
+
+function attachSearchToModel($input, model){
+    // Clean previous typeahead
+    $input.typeahead('destroy');
+
+    $input.typeahead({
+        minLength: 2,
+        delay: 250, // Millisecond
+        source: function(query, process) {
+            var requestUrl = '/' + model + '/?search=' + query;
+
+            $.getJSON(requestUrl, function(response){
+                process(response.data.results);
+            });
+        },
+        afterSelect: function(suggestion){
+            window.location.href = suggestion.url;
+        },
+        displayText: function(item){
+            if (item.hasOwnProperty('system_name')){
+                return item.name + ' (' + item.system_name + ')';
+            }
+
+            return item.name;
+        }
+    });
+
+    $input.keypress(function(e){
+        if (e.which == 13){
+            $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
+        }
+    });
+}
+
+function initFormSubmitChange(){
+    var $forms = $('form');
+
+    if (!$forms.length) {
+        return;
+    }
+
+    // When submitting a form, replace inputs with input.data('selected').url
+    $forms.each(function(){
+        var $form = $(this);
+
+        attachTypeaheadForInputs($form);
+
+        $form.submit(function(){
+            $form.find(':input').each(function(){
+                var selected = $(this).data('selected');
+                if (typeof selected !== 'undefined'){
+                    $(this).val(selected.url);
+                    $(this).removeData();
+                }
+            });
+        });
+    });
+}
+
 function iCompare(search, source){
     return source.toLowerCase().indexOf(search.toLowerCase()) != -1;
 }
@@ -25,8 +194,8 @@ function findModel(name){
     }
 }
 
-function attachInputsToModel(){
-    $('input').each(function(){
+function attachTypeaheadForInputs($form){
+    $form.find(':input').each(function(){
         var $input = $(this);
         var name = $input.attr('name');
         var model = findModel(name);
@@ -90,159 +259,45 @@ function attachInputsToModel(){
     });
 }
 
-function showStationCommodities(btn, uuid, station, commodity){
-    // Sets up the station commodities div and change button to show/hide the created div
-    var $button = $(btn);
-    var listId = uuid + '_station_commodities_list';
-    $button.after('<div id="' + listId + '" class="collapse"></div>');
-    $button.attr('onclick', null);
-    $button.attr('data-toggle', 'collapse');
-    $button.attr('data-target', '#' + listId);
+function initStationCommoditySearchBox(){
+    var $inputs = $('input[name=station_commodity_search_input]');
 
-    populateStationCommoditiesList(listId, station, commodity);
-}
-
-function populateStationCommoditiesList(listId, station, commodity, url){
-    var $listDiv = $('#'+listId);
-    var hasUrl = typeof url !== 'undefined';
-
-    // Get the station commodities
-    $.getJSON(hasUrl ? url : '/station_commodities/',
-    hasUrl ? null : {
-        station: station,
-        commodity: commodity
-    }, function(data){
-        var html = buildStationCommoditiesListNav(data, function(url){
-            return 'onclick=\'populateStationCommoditiesList("' + listId + '",null,null,"' + url + '")\'';
-        });
-        html += buildStationCommoditiesTable(data, station !== null);
-
-        $listDiv.html(html);
-    });
-}
-
-function buildStationCommoditiesListNav(data, targeter){
-    var previous = data.data.previous, next = data.data.next;
-
-    previous = previous ?
-        "<li class='previous'><a class='btn' " + targeter(previous) + "><span aria-hidden='true'>&larr;</span> Previous</a></li>"
-        : "";
-
-    next = next ?
-        "<li class='next'><a class='btn' " + targeter(next) + ">Next <span aria-hidden='true'>&rarr;</span></a></li>"
-        : "";
-
-    return '<nav><ul class="pager">' + previous + next + "</ul></nav>";
-}
-
-function buildStationCommoditiesTable(data, forStation){
-    var results = data.data.results;
-    var header = '<table class="table">' + 
-                    '<thead>' +
-                    '<tr>' +
-                        '<th>' + (forStation ? 'Commodity' : 'Station') + '</th>' +
-                        '<th>Category</th>' +
-                        '<th>Average price</th>' +
-                        '<th>Buy</th>' +
-                        '<th>Supply (level)</th>' +
-                        '<th>Sell</th>' +
-                        '<th>Demand (level)</th>' +
-                        '<th>Created</th>' +
-                    '</tr>' +
-                    '</thead>' +
-                    '<tbody>';
-    var ender =     '</tbody>' +
-                '</table>';
-
-    var body = '';
-
-    for (var i = 0; i < results.length; i++) {
-        var thing = results[i];
-
-        body += '<tr>';
-        body += forStation ? tdAnchorSm(thing.commodity, thing.commodity_name)
-                    : tdAnchorSm(thing.station, thing.station_name);
-        body += td(thing.category_name);
-        body += td(thing.average_price);
-        body += td(thing.buy_price);
-        body += td(thing.supply + ' (' + thing.supply_level + ')');
-        body += td(thing.sell_price);
-        body += td(thing.demand + ' (' + thing.demand_level + ')');
-        body += td(thing.created);
-        body += '</tr>';
+    if (!$inputs.length) {
+        return;
     }
 
-    return header + body + ender;
-}
+    $inputs.each(function(){
+        var $input = $(this);
+        var resultsDivId = $input.data('uuid') + '_station_commodity_results';
+        $input.closest('p').after('<div class="collapse" id="' + resultsDivId + '"></div>');
+        var $resultsDiv = $('#' + resultsDivId);
+        var forStation = $input.data('station') !== undefined;
+        console.log($input.data('station'));
 
-function td(thing){
-    return '<td>' + thing + '</td>';
-}
+        $input.keypress(function(e){
+            if (e.which == 13){
+                var val = $input.val();
 
-function tdAnchorSm(url, name){
-    return '<td><a class="btn btn-primary btn-sm" href="' + url + '">' + name + '</a></td>';
-}
-
-function attachSearchToModel($input, model){
-    // Clean previous typeahead
-    $input.typeahead('destroy');
-
-    $input.typeahead({
-        minLength: 2,
-        delay: 250, // Millisecond
-        source: function(query, process) {
-            var requestUrl = '/' + model + '/?search=' + query;
-
-            $.getJSON(requestUrl, function(response){
-                process(response.data.results);
-            });
-        },
-        afterSelect: function(suggestion){
-            window.location.href = suggestion.url;
-        },
-        displayText: function(item){
-            if (item.hasOwnProperty('system_name')){
-                return item.name + ' (' + item.system_name + ')';
-            }
-
-            return item.name;
-        }
-    });
-
-    $input.keypress(function(e){
-        if (e.which == 13){
-            $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
-        }
-    });
-}
-
-function initSearchBox(){
-    // Search box logic
-    var $input = $('#search_input');
-
-    // Default option
-    var checkedRadio = $('input[name=search_type]:checked');
-    attachSearchToModel($input, checkedRadio.val());
-
-    $("input[name=search_type]").click(function(){
-        attachSearchToModel($input, $(this).val());
-    });
-}
-
-function initFormSubmitChange(){
-    attachInputsToModel();
-
-    // When submitting a form, replace inputs with input.data('selected').url
-    $('form').each(function(){
-        var $form = $(this);
-        $form.submit(function(){
-            $form.find(':input').each(function(){
-                var selected = $(this).data('selected');
-                if (typeof selected !== 'undefined'){
-                    $(this).val(selected.url);
-                    $(this).removeData();
+                if (val.length < 2) {
+                    $resultsDiv.html('<p>Minimum of 2 characters to search</p>');
                 }
-            });
+                else {
+                    $.getJSON('/station_commodities/', {
+                        commodity: $input.data('commodity'),
+                        station: $input.data('station'),
+                        search: val
+                    }, function(data){
+                        if (data.data.count) {
+                            $resultsDiv.html(buildStationCommoditiesTable(data, forStation));
+                        }
+                        else {
+                            $resultsDiv.html('<p>No results</p>');
+                        }
+                    });
+                }
+
+                $resultsDiv.collapse('show');
+            }
         });
     });
 }
@@ -250,4 +305,5 @@ function initFormSubmitChange(){
 $(function(){
     initFormSubmitChange();
     initSearchBox();
+    initStationCommoditySearchBox();
 });
