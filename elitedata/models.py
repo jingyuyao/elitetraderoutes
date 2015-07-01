@@ -20,6 +20,7 @@ class System(UUIDModel):
     government = models.CharField(max_length=100, null=True)
     state = models.CharField(max_length=100, null=True)
     faction = models.CharField(max_length=100, null=True)
+    power_control_faction = models.CharField(max_length=100, null=True)
 
     x = models.FloatField()
     y = models.FloatField()
