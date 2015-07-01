@@ -124,4 +124,4 @@ class StationCommodityViewSet(WrappedModelViewSet):
     template_name = 'frontend/station_commodity/instance.html'
     list_template_name = 'frontend/station_commodity/list.html'
     filter_class = StationCommodityFilter
-    search_fields = ('commodity__name', 'station__name')
+    search_fields = ('commodity__name', 'station__name', 'commodity__category_name')
