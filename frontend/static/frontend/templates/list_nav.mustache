@@ -1,0 +1,10 @@
+<nav>
+  <ul class="pager">
+  {{#previous}}
+      <li class='previous'><a {{#targeter}}{{previous}}{{/targeter}}><span aria-hidden="true">&larr;</span> Previous</a></li>
+  {{/previous}}
+  {{#next}}
+      <li class='next'><a {{#targeter}}{{next}}{{/targeter}}>Next <span aria-hidden="true">&rarr;</span></a></li>
+  {{/next}}
+  </ul>
+</nav>

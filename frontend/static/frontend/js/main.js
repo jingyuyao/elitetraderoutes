@@ -5,6 +5,7 @@
 // Global scope
 
 var cache = {};
+var STATIC_BASE = '/static/frontend/';
 
 function showStationCommodities(btn, uuid, station, commodity){
     // Change button to show/hide the created div
@@ -29,75 +30,30 @@ function populateStationCommoditiesList(listId, station, commodity, url){
         commodity: commodity
     }, function(data){
         var forStation = station !== null;
-        var html = buildListNav(data, function(url){
-            return 'onclick=\'populateStationCommoditiesList("' + listId + '",' + station + ',' + commodity + ',"' + url + '")\'';
-        });
-        html += buildStationCommoditiesTable(data, forStation);
+        var html = "";
 
-        $listDiv.html(html);
+        $.get(STATIC_BASE + 'templates/list_nav.mustache').done(function(template){
+            html += Mustache.render(template, {
+                previous: data.data.previous,
+                next: data.data.next,
+                targeter: function(){
+                    return function(val, render){
+                        // The cursor style is a hack for pager with no href
+                        return 'style="cursor: pointer;" onclick=\'populateStationCommoditiesList("' + listId + '",' + station + ',' + commodity + ',"' + render(val) + '");\'';
+                    }
+                }});
+        }).always(function(){
+            $.get(stationCommodityTemplateChooser(forStation)).done(function(template){
+                html += Mustache.render(template, data);
+                $listDiv.html(html);
+            });
+        });
     });
 }
 
-function buildListNav(data, targeter){
-    var previous = data.data.previous, next = data.data.next;
-
-    previous = previous ?
-        "<li class='previous'><a class='btn' " + targeter(previous) + "><span aria-hidden='true'>&larr;</span> Previous</a></li>"
-        : "";
-
-    next = next ?
-        "<li class='next'><a class='btn' " + targeter(next) + ">Next <span aria-hidden='true'>&rarr;</span></a></li>"
-        : "";
-
-    return '<nav><ul class="pager">' + previous + next + "</ul></nav>";
-}
-
-function buildStationCommoditiesTable(data, forStation){
-    var results = data.data.results;
-    var header = '<table class="table">' + 
-                    '<thead>' +
-                    '<tr>' +
-                        '<th>' + (forStation ? 'Commodity' : 'Station') + '</th>' +
-                        (forStation ? '<th>Category</th>' : "") +
-                        '<th>Average price</th>' +
-                        '<th>Buy</th>' +
-                        '<th>Supply (level)</th>' +
-                        '<th>Sell</th>' +
-                        '<th>Demand (level)</th>' +
-                        '<th>Created</th>' +
-                    '</tr>' +
-                    '</thead>' +
-                    '<tbody>';
-    var ender =     '</tbody>' +
-                '</table>';
-
-    var body = '';
-
-    for (var i = 0; i < results.length; i++) {
-        var thing = results[i];
-
-        body += '<tr>';
-        body += forStation ? tdAnchorSm(thing.commodity, thing.commodity_name)
-                    : tdAnchorSm(thing.station, thing.station_name);
-        body += forStation ? td(thing.category_name) : "";
-        body += td(thing.average_price);
-        body += td(thing.buy_price);
-        body += td(thing.supply + ' (' + thing.supply_level + ')');
-        body += td(thing.sell_price);
-        body += td(thing.demand + ' (' + thing.demand_level + ')');
-        body += td(thing.created);
-        body += '</tr>';
-    }
-
-    return header + body + ender;
-}
-
-function td(thing){
-    return '<td>' + thing + '</td>';
-}
-
-function tdAnchorSm(url, name){
-    return '<td><a class="btn btn-primary btn-sm" href="' + url + '">' + name + '</a></td>';
+function stationCommodityTemplateChooser(forStation) {
+    return STATIC_BASE + (forStation ? 'templates/station_commodities_table.mustache'
+                                     : 'templates/commodity_stations_table.mustache');
 }
 
 function initSearchBox(){
@@ -272,7 +228,6 @@ function initStationCommoditySearchBox(){
         $input.closest('p').after('<div class="collapse" id="' + resultsDivId + '"></div>');
         var $resultsDiv = $('#' + resultsDivId);
         var forStation = $input.data('station') !== undefined;
-        console.log($input.data('station'));
 
         $input.keypress(function(e){
             if (e.which == 13){
@@ -288,14 +243,15 @@ function initStationCommoditySearchBox(){
                         search: val
                     }, function(data){
                         if (data.data.count) {
-                            $resultsDiv.html(buildStationCommoditiesTable(data, forStation));
+                            $.get(stationCommodityTemplateChooser(forStation)).done(function(template){
+                                $resultsDiv.html(Mustache.render(template, data));
+                            });
                         }
                         else {
                             $resultsDiv.html('<p>No results</p>');
                         }
                     });
                 }
-
                 $resultsDiv.collapse('show');
             }
         });

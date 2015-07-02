@@ -1,0 +1,36 @@
+{{#data}}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Commodity</th>
+            <th>Category</th>
+            <th>Average price</th>
+            <th>Buy</th>
+            <th>Supply (level)</th>
+            <th>Sell</th>
+            <th>Demand (level)</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#data.results}}
+            <tr>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{{commodity}}">
+                        {{commodity_name}}
+                    </a>
+                </td>
+                <td>{{category_name}}</td>
+                <td>{{average_price}}</td>
+                <td>{{buy_price}}</td>
+                <td>{{supply}} ({{supply_level}})</td>
+                <td>{{sell_price}}</td>
+                <td>{{demand}} ({{demand_level}})</td>
+                <td>{{created}}</td>
+            </tr>
+        {{/data.results}}
+        </tbody>
+    </table>
+</div>
+{{/data}}
