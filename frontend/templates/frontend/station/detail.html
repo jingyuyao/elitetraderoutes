@@ -55,16 +55,16 @@
         </tr>
         </tbody>
     </table>
-    {% if data.number_of_commodities != 0 %}
-    <p>
-        <input id="{{data.uuid}}_search_input" name="station_commodity_search_input"
-               data-station="{{data.id}}" data-uuid="{{data.uuid}}"
-               type="text" class="typeahead form-control" placeholder="Search for a commodity..." autocomplete="off">
-    </p>
-    <p>
-        <button class="btn btn-primary" data-uuid="{{data.uuid}}" data-station="{{data.id}}"
-                name="station_commodities_browse_button">Browse commodities</button>
-    </p>
-    {% endif %}
 </div>
+{% if data.number_of_commodities != 0 %}
+<p>
+    <input id="{{data.uuid}}_search_input" name="station_commodity_search_input"
+           data-station="{{data.id}}" data-uuid="{{data.uuid}}"
+           type="text" class="typeahead form-control" placeholder="Search for a commodity..." autocomplete="off">
+</p>
+<p>
+    <button class="btn btn-primary" data-uuid="{{data.uuid}}" data-station="{{data.id}}"
+            name="station_commodities_browse_button">Browse commodities</button>
+</p>
+{% endif %}
 {% endblock body %}
