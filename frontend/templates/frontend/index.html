@@ -27,6 +27,9 @@ Elite Trade Routes
 </p>
 <div id="search_error"></div>
 
+<h4>
+    About
+</h4>
 <p>
     The first version of this website will be focused on providing a restful
     api. The api will have a matching html and api view in most cases.
@@ -54,21 +57,41 @@ Elite Trade Routes
     The data used in this website is collected from eddb.io and EDDN.
 </p>
 
-<p>
+<h4>
     Example views:
-</p>
-<ul>
-    <li><a href="/systems/1/">HTML view</a></li>
-    <li><a href="/systems/1/.json">JSON view</a></li>
-    <li><a href="/systems/1/.api">API view</a></li>
-</ul>
+</h4>
+<div class="btn-group btn-group-sm" role="group">
+    <a class="btn btn-default" href="/systems/1/">HTML view</a>
+    <a class="btn btn-default" href="/systems/1/.json">JSON view</a>
+    <a class="btn btn-default" href="/systems/1/.api">API view</a>
+</div>
 
-<p>
+<h4>
     Example data:
-</p>
-<ul>
-    <li>Commodity: Gold, Silver, Marine Equipment, Explosives...</li>
-    <li>Station: Titan City, Smoot station..</li>
-    <li>System: Sol, LHS 3447...</li>
-</ul>
+</h4>
+<div class="btn-group btn-group-sm" role="group">
+    <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Commodity<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/commodities/42/">Gold</a></li>
+            <li><a href="/commodities/27/">Marine Equipment</a></li>
+            <li><a href="/commodities/1/">Explosives</a></li>
+        </ul>
+    </div>
+    <div class="btn-group">
+
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Station<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/stations/1430/">Titan City (Sol)</a></li>
+            <li><a href="/stations/18595/">Bradfield Ring (HR 826)</a></li>
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">System<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/systems/12024/">LHS 3447</a></li>
+            <li><a href="/systems/17072/">Sol</a></li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

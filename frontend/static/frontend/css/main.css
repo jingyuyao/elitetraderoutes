@@ -99,14 +99,30 @@ body {
     padding-top: 50px;
 }
 
-// Firefox table hack
+/* Firefox table hack */
 @-moz-document url-prefix() {
     fieldset {
         display: table-cell;
     }
 }
 
-
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 25px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 25px;
+}
 
 
 
@@ -124,7 +140,7 @@ body {
  * Hide visually and from screen readers:
  */
 
-inputen {
+.hidden {
     display: none !important;
 }
 
