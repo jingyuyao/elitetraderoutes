@@ -28,7 +28,8 @@
                type="text" class="typeahead form-control" placeholder="Search for a station..." autocomplete="off">
     </p>
     <p>
-        <button class="btn btn-primary" onclick="showStationCommodities(this, '{{data.uuid}}', null, {{data.id}});">Browse stations</button>
+        <button class="btn btn-primary" data-uuid="{{data.uuid}}" data-commodity="{{data.id}}"
+                name="station_commodities_browse_button">Browse stations</button>
     </p>
     {% endif %}
 </div>
