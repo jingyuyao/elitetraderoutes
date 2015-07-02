@@ -1,10 +1,6 @@
 {% extends 'frontend/base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-Elite Trade Routes
-{% endblock %}
-
 {% block body %}
 <div class="page-header">
     <h1>
@@ -27,15 +23,28 @@ Elite Trade Routes
 </p>
 <div id="search_error"></div>
 
-<h4>
+<h3>
     About
-</h4>
+</h3>
 <p>
-    The first version of this website will be focused on providing a restful
-    api. The api will have a matching html and api view in most cases.
+    EliteTradeRoutes provides an easy way to search for details on various game
+    data related to trading for the game Elite: Dangerous.
+    The first version of this website will be focused on providing a REST
+    API as well as an equally featured web view.
 </p>
 
 <p>
+    You can find specific game data by using the search box or by browsing the
+    database through the categories listed in the nav bar.
+</p>
+
+<h3>
+    API
+</h3>
+
+<p>
+    This site also provides a REST API. Any data you can see on the web will also be
+    available via the API. Currently no there are no API keys but please go easy on the server.
     To specify the return type of the content you can either use the appropriate
     accept header (recommended) or append '.json', '.html' or '.api' to the end
     of your calls. ex. <code>/systems/1/.json</code> will return the data for that
@@ -49,26 +58,18 @@ Elite Trade Routes
     somewhat bothersome as it makes the return value not very consistent.
 </p>
 
-<p>
-    The backend used to build this api are Django and django-rest-framework.
-</p>
-
-<p>
-    The data used in this website is collected from eddb.io and EDDN.
-</p>
-
-<h4>
+<h3>
     Example views:
-</h4>
+</h3>
 <div class="btn-group btn-group-sm" role="group">
     <a class="btn btn-default" href="/systems/1/">HTML view</a>
     <a class="btn btn-default" href="/systems/1/.json">JSON view</a>
     <a class="btn btn-default" href="/systems/1/.api">API view</a>
 </div>
 
-<h4>
+<h3>
     Example data:
-</h4>
+</h3>
 <div class="btn-group btn-group-sm" role="group">
     <div class="btn-group">
         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Commodity<span class="caret"></span></button>
@@ -94,4 +95,13 @@ Elite Trade Routes
         </ul>
     </div>
 </div>
+
+<h3>
+    Where did you get all the data?
+</h3>
+
+<p>
+    The data used in this website is collected from eddb.io and EDDN.
+</p>
+
 {% endblock %}
