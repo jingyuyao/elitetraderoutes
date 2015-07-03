@@ -76,6 +76,10 @@ class WrappedModelViewSet(ResponseWrapperMixin, viewsets.ModelViewSet):
         response.template_name = self.list_template_name
         return response
 
+
+def handler404(request):
+    return render(request, 'frontend/404.html')
+
 # def wrapped_exception_handler(exec, context):
 #     """
 #     This wraping does not solve the problem of response not being rendered unto the template.

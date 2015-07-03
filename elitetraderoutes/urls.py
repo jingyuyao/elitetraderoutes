@@ -34,3 +34,5 @@ urlpatterns = [
     url(r'^', include(api_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+handler404 = 'common.views.handler404'
