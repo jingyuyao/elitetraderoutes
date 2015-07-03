@@ -1,0 +1,42 @@
+{% extends "frontend/base.html" %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Login</h1>
+</div>
+
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    {% for field, errors in form.errors.items %}
+    {{field}}: {{errors.0}}
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username_id">Username:</label>
+        <input id="username_id" class="form-control" type="text" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="password_id">Password:</label>
+        <input id="password_id" class="form-control" type="password" name="password" required>
+    </div>
+    <input class="btn btn-default" type="submit" value="Login" />
+    {# Prevent logout if it was redirected from the login page #}
+    {% if next = request.path %}
+    <input type="hidden" name="next" value="/" />
+    {% else %}
+    <input type="hidden" name="next" value="{{ next|default:'/' }}" />
+    {% endif %}
+</form>
+
+{% comment 'requires smpt service' %}
+{# Assumes you setup the password_reset view in your URLconf #}
+<p>
+    <a href="{% url 'password_reset' %}">Lost password?</a>
+</p>
+{% endcomment %}
+
+{% endblock %}

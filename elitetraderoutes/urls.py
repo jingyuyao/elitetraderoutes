@@ -31,8 +31,10 @@ api_router.register('station_commodities', elitedata.views.StationCommodityViewS
 
 urlpatterns = [
     url(r'^', include('frontend.urls')),
+    url(r'^register/', common.views.register, name='register'),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^', include(api_router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
 handler404 = 'common.views.handler404'

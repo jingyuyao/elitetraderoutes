@@ -1,14 +1,14 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.views import exception_handler
-from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 from rest_framework import filters
 from rest_framework import renderers
 from rest_framework import permissions
 
 from common.serializers import UserSerializer
+from common.forms import UserRegisterForm
 
 response_wrapper_name = "data"
 
@@ -79,6 +79,28 @@ class WrappedModelViewSet(ResponseWrapperMixin, viewsets.ModelViewSet):
 
 def handler404(request):
     return render(request, 'frontend/404.html')
+
+
+def register(request):
+    if request.user.is_anonymous():
+        if request.method == 'POST':
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                form.save()
+                cleaned_data = form.cleaned_data
+                authenticated_user = authenticate(username=cleaned_data['username'], password=cleaned_data['password1'])
+
+                if authenticated_user is not None:
+                    print('authenticated')
+                    login(request, authenticated_user)
+
+                return render(request, 'registration/registration_success.html')
+        else:
+            form = UserRegisterForm()
+
+        return render(request, 'registration/registration_form.html', {'form': form})
+    else:
+        return HttpResponseRedirect('/')
 
 # def wrapped_exception_handler(exec, context):
 #     """

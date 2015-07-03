@@ -36,7 +36,7 @@ ALLOWED_HOSTS = configs.ALLOWED_HOSTS
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
+    # 'django.contrib.admin',  # Url conflicts with our django.contrib.auth.urls
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'elitetraderoutes.urls'
+LOGIN_REDIRECT_URL = '/'
 
 TEMPLATES = [
     {

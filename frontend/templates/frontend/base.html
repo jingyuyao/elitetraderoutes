@@ -13,7 +13,6 @@
 
         <link rel="stylesheet" href="{% static 'frontend/css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'frontend/css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'frontend/css/bootstrap-theme.min.css' %}">
         <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
         {% block css %}{% endblock %}
         <script src="{% static 'frontend/js/vendor/modernizr-2.8.3.min.js' %}"></script>
@@ -25,46 +24,53 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-         <nav class="navbar navbar-inverse navbar-fixed-top">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="/">EliteTradeRoutes</a>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">EliteTradeRoutes</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'route-list' %}">Routes</a></li>
+                        <li><a href="{% url 'system-list' %}">Systems</a></li>
+                        <li><a href="{% url 'station-list' %}">Stations</a></li>
+                        <li><a href="{% url 'commodity-list' %}">Commodities</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                {% if not user.is_authenticated %}
+                                <li><a href='{% url "django.contrib.auth.views.login" %}?next={{request.path}}'>Login</a></li>
+                                <li><a href='{% url "register" %}'>Register</a></li>
+                                {% else %}
+                                <li><a href="{% url 'django.contrib.auth.views.password_change' %}">Change password</a></li>
+                                <li><a href='{% url "django.contrib.auth.views.logout"%}'>Logout</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Info <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="https://github.com/Jingyu-Yao/elitetraderoutes" target="_blank">GitHub</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Dev sources</li>
+                                <li><a href="https://docs.djangoproject.com/en/1.8/" target="_blank">Django</a></li>
+                                <li><a href="http://www.django-rest-framework.org/" target="_blank">django-rest-framework</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Data sources</li>
+                                <li><a href="http://eddb.io/" target="_blank">EDDB</a></li>
+                                <li><a href="http://eddn-gateway.elite-markets.net/" target="_blank">EDDN</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="https://www.elitedangerous.com" target="_blank">EliteDangerous</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                  <li><a href="{% url 'route-list' %}">Routes</a></li>
-                  <li><a href="{% url 'system-list' %}">Systems</a></li>
-                  <li><a href="{% url 'station-list' %}">Stations</a></li>
-                  <li><a href="{% url 'commodity-list' %}">Commodities</a></li>
-                {% if not user.is_authenticated %}
-                <li><a href='/api-auth/login?next={{request.path}}'>Login</a></li>
-                {% else %}
-                <li><a href='/api-auth/logout?next={{request.path}}'>Logout</a></li>
-                {% endif %}
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Info <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="https://github.com/Jingyu-Yao/elitetraderoutes" target="_blank">GitHub</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Dev sources</li>
-                    <li><a href="https://docs.djangoproject.com/en/1.8/" target="_blank">Django</a></li>
-                    <li><a href="http://www.django-rest-framework.org/" target="_blank">django-rest-framework</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Data sources</li>
-                    <li><a href="http://eddb.io/" target="_blank">EDDB</a></li>
-                    <li><a href="http://eddn-gateway.elite-markets.net/" target="_blank">EDDN</a></li>
-                  </ul>
-                </li>
-                <li><a href="https://www.elitedangerous.com" target="_blank">EliteDangerous</a></li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div>
         </nav>
 
         <div class="container">
@@ -95,13 +101,13 @@
 
         <!-- Google Analytics -->
         <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-55772901-2', 'auto');
-          ga('send', 'pageview');
+            ga('create', 'UA-55772901-2', 'auto');
+            ga('send', 'pageview');
 
         </script>
     </body>
