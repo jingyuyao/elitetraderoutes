@@ -200,49 +200,6 @@ function initFormSubmitChange() {
     }
 }
 
-function initStationCommoditySearchBox() {
-    var $inputs = $('input[name=station_commodity_search_input]');
-
-    if (!$inputs.length) {
-        return;
-    }
-
-    $inputs.each(function () {
-        var $input = $(this);
-        var resultsDivId = $input.data('uuid') + '_station_commodity_results';
-        $input.closest('p').after('<div class="collapse" id="' + resultsDivId + '"></div>');
-        var $resultsDiv = $('#' + resultsDivId);
-        var station = $input.data('station');
-
-        $input.keypress(function (e) {
-            if (e.which == 13) {
-                var val = $input.val();
-
-                if (val.length < 2) {
-                    $resultsDiv.html('<p>Minimum of 2 characters to search</p>');
-                }
-                else {
-                    $.getJSON('/station_commodities/', {
-                        commodity: $input.data('commodity'),
-                        station: $input.data('station'),
-                        search: val
-                    }, function (data) {
-                        if (data.data.count) {
-                            cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
-                                $resultsDiv.html(Mustache.render(template, data));
-                            });
-                        }
-                        else {
-                            $resultsDiv.html('<p>No results</p>');
-                        }
-                    });
-                }
-                $resultsDiv.collapse('show');
-            }
-        });
-    });
-}
-
 function initStationCommodityBrowseButtons() {
     $('[name=station_commodities_browse_button]').each(function () {
         var $btn = $(this);
@@ -252,7 +209,7 @@ function initStationCommodityBrowseButtons() {
 
         $btn.click(function () {
             var listId = uuid + '_station_commodity_list';
-            $btn.closest('p').after('<div class="collapse" id="' + listId + '"></div>');
+            $btn.parent().after('<div class="collapse" id="' + listId + '"></div>');
             $btn.attr('data-toggle', 'collapse');
             $btn.attr('data-target', '#' + listId);
             $btn.off('click');
@@ -260,8 +217,9 @@ function initStationCommodityBrowseButtons() {
             populateStationCommoditiesList(listId, station, commodity, "");
         });
     });
+}
 
-    /**
+/**
      * Populate the #listId with station commodity data.
      *
      * If {@code url} is supplied, then the data returned by the url
@@ -275,18 +233,19 @@ function initStationCommodityBrowseButtons() {
      * @param {number} commodity
      * @param {string} url
      */
-    function populateStationCommoditiesList(listId, station, commodity, url) {
-        var $listDiv = $('#' + listId);
+function populateStationCommoditiesList(listId, station, commodity, url) {
+    var $listDiv = $('#' + listId);
 
-        // Get the station commodities
-        $.getJSON(url ? url : '/station_commodities/',
-            url ? null : {
-                station: station,
-                commodity: commodity
-            }, function (data) {
-                var html = "";
+    // Get the station commodities
+    $.getJSON(url ? url : '/station_commodities/',
+        url ? null : {
+            station: station,
+            commodity: commodity
+        }, function (data) {
+            var html = "";
 
-                cache.getTemplate(STATIC_BASE + 'templates/list_nav.mustache', function (template) {
+            cache.getTemplate(STATIC_BASE + 'templates/list_nav.mustache', function (template) {
+                if (data.data.previous || data.data.next){
                     html += Mustache.render(template,
                         {
                             previous: data.data.previous,
@@ -298,27 +257,113 @@ function initStationCommodityBrowseButtons() {
                                 };
                             }
                         });
+                }
 
-                    cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
-                        html += Mustache.render(template, data);
-                        $listDiv.html(html);
+                cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
+                    html += Mustache.render(template, data);
+                    $listDiv.html(html);
 
-                        // Attach click listeners to the created pagers
-                        $listDiv.find('a[name=station_commodities_list_pager]').each(function () {
-                            var $pager = $(this);
-                            $pager.click(function () {
-                                populateStationCommoditiesList(listId, station, commodity, $pager.data('url'));
-                            });
+                    // Attach click listeners to the created pagers
+                    $listDiv.find('a[name=station_commodities_list_pager]').each(function () {
+                        var $pager = $(this);
+                        $pager.click(function () {
+                            populateStationCommoditiesList(listId, station, commodity, $pager.data('url'));
                         });
                     });
                 });
             });
+        });
+}
+
+function initStationCommodityModalHandler(){
+    var $stationCommodityModal = $('#station_commodity_modal');
+    var $stationCommodityModalTitle = $('#station_commodity_modal_title');
+    var $stationCommodityModalBrowseResults = $stationCommodityModal.find('#station_commodity_modal_browse_results');
+    var $stationCommodityModalSearchResults = $stationCommodityModal.find('#station_commodity_modal_search_results');
+    var $searchBox = $('#' + 'station_commodity_modal_search_input');
+
+    $stationCommodityModal.on('show.bs.modal', function(event){
+        var $btn = $(event.relatedTarget);
+        var uuid = $btn.data('uuid');
+        var station = $btn.data('station');
+        var commodity = $btn.data('commodity');
+        var name = $btn.data('name');
+
+        // Modal configurations
+        $stationCommodityModalTitle.html(name);
+        $searchBox.attr('placeholder', station ? 'Search commodity...' : 'Search station...');
+
+        // Start browsing by default
+        populateStationCommoditiesList('station_commodity_modal_browse_results', station, commodity, "");
+
+        initStationCommoditySearchBox($searchBox, $stationCommodityModalSearchResults, station, commodity);
+    });
+
+    // Reset modal state
+    $stationCommodityModal.on('hidden.bs.modal', function(event){
+        $searchBox.val('');
+        $stationCommodityModalSearchResults.empty();
+        $stationCommodityModalBrowseResults.empty();
+    });
+}
+
+function initStationCommoditySearchBox($searchBox, $target, station, commodity){
+    station = typeof station !== 'undefined' ? station : $searchBox.data('station');
+    commodity = typeof commodity !== 'undefined' ? commodity : $searchBox.data('commodity');
+
+    $searchBox.keypress(function (e) {
+        if (e.which == 13) {
+            var val = $searchBox.val();
+
+            if (val.length < 2) {
+                $target.html('<p>Minimum of 2 characters to search</p>');
+            }
+            else {
+                var params = {
+                    commodity: commodity,
+                    station: station,
+                    search: val
+                };
+
+                $.getJSON('/station_commodities/', params, function (data) {
+                    if (data.data.count) {
+                        // Limit # of results to 5
+                        data.data.results = data.data.results.slice(0, 5);
+                        cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
+                            $target.html(Mustache.render(template, data));
+                        });
+                    }
+                    else {
+                        $target.html('<p>No results</p>');
+                    }
+                });
+            }
+            $target.collapse('show');
+        }
+    });
+}
+
+function initAllStationCommoditySearchBox() {
+    var $inputs = $('input[name=station_commodity_search_input]');
+
+    if (!$inputs.length) {
+        return;
     }
+
+    $inputs.each(function () {
+        var $input = $(this);
+        var resultsDivId = $input.data('uuid') + '_station_commodity_results';
+        $input.parent().after('<div class="collapse" id="' + resultsDivId + '"></div>');
+        var $resultsDiv = $('#' + resultsDivId);
+
+        initStationCommoditySearchBox($input, $resultsDiv);
+    });
 }
 
 $(function () {
     initFormSubmitChange();
     initSearchBox();
-    initStationCommoditySearchBox();
+    initAllStationCommoditySearchBox();
     initStationCommodityBrowseButtons();
+    initStationCommodityModalHandler();
 });

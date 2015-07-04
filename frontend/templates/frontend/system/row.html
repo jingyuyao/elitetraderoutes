@@ -1,0 +1,21 @@
+<tr>
+    <td><a class="btn btn-primary btn-sm" href="{{data.url}}">{{data.name}}</a></td>
+    <td>{{data.needs_permit}}</td>
+    <td>{{data.primary_economy}}</td>
+    <td>{{data.population}}</td>
+    <td>{{data.security}}</td>
+    <td>{{data.allegiance}}</td>
+    <td>{{data.government}}</td>
+    <td>{{data.state}}</td>
+    <td>{{data.faction}}</td>
+    <td>{{data.x}}</td>
+    <td>{{data.y}}</td>
+    <td>{{data.z}}</td>
+    <td>
+        {% if data.stations|length == 0 %}
+            --
+        {% else %}
+            <a class="btn btn-default btn-sm" href="{{data.url}}stations">Show</a>
+        {% endif %}
+    </td>
+</tr>

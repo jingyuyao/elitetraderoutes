@@ -12,10 +12,18 @@ Commodity list
     </div>
     {% if data %}
     {% include 'frontend/list_nav.html' %}
-    <div class='panel-group' id='commodity_list' role="tablist">
-        {% for commodity in data.results %}
-            {% include "frontend/commodity/detail.html" with data=commodity group='commodity_list' only %}
-        {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-striped table-condensed">
+            {% include 'frontend/commodity/thead.html' %}
+            <tbody>
+            {% for commodity in data.results %}
+                {% include "frontend/commodity/row.html" with data=commodity only %}
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+
+    {% include 'frontend/station_commodity/modal.html' %}
+
     {% endif %}
 {% endblock list %}
