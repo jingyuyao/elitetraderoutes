@@ -1,8 +1,34 @@
 // Included libraries: bootstrap, jQuery, Mustache
 // Global scope
 
+// Constants
 var STATIC_BASE = '/static/frontend/';
 
+// Dom selectors, grouped by page, scope, model or function
+// Not all selectors exists on every page
+// Note: Should not initialize jquery selector on them here since
+// page might not be loaded yet.
+var DOM = {
+    generic: {
+        searchError: '#search_error',
+        singleModelSearch: '#list_search',
+        browseButtons: '[name=station_commodities_browse_button]'
+    },
+    index: {
+        searchInput: '#search_input',
+        searchRadios: 'input[name=search_type]'
+    },
+    stationCommodity: {
+        modal: '#station_commodity_modal',
+        modalSearchBox: '#station_commodity_modal_search_input',
+        modalBrowseResults: '#station_commodity_modal_browse_results',
+        modalSearchResults: '#station_commodity_modal_search_results',
+        searchBoxes: 'input[name=station_commodity_search_input]'
+    },
+    station: {
+        modal: '#station_list_modal'
+    }
+};
 var cache = {
     templates: {},
     station_inputs: {},
@@ -28,7 +54,7 @@ var cache = {
         }
     }
 };
-var util = {
+var UTIL = {
     /**
      * Case-insensitive search.
      *
@@ -48,13 +74,13 @@ var util = {
         if (typeof name === 'undefined') {
 
         }
-        else if (util.iCompare('system', name)) {
+        else if (UTIL.iCompare('system', name)) {
             return 'systems';
         }
-        else if (util.iCompare('station', name)) {
+        else if (UTIL.iCompare('station', name)) {
             return 'stations';
         }
-        else if (util.iCompare('commodity', name)) {
+        else if (UTIL.iCompare('commodity', name)) {
             return 'commodities';
         }
     },
@@ -83,27 +109,28 @@ var util = {
 
 function initIndexSearchBox() {
     // Search box logic
-    var $input = $('#search_input');
+    var $input = $(DOM.index.searchInput);
 
     if (!$input.length) {
         return;
     }
 
     // Default option
-    var checkedRadio = $('input[name=search_type]:checked');
-    attachSearchToModel($input, checkedRadio.val());
+    var $radios = $(DOM.index.searchRadios);
+    var $searchError = $(DOM.generic.searchError);
+    var checkedRadio = $radios.filter(':checked');
+    attachSearchToModel($input, checkedRadio.val(), $searchError);
 
-    $('input[name=search_type]').click(function () {
-        attachSearchToModel($input, $(this).val(), $('#search_error'));
+    $radios.click(function () {
+        attachSearchToModel($input, $(this).val(), $searchError);
     });
 }
 
 function initListPageSearchBox(){
-    var $input = $('#list_search');
-    var $error = $('#search_error');
+    var $input = $(DOM.generic.singleModelSearch);
     var model = $input.data('model');
 
-    attachSearchToModel($input, model, $error);
+    attachSearchToModel($input, model, $(DOM.generic.searchError));
 }
 
 function attachSearchToModel($input, model, $error) {
@@ -139,6 +166,14 @@ function attachSearchToModel($input, model, $error) {
     });
 }
 
+/**
+ * Add typeahead to form inputs that display live search results and
+ * attach result data to the input element upon selection. The suggestions
+ * for station typeaheads are restricted to the 
+ * Also add on submit listener to form that replace input values
+ * with urls if they exists. Also put restrictions on station inputs
+ * to only show stations belong in the corresponding system.
+ */
 function initFormSubmitChange() {
     var $forms = $('form');
 
@@ -167,7 +202,7 @@ function initFormSubmitChange() {
         $form.find(':input').each(function () {
             var $input = $(this);
             var name = $input.attr('name');
-            var model = util.findModel(name);
+            var model = UTIL.findModel(name);
 
             if (typeof model === 'undefined') {
                 return;
@@ -229,8 +264,11 @@ function initFormSubmitChange() {
     }
 }
 
+/**
+ * Add on click listener to all browse buttons.
+ */
 function initStationCommodityBrowseButtons() {
-    $('[name=station_commodities_browse_button]').each(function () {
+    $(DOM.generic.browseButtons).each(function () {
         var $btn = $(this);
         var uuid = $btn.data('uuid');
         var station = $btn.data('station');
@@ -243,7 +281,7 @@ function initStationCommodityBrowseButtons() {
             $btn.attr('data-target', '#' + listId);
             $btn.off('click');
 
-            populateStationCommoditiesList(listId, station, commodity, "");
+            populateStationCommoditiesList($('#'+listId), station, commodity, "");
         });
     });
 }
@@ -257,22 +295,20 @@ function initStationCommodityBrowseButtons() {
      *
      * Has to be top level since pager buttons call this.
      *
-     * @param {string} listId
+     * @param {string} $listDiv
      * @param {number} station
      * @param {number} commodity
      * @param {string} url
      */
-function populateStationCommoditiesList(listId, station, commodity, url) {
-    var $listDiv = $('#' + listId);
-
+function populateStationCommoditiesList($listDiv, station, commodity, url) {
     // Get the station commodities
     $.getJSON(url ? url : '/station_commodities/',
         url ? null : {
             station: station,
             commodity: commodity
         }, function (data) {
-            util.renderNav(data, 'station_commodities_list_pager', function(nav){
-                cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
+            UTIL.renderNav(data, 'station_commodities_list_pager', function(nav){
+                cache.getTemplate(UTIL.stationCommodityTemplateChooser(station), function (template) {
                     var table = Mustache.render(template, data);
                     $listDiv.html(nav+table);
 
@@ -280,7 +316,7 @@ function populateStationCommoditiesList(listId, station, commodity, url) {
                     $listDiv.find('a[name=station_commodities_list_pager]').each(function () {
                         var $pager = $(this);
                         $pager.click(function () {
-                            populateStationCommoditiesList(listId, station, commodity, $pager.data('url'));
+                            populateStationCommoditiesList($listDiv, station, commodity, $pager.data('url'));
                         });
                     });
                 });
@@ -289,33 +325,33 @@ function populateStationCommoditiesList(listId, station, commodity, url) {
 }
 
 function initStationCommodityModalHandler(){
-    var $stationCommodityModal = $('#station_commodity_modal');
-    var $stationCommodityModalTitle = $stationCommodityModal.find('.modal-title');
-    var $stationCommodityModalBrowseResults = $stationCommodityModal.find('#station_commodity_modal_browse_results');
-    var $stationCommodityModalSearchResults = $stationCommodityModal.find('#station_commodity_modal_search_results');
-    var $searchBox = $('#' + 'station_commodity_modal_search_input');
+    var modelDom = DOM.stationCommodity;
+    var $modal = $(modelDom.modal);
+    var $modalSearchBox = $(modelDom.modalSearchBox);
+    var $modalSearchResults = $(modelDom.modalSearchResults);
+    var $modalBrowseResults = $(modelDom.modalBrowseResults);
 
-    $stationCommodityModal.on('show.bs.modal', function(event){
+    $modal.on('show.bs.modal', function(event){
         var $btn = $(event.relatedTarget);
         var station = $btn.data('station');
         var commodity = $btn.data('commodity');
         var name = $btn.data('name');
 
         // Modal configurations
-        $stationCommodityModalTitle.html(name);
-        $searchBox.attr('placeholder', station ? 'Search commodity...' : 'Search station...');
+        $modal.find('.modal-title').html(name);
+        $modalSearchBox.attr('placeholder', station ? 'Search commodity...' : 'Search station...');
 
         // Start browsing by default
-        populateStationCommoditiesList('station_commodity_modal_browse_results', station, commodity, "");
+        populateStationCommoditiesList($modalBrowseResults, station, commodity, "");
 
-        initStationCommoditySearchBox($searchBox, $stationCommodityModalSearchResults, station, commodity);
+        initStationCommoditySearchBox($modalSearchBox, $modalSearchResults, station, commodity);
     });
 
     // Reset modal state
-    $stationCommodityModal.on('hidden.bs.modal', function(event){
-        $searchBox.val('');
-        $stationCommodityModalSearchResults.empty();
-        $stationCommodityModalBrowseResults.empty();
+    $modal.on('hidden.bs.modal', function(event){
+        $modalSearchBox.val('');
+        $modalBrowseResults.empty();
+        $modalSearchResults.empty();
     });
 }
 
@@ -341,7 +377,7 @@ function initStationCommoditySearchBox($searchBox, $target, station, commodity){
                     if (data.data.count) {
                         // Limit # of results to 5
                         data.data.results = data.data.results.slice(0, 5);
-                        cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
+                        cache.getTemplate(UTIL.stationCommodityTemplateChooser(station), function (template) {
                             $target.html(Mustache.render(template, data));
                         });
                     }
@@ -356,7 +392,7 @@ function initStationCommoditySearchBox($searchBox, $target, station, commodity){
 }
 
 function initAllStationCommoditySearchBox() {
-    var $inputs = $('input[name=station_commodity_search_input]');
+    var $inputs = $(DOM.stationCommodity.searchBoxes);
 
     if (!$inputs.length) {
         return;
@@ -373,24 +409,22 @@ function initAllStationCommoditySearchBox() {
 }
 
 function initStationListModalHandler(){
-    var $modal = $('#station_list_modal');
-    var $title = $modal.find('.modal-title');
-    var $body = $modal.find('.modal-body');
+    var $stationModal = $(DOM.station.modal);
 
-    $modal.on('show.bs.modal', function(event){
+    $stationModal.on('show.bs.modal', function(event){
         var $btn = $(event.relatedTarget);
         var url = $btn.data('url');
         var name = $btn.data('name');
 
         // Modal configurations
-        $title.html(name);
+        $stationModal.find('.modal-title').html(name);
 
         // Modal data
         $.getJSON(url+'stations/', function(data){
-            util.renderNav(data, 'station_list_modal_pager', function(nav){
+            UTIL.renderNav(data, 'station_list_modal_pager', function(nav){
                 cache.getTemplate('station_table.mustache', function(template){
                     var table = Mustache.render(template, data);
-                    $body.html(nav + table);
+                    $stationModal.find('.modal-body').html(nav + table);
                 });
             });
         });
