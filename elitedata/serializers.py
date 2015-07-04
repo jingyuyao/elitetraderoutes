@@ -11,6 +11,8 @@ class StationCommoditySerializer(IDHyperlinkedModelSerializer):
     category_name = serializers.ReadOnlyField(source='commodity.category_name')
     station = serializers.HyperlinkedRelatedField(view_name='station-detail', read_only=True)
     station_name = serializers.ReadOnlyField(source='station.name')
+    system = serializers.HyperlinkedRelatedField(source='station.system', view_name='system-detail', read_only=True)
+    system_name = serializers.ReadOnlyField(source='station.system.name')
 
     class Meta:
         model = StationCommodity

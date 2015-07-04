@@ -15,7 +15,9 @@
         {% if data.stations|length == 0 %}
             --
         {% else %}
-            <a class="btn btn-default btn-sm" href="{{data.url}}stations">Show</a>
+        <button class="btn btn-default btn-sm" name="station_list_modal_button"
+                data-uuid="{{data.uuid}}" data-system="{{data.id}}" data-url="{{data.url}}" data-name="{{data.name}}"
+                data-toggle="modal" data-target="#station_list_modal">Show</button>
         {% endif %}
     </td>
 </tr>

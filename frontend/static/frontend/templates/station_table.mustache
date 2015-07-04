@@ -4,7 +4,6 @@
             <thead>
             <tr>
                 <th>Station</th>
-                <th>System</th>
                 <th>Type</th>
                 <th>Max pad</th>
                 <th>Star distance</th>
@@ -21,11 +20,6 @@
             {{#data.results}}
                 <tr>
                     <td><a class="btn btn-primary btn-sm" href="{{url}}">{{name}}</a></td>
-                    <td>
-                        <a class="btn btn-default btn-sm" href="{{system}}">
-                            {{system_name}}
-                        </a>
-                    </td>
                     <td>{{type}}</td>
                     <td>{{max_landing_pad_size}}</td>
                     <td>{{distance_to_star}}</td>

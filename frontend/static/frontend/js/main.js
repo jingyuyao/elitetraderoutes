@@ -12,16 +12,17 @@ var cache = {
      * cache. Actual 304 status is not validated since templates are
      * unlikely to change during a session.
      *
-     * @param {string} template Url to the template
+     * @param {string} templateName Url to the template
      * @param {Function} callback Callback function to run on the template
      */
-    getTemplate: function (template, callback) {
-        if (cache.templates.hasOwnProperty(template)) {
-            callback(cache.templates[template]);
+    getTemplate: function (templateName, callback) {
+        templateName = STATIC_BASE + 'templates/' + templateName;
+        if (cache.templates.hasOwnProperty(templateName)) {
+            callback(cache.templates[templateName]);
         }
         else {
-            $.get(template, function (data) {
-                cache.templates[template] = data;
+            $.get(templateName, function (data) {
+                cache.templates[templateName] = data;
                 callback(data);
             });
         }
@@ -40,8 +41,7 @@ var util = {
     },
 
     stationCommodityTemplateChooser: function (forStation) {
-        return STATIC_BASE + (forStation ? 'templates/station_commodities_table.mustache'
-                : 'templates/commodity_stations_table.mustache');
+        return (forStation ? 'station_commodities_table.mustache' : 'commodity_stations_table.mustache');
     },
 
     findModel: function (name) {
@@ -56,6 +56,27 @@ var util = {
         }
         else if (util.iCompare('commodity', name)) {
             return 'commodities';
+        }
+    },
+
+    renderNav: function(data, pagerName, callback){
+        if (data.data.previous || data.data.next){
+            cache.getTemplate('list_nav.mustache', function(template){
+                var nav = Mustache.render(template,{
+                    previous: data.data.previous,
+                    next: data.data.next,
+                    targeter: function () {
+                        return function (val, render) {
+                            // The cursor style is a hack for pager with no href
+                            return 'style="cursor: pointer;" name="' + pagerName + '" data-url="' + render(val) + '"';
+                        };
+                    }
+                });
+                callback(nav);
+            });
+        }
+        else{
+            callback('');
         }
     }
 };
@@ -242,26 +263,10 @@ function populateStationCommoditiesList(listId, station, commodity, url) {
             station: station,
             commodity: commodity
         }, function (data) {
-            var html = "";
-
-            cache.getTemplate(STATIC_BASE + 'templates/list_nav.mustache', function (template) {
-                if (data.data.previous || data.data.next){
-                    html += Mustache.render(template,
-                        {
-                            previous: data.data.previous,
-                            next: data.data.next,
-                            targeter: function () {
-                                return function (val, render) {
-                                    // The cursor style is a hack for pager with no href
-                                    return 'style="cursor: pointer;" name="station_commodities_list_pager" data-url="' + render(val) + '"';
-                                };
-                            }
-                        });
-                }
-
+            util.renderNav(data, 'station_commodities_list_pager', function(nav){
                 cache.getTemplate(util.stationCommodityTemplateChooser(station), function (template) {
-                    html += Mustache.render(template, data);
-                    $listDiv.html(html);
+                    var table = Mustache.render(template, data);
+                    $listDiv.html(nav+table);
 
                     // Attach click listeners to the created pagers
                     $listDiv.find('a[name=station_commodities_list_pager]').each(function () {
@@ -277,7 +282,7 @@ function populateStationCommoditiesList(listId, station, commodity, url) {
 
 function initStationCommodityModalHandler(){
     var $stationCommodityModal = $('#station_commodity_modal');
-    var $stationCommodityModalTitle = $('#station_commodity_modal_title');
+    var $stationCommodityModalTitle = $stationCommodityModal.find('.modal-title');
     var $stationCommodityModalBrowseResults = $stationCommodityModal.find('#station_commodity_modal_browse_results');
     var $stationCommodityModalSearchResults = $stationCommodityModal.find('#station_commodity_modal_search_results');
     var $searchBox = $('#' + 'station_commodity_modal_search_input');
@@ -360,10 +365,38 @@ function initAllStationCommoditySearchBox() {
     });
 }
 
+function initStationListModalHandler(){
+    var $modal = $('#station_list_modal');
+    var $title = $modal.find('.modal-title');
+    var $body = $modal.find('.modal-body');
+
+    $modal.on('show.bs.modal', function(event){
+        var $btn = $(event.relatedTarget);
+        var uuid = $btn.data('uuid');
+        var system = $btn.data('system');
+        var url = $btn.data('url');
+        var name = $btn.data('name');
+
+        // Modal configurations
+        $title.html(name);
+
+        // Modal data
+        $.getJSON(url+'stations/', function(data){
+            util.renderNav(data, 'station_list_modal_pager', function(nav){
+                cache.getTemplate('station_table.mustache', function(template){
+                    var table = Mustache.render(template, data);
+                    $body.html(nav + table);
+                });
+            });
+        });
+    });
+}
+
 $(function () {
     initFormSubmitChange();
     initSearchBox();
     initAllStationCommoditySearchBox();
     initStationCommodityBrowseButtons();
     initStationCommodityModalHandler();
+    initStationListModalHandler();
 });
