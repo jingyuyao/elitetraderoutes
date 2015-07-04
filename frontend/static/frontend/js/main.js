@@ -289,7 +289,6 @@ function initStationCommodityModalHandler(){
 
     $stationCommodityModal.on('show.bs.modal', function(event){
         var $btn = $(event.relatedTarget);
-        var uuid = $btn.data('uuid');
         var station = $btn.data('station');
         var commodity = $btn.data('commodity');
         var name = $btn.data('name');
@@ -372,8 +371,6 @@ function initStationListModalHandler(){
 
     $modal.on('show.bs.modal', function(event){
         var $btn = $(event.relatedTarget);
-        var uuid = $btn.data('uuid');
-        var system = $btn.data('system');
         var url = $btn.data('url');
         var name = $btn.data('name');
 
