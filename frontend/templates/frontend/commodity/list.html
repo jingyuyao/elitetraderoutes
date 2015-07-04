@@ -10,6 +10,12 @@ Commodity list
             Commodity list
         </h1>
     </div>
+    <p>
+        <input id="list_search" type="search" class="typeahead form-control"
+               placeholder="Search..." autocomplete="off" data-model="commodities">
+    </p>
+    <div id="search_error"></div>
+
     {% if data %}
     {% include 'frontend/list_nav.html' %}
     <div class="table-responsive">

@@ -81,7 +81,7 @@ var util = {
     }
 };
 
-function initSearchBox() {
+function initIndexSearchBox() {
     // Search box logic
     var $input = $('#search_input');
 
@@ -94,41 +94,49 @@ function initSearchBox() {
     attachSearchToModel($input, checkedRadio.val());
 
     $('input[name=search_type]').click(function () {
-        attachSearchToModel($input, $(this).val());
+        attachSearchToModel($input, $(this).val(), $('#search_error'));
+    });
+}
+
+function initListPageSearchBox(){
+    var $input = $('#list_search');
+    var $error = $('#search_error');
+    var model = $input.data('model');
+
+    attachSearchToModel($input, model, $error);
+}
+
+function attachSearchToModel($input, model, $error) {
+    // Clean previous typeahead
+    $input.typeahead('destroy');
+
+    $input.typeahead({
+        minLength: 2,
+        delay: 250, // Millisecond
+        source: function (query, process) {
+            var requestUrl = '/' + model + '/?search=' + query;
+
+            $.getJSON(requestUrl, function (response) {
+                process(response.data.results);
+            });
+        },
+        afterSelect: function (suggestion) {
+            window.location.href = suggestion.url;
+        },
+        displayText: function (item) {
+            if (item.hasOwnProperty('system_name')) {
+                return item.name + ' (' + item.system_name + ')';
+            }
+
+            return item.name;
+        }
     });
 
-    function attachSearchToModel($input, model) {
-        // Clean previous typeahead
-        $input.typeahead('destroy');
-
-        $input.typeahead({
-            minLength: 2,
-            delay: 250, // Millisecond
-            source: function (query, process) {
-                var requestUrl = '/' + model + '/?search=' + query;
-
-                $.getJSON(requestUrl, function (response) {
-                    process(response.data.results);
-                });
-            },
-            afterSelect: function (suggestion) {
-                window.location.href = suggestion.url;
-            },
-            displayText: function (item) {
-                if (item.hasOwnProperty('system_name')) {
-                    return item.name + ' (' + item.system_name + ')';
-                }
-
-                return item.name;
-            }
-        });
-
-        $input.keypress(function (e) {
-            if (e.which == 13) {
-                $('#search_error').html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
-            }
-        });
-    }
+    $input.keypress(function (e) {
+        if (e.which == 13) {
+            $error.html('<div class="alert alert-warning" role="alert">Please select item from dropdown or tab complete.</div>');
+        }
+    });
 }
 
 function initFormSubmitChange() {
@@ -391,9 +399,10 @@ function initStationListModalHandler(){
 
 $(function () {
     initFormSubmitChange();
-    initSearchBox();
+    initIndexSearchBox();
     initAllStationCommoditySearchBox();
     initStationCommodityBrowseButtons();
     initStationCommodityModalHandler();
     initStationListModalHandler();
+    initListPageSearchBox();
 });
