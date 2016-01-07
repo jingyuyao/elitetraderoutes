@@ -3,6 +3,7 @@
 www.elitetraderoutes.com
 
 # Project setup
+Ryan is cool.
 
 The following setup is for Linux / Windows. Installation scripts are available 
 for linux only. All commands should be run in the directory where manage.py is located.
