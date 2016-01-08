@@ -2,8 +2,6 @@
 
 www.elitetraderoutes.com
 
-test again
-
 # Project setup
 
 The following setup is for Linux / Windows. Installation scripts are available 
