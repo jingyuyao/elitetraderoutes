@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/Jingyu-Yao/elitetraderoutes.svg?branch=master)](https://travis-ci.org/Jingyu-Yao/elitetraderoutes)
 
-testing
-
 www.elitetraderoutes.com
 
 # Project setup
