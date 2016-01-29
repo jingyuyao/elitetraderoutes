@@ -8,6 +8,7 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "elitetraderoutes.settings")
 
 import django
+django.setup()
 from eddn.ingester import Ingester
 
 """
@@ -25,8 +26,6 @@ def main():
     subscriber  = context.socket(zmq.SUB)
     subscriber.setsockopt(zmq.SUBSCRIBE, b"")
     subscriber.setsockopt(zmq.RCVTIMEO, __timeoutEDDN)
-
-    django.setup()
 
     ingester = Ingester()
 
