@@ -1,0 +1,992 @@
+[
+  {
+    "fields": {
+      "category_name": "Chemicals",
+      "average_price": 271,
+      "category_id": 1,
+      "name": "Explosives"
+    },
+    "pk": 1,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Chemicals",
+      "average_price": 102,
+      "category_id": 1,
+      "name": "Hydrogen Fuel"
+    },
+    "pk": 2,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Chemicals",
+      "average_price": 185,
+      "category_id": 1,
+      "name": "Mineral Oil"
+    },
+    "pk": 3,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Chemicals",
+      "average_price": 183,
+      "category_id": 1,
+      "name": "Pesticides"
+    },
+    "pk": 4,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Consumer Items",
+      "average_price": 300,
+      "category_id": 2,
+      "name": "Clothing"
+    },
+    "pk": 5,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Consumer Items",
+      "average_price": 6958,
+      "category_id": 2,
+      "name": "Consumer Technology"
+    },
+    "pk": 6,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Consumer Items",
+      "average_price": 509,
+      "category_id": 2,
+      "name": "Domestic Appliances"
+    },
+    "pk": 7,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Legal Drugs",
+      "average_price": 170,
+      "category_id": 3,
+      "name": "Beer"
+    },
+    "pk": 8,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Legal Drugs",
+      "average_price": 630,
+      "category_id": 3,
+      "name": "Liquor"
+    },
+    "pk": 9,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Legal Drugs",
+      "average_price": 9301,
+      "category_id": 3,
+      "name": "Narcotics"
+    },
+    "pk": 10,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Legal Drugs",
+      "average_price": 4911,
+      "category_id": 3,
+      "name": "Tobacco"
+    },
+    "pk": 11,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Legal Drugs",
+      "average_price": 253,
+      "category_id": 3,
+      "name": "Wine"
+    },
+    "pk": 12,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 117,
+      "category_id": 4,
+      "name": "Algae"
+    },
+    "pk": 13,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 1326,
+      "category_id": 4,
+      "name": "Animal Meat"
+    },
+    "pk": 14,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 1307,
+      "category_id": 4,
+      "name": "Coffee"
+    },
+    "pk": 15,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 415,
+      "category_id": 4,
+      "name": "Fish"
+    },
+    "pk": 16,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 89,
+      "category_id": 4,
+      "name": "Food Cartridges"
+    },
+    "pk": 17,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 310,
+      "category_id": 4,
+      "name": "Fruit and Vegetables"
+    },
+    "pk": 18,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 201,
+      "category_id": 4,
+      "name": "Grain"
+    },
+    "pk": 19,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 262,
+      "category_id": 4,
+      "name": "Synthetic Meat"
+    },
+    "pk": 20,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Foods",
+      "average_price": 1503,
+      "category_id": 4,
+      "name": "Tea"
+    },
+    "pk": 21,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Industrial Materials",
+      "average_price": 121,
+      "category_id": 5,
+      "name": "Polymers"
+    },
+    "pk": 22,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Industrial Materials",
+      "average_price": 878,
+      "category_id": 5,
+      "name": "Semiconductors"
+    },
+    "pk": 23,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Industrial Materials",
+      "average_price": 6718,
+      "category_id": 5,
+      "name": "Superconductors"
+    },
+    "pk": 24,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 325,
+      "category_id": 6,
+      "name": "Atmospheric Processors"
+    },
+    "pk": 25,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 2005,
+      "category_id": 6,
+      "name": "Crop Harvesters"
+    },
+    "pk": 26,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 3929,
+      "category_id": 6,
+      "name": "Marine Equipment"
+    },
+    "pk": 27,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 214,
+      "category_id": 6,
+      "name": "Microbial Furnaces"
+    },
+    "pk": 28,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 526,
+      "category_id": 6,
+      "name": "Mineral Extractors"
+    },
+    "pk": 29,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 475,
+      "category_id": 6,
+      "name": "Power Generators"
+    },
+    "pk": 30,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Machinery",
+      "average_price": 256,
+      "category_id": 6,
+      "name": "Water Purifiers"
+    },
+    "pk": 31,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Medicines",
+      "average_price": 987,
+      "category_id": 7,
+      "name": "Agri-Medicines"
+    },
+    "pk": 32,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Medicines",
+      "average_price": 269,
+      "category_id": 7,
+      "name": "Basic Medicines"
+    },
+    "pk": 33,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Medicines",
+      "average_price": 2853,
+      "category_id": 7,
+      "name": "Combat Stabilisers"
+    },
+    "pk": 34,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Medicines",
+      "average_price": 6979,
+      "category_id": 7,
+      "name": "Performance Enhancers"
+    },
+    "pk": 35,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Medicines",
+      "average_price": 6959,
+      "category_id": 7,
+      "name": "Progenitor Cells"
+    },
+    "pk": 36,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 294,
+      "category_id": 8,
+      "name": "Aluminium"
+    },
+    "pk": 37,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 8264,
+      "category_id": 8,
+      "name": "Beryllium"
+    },
+    "pk": 38,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 637,
+      "category_id": 8,
+      "name": "Cobalt"
+    },
+    "pk": 39,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 428,
+      "category_id": 8,
+      "name": "Copper"
+    },
+    "pk": 40,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 5166,
+      "category_id": 8,
+      "name": "Gallium"
+    },
+    "pk": 41,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 9490,
+      "category_id": 8,
+      "name": "Gold"
+    },
+    "pk": 42,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 5863,
+      "category_id": 8,
+      "name": "Indium"
+    },
+    "pk": 43,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 1554,
+      "category_id": 8,
+      "name": "Lithium"
+    },
+    "pk": 44,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 13485,
+      "category_id": 8,
+      "name": "Palladium"
+    },
+    "pk": 45,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 19743,
+      "category_id": 8,
+      "name": "Platinum"
+    },
+    "pk": 46,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 4787,
+      "category_id": 8,
+      "name": "Silver"
+    },
+    "pk": 47,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 3939,
+      "category_id": 8,
+      "name": "Tantalum"
+    },
+    "pk": 48,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 957,
+      "category_id": 8,
+      "name": "Titanium"
+    },
+    "pk": 49,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 2644,
+      "category_id": 8,
+      "name": "Uranium"
+    },
+    "pk": 50,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 109,
+      "category_id": 9,
+      "name": "Bauxite"
+    },
+    "pk": 51,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 2427,
+      "category_id": 9,
+      "name": "Bertrandite"
+    },
+    "pk": 52,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 1353,
+      "category_id": 9,
+      "name": "Coltan"
+    },
+    "pk": 53,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 1867,
+      "category_id": 9,
+      "name": "Gallite"
+    },
+    "pk": 54,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 2139,
+      "category_id": 9,
+      "name": "Indite"
+    },
+    "pk": 55,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 554,
+      "category_id": 9,
+      "name": "Lepidolite"
+    },
+    "pk": 56,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 292,
+      "category_id": 9,
+      "name": "Rutile"
+    },
+    "pk": 57,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 844,
+      "category_id": 9,
+      "name": "Uraninite"
+    },
+    "pk": 58,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Slavery",
+      "average_price": 15946,
+      "category_id": 10,
+      "name": "Imperial Slaves"
+    },
+    "pk": 59,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Slavery",
+      "average_price": 10277,
+      "category_id": 10,
+      "name": "Slaves"
+    },
+    "pk": 60,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 2929,
+      "category_id": 11,
+      "name": "Advanced Catalysers"
+    },
+    "pk": 61,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 275,
+      "category_id": 11,
+      "name": "Animal Monitors"
+    },
+    "pk": 62,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 264,
+      "category_id": 11,
+      "name": "Aquaponic Systems"
+    },
+    "pk": 63,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 3758,
+      "category_id": 11,
+      "name": "Auto-Fabricators"
+    },
+    "pk": 64,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 999,
+      "category_id": 11,
+      "name": "Bioreducing Lichen"
+    },
+    "pk": 65,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 410,
+      "category_id": 11,
+      "name": "Computer Components"
+    },
+    "pk": 66,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 309,
+      "category_id": 11,
+      "name": "H.E. Suits"
+    },
+    "pk": 67,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 4828,
+      "category_id": 11,
+      "name": "Land Enrichment Systems"
+    },
+    "pk": 68,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 6075,
+      "category_id": 11,
+      "name": "Resonating Separators"
+    },
+    "pk": 69,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Technology",
+      "average_price": 1830,
+      "category_id": 11,
+      "name": "Robotics"
+    },
+    "pk": 70,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Textiles",
+      "average_price": 179,
+      "category_id": 12,
+      "name": "Leather"
+    },
+    "pk": 72,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Textiles",
+      "average_price": 422,
+      "category_id": 12,
+      "name": "Natural Fabrics"
+    },
+    "pk": 73,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Textiles",
+      "average_price": 158,
+      "category_id": 12,
+      "name": "Synthetic Fabrics"
+    },
+    "pk": 74,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Waste",
+      "average_price": 19,
+      "category_id": 13,
+      "name": "Biowaste"
+    },
+    "pk": 75,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Waste",
+      "average_price": 60,
+      "category_id": 13,
+      "name": "Chemical Waste"
+    },
+    "pk": 76,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Waste",
+      "average_price": 43,
+      "category_id": 13,
+      "name": "Scrap"
+    },
+    "pk": 77,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Weapons",
+      "average_price": 1842,
+      "category_id": 14,
+      "name": "Non-lethal Weapons"
+    },
+    "pk": 78,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Weapons",
+      "average_price": 4231,
+      "category_id": 14,
+      "name": "Personal Weapons"
+    },
+    "pk": 79,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Weapons",
+      "average_price": 2124,
+      "category_id": 14,
+      "name": "Reactive Armour"
+    },
+    "pk": 80,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Weapons",
+      "average_price": 6527,
+      "category_id": 14,
+      "name": "Battle Weapons"
+    },
+    "pk": 81,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Waste",
+      "average_price": null,
+      "category_id": 13,
+      "name": "Toxic Waste"
+    },
+    "pk": 82,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Minerals",
+      "average_price": 35407,
+      "category_id": 9,
+      "name": "Painite"
+    },
+    "pk": 83,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Limpet"
+    },
+    "pk": 84,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Eranin Pearl Whiskey"
+    },
+    "pk": 85,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Kamorin Historic Weapons"
+    },
+    "pk": 86,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Lucan Onion Head"
+    },
+    "pk": 87,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Motrona Experience Jelly"
+    },
+    "pk": 88,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Onion Head"
+    },
+    "pk": 89,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Rusani Old Smokey"
+    },
+    "pk": 90,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Tarach Spice"
+    },
+    "pk": 91,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Terra Mater Blood Bores"
+    },
+    "pk": 92,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Wolf Fesh"
+    },
+    "pk": 93,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Unknown",
+      "average_price": null,
+      "category_id": 15,
+      "name": "Wuthielo Ku Froth"
+    },
+    "pk": 94,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Salvage",
+      "average_price": 142390,
+      "category_id": 16,
+      "name": "Ai Relics"
+    },
+    "pk": 95,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Salvage",
+      "average_price": 120192,
+      "category_id": 16,
+      "name": "Antiquities"
+    },
+    "pk": 96,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Metals",
+      "average_price": 7510,
+      "category_id": 8,
+      "name": "Osmium"
+    },
+    "pk": 97,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Salvage",
+      "average_price": 60229,
+      "category_id": 16,
+      "name": "Sap 8 Core Container"
+    },
+    "pk": 98,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Consumer Items",
+      "average_price": null,
+      "category_id": 2,
+      "name": "Trinkets Of Hidden Fortune"
+    },
+    "pk": 99,
+    "model": "elitedata.commodity"
+  },
+  {
+    "fields": {
+      "category_name": "Salvage",
+      "average_price": 1506,
+      "category_id": 16,
+      "name": "Trade Data"
+    },
+    "pk": 100,
+    "model": "elitedata.commodity"
+  }
+]

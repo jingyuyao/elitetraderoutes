@@ -72,5 +72,4 @@ target/
 configs/production.py
 configs/production.cnf
 /static
-/elitedata/fixtures/*.json
 *.out
